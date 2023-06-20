@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+        <title>Login Page</title>
+        <style>
+            .center-layout {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                font-size: 20px;
+                border-radius: 4px;
+            }
+            #form{
+                border: 1px solid black;
+                padding: 10px;
+                border-radius: 4px;
+
+
+            }
+            .errorMessage{
+                font-size: 10px;
+
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+
+        <p:messages styleClass="errorMessage" severity="error" autoUpdate="true" />
+
+        <div class="center-layout">
+
+            <h:form id="form">
+                <h2 style="text-align: center;">Login</h2>
+                <p:outputLabel for="username">Username</p:outputLabel><br/>
+                <p:inputText id="username" value="#{login.username}"
+                             required="true"/><br/><br/>
+
+                <p:outputLabel for="password">Password</p:outputLabel><br/>
+                <p:password id="password" value="#{login.password}" feedback="false"
+                            required="true"/>
+                <br/><br/>
+
+                <p:commandButton value="Login" id="btn" actionListener="#{loginController.checkUser}"/>
+
+            </h:form>
+        </div>
+
+
+    </h:body>
+</html>
