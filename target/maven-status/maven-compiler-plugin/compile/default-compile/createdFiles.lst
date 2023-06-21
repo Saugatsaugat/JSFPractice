@@ -1,3 +1,6 @@
 Login/Login.class
-Controller/LoginController.class
+Login/Test.class
+Entities/User.class
 Controller/JDBCController.class
+Model/UserModel.class
+Controller/LoginController.class
