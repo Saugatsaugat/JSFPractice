@@ -38,11 +38,11 @@
             <h:form id="form">
                 <h2 style="text-align: center;">Login</h2>
                 <p:outputLabel for="username">Username</p:outputLabel><br/>
-                <p:inputText id="username" value="#{login.username}"
+                <p:inputText id="username" value="#{loginController.login.username}"
                              required="true"/><br/><br/>
 
                 <p:outputLabel for="password">Password</p:outputLabel><br/>
-                <p:password id="password" value="#{login.password}" feedback="false"
+                <p:password id="password" value="#{loginController.login.password}" feedback="false"
                             required="true"/>
                 <br/><br/>
 

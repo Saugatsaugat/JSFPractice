@@ -17,7 +17,7 @@ public class UserModel {
     EntityManager em;
 
     public UserModel() {
-        emf = Persistence.createEntityManagerFactory("tester");
+        emf = Persistence.createEntityManagerFactory("futsal");
         em = emf.createEntityManager();
     }
 
@@ -43,7 +43,7 @@ public class UserModel {
     }
 
     public static void main(String[] args) {
-       new UserModel().deleteDataById();
+       new UserModel().getAllData();
 
     }
 }

@@ -4,15 +4,19 @@
  */
 package Controller;
 
+import Entities.User;
+import Login.Login;
+import Model.UserCRUD;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -22,32 +26,43 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 
-public class LoginController {
+public class LoginController implements Serializable {
+
+    private Login login;
+    @Inject
+    private UserCRUD userCRUD;
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+
+    @PostConstruct
+    public void init() {
+        login = new Login();
+    }
 
     public void checkUser() throws SQLException, ClassNotFoundException, IOException {
-        try {
-            Connection con = new JDBCController().getCon();
+//        try {
             FacesContext context = FacesContext.getCurrentInstance();
-
-            Map<String, String> requestParams = context.getExternalContext().getRequestParameterMap();
-
-            String username = requestParams.get("form:username");
-            String password = requestParams.get("form:password");
-
-            String getData = "Select * from test where username=? and password=?;";
-            PreparedStatement ps = con.prepareStatement(getData);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
-            if (rs != null && rs.next()) {
-                context.getExternalContext().redirect("faces/home.xhtml");
-            } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Invalid Credentials", "Invalid Credentials");
-                context.addMessage(null, message);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+             context.getExternalContext().redirect("faces/view/Home/home.xhtml");
+//            User userRecord = userCRUD.findByUsernameAndPassword(login.getUsername(), login.getPassword());
+//
+//            if (userRecord != null) {
+//                Map<String, Object> flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+//                flash.put("user", userRecord);
+//               // context.getExternalContext().redirect("faces/view/Home/home.xhtml?faces-redirect=true");
+////               context.getExternalContext().redirect("faces/view/Home/eastHome.xhtml");
+//            } else {
+//                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Credentials", "Invalid Credentials");
+//                context.addMessage(null, message);
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
 
     }
 }

@@ -1,40 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
-import Entities.User;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
  * @author saugat
  * @param <T>
  */
-public class AbstractCRUD<T extends IAbstractEntity> {
-    
-    EntityManagerFactory emf;
-    EntityManager em;
+public abstract class AbstractCRUD<T extends IAbstractEntity> {
 
+    protected abstract EntityManager getEntityManager();
     private T obj;
 
-    public AbstractCRUD(T obj) {
-        this.obj = obj;
-        emf = Persistence.createEntityManagerFactory("tester");
-        em = emf.createEntityManager();
-    }
+    public List<T> getAllData(Class<T> cla) {
+        CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(cla);
+        Root<T> root = criteriaQuery.from(cla);
+        criteriaQuery.select(root);
 
-    //Get all Data from Table
-    public List<User> getAllData() {
-        TypedQuery<User> query = em.createQuery("Select e from "+obj.getTableName()+" e", User.class);
-        List<User> list = query.getResultList();
-        return list;     
+        TypedQuery<T> query = getEntityManager().createQuery(criteriaQuery);
+        List<T> list =  query.getResultList();
+        if(list!=null){
+            return list;
+        }
+        return null;
+    }
+    
+    public T getDataById(Class<T> cla, Long id){
+        return null;
     }
     
     
+
 }

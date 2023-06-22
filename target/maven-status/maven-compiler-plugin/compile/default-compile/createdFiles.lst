@@ -1,6 +1,9 @@
+Model/AbstractCRUD.class
 Login/Login.class
-Login/Test.class
 Entities/User.class
+Model/UserCRUD.class
 Controller/JDBCController.class
 Model/UserModel.class
+Model/AbstractEntity.class
+Model/IAbstractEntity.class
 Controller/LoginController.class

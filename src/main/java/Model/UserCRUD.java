@@ -5,16 +5,40 @@
 package Model;
 
 import Entities.User;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
  * @author saugat
  */
-public class UserCRUD extends AbstractCRUD<User>  {
-    
-    public UserCRUD(User obj) {
-        super(obj);
+@Stateless
+public class UserCRUD extends AbstractCRUD<User> {
+
+    @PersistenceContext(name = "futsal")
+    EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public User findByUsernameAndPassword(String username, String password) {
+        User user = null;
+        try {
+
+            Query query = em.createQuery("Select u from User u where u.email=:em and u.userpassword=:pa", User.class);
+            System.out.println(query);
+            query.setParameter("em", username);
+            query.setParameter("pa", password);
+            user = (User) query.getSingleResult();
+        } catch (Exception e) {
+        }
+        return user;
+
     }
     
-    
+
 }

@@ -1,6 +1,9 @@
-/home/saugat/NetBeansProjects/JSFProject/src/main/java/Login/Test.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/AbstractEntity.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/UserCRUD.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/LoginController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/User.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/IAbstractEntity.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/AbstractCRUD.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Login/Login.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/JDBCController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/UserModel.java

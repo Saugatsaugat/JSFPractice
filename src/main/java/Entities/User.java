@@ -3,17 +3,18 @@ package Entities;
 import Model.AbstractEntity;
 import Model.IAbstractEntity;
 import java.io.Serializable;
+import javax.ejb.Stateless;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author saugat
  */
+@Stateless
 @Entity
+@Table(name="User")
 public class User extends AbstractEntity implements IAbstractEntity, Serializable{
-    @Id
-    private Long id;
     private String usertype;
     private String email;
     private String firstname;
