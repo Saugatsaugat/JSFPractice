@@ -37,8 +37,19 @@ public class UserCRUD extends AbstractCRUD<User> {
         } catch (Exception e) {
         }
         return user;
-
     }
-    
+
+    public boolean saveUser(User user) {
+        try {
+
+            em.persist(user);
+            return true;
+
+        } catch (Exception e) {
+            
+            return false;
+
+        }
+    }
 
 }

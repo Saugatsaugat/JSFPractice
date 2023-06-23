@@ -4,18 +4,14 @@
  */
 package Controller;
 
-import Entities.User;
 import Login.Login;
 import Model.UserCRUD;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -24,7 +20,7 @@ import javax.inject.Named;
  * @author saugat
  */
 @Named
-@RequestScoped
+@ViewScoped
 
 public class LoginController implements Serializable {
 

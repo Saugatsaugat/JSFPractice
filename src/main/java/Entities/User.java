@@ -11,7 +11,6 @@ import javax.persistence.Table;
  *
  * @author saugat
  */
-@Stateless
 @Entity
 @Table(name="User")
 public class User extends AbstractEntity implements IAbstractEntity, Serializable{

@@ -4,18 +4,19 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title><ui:insert name="title">Template </ui:insert></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <style>
             .ui-layout-pane {
-                border: 1px solid black;
+                border: 0;
                 overflow:visible;
                 margin: 0;
                 padding: 0px 5px;
-
 
             }
             .ui-layout-unit-content{
                 overflow: visible !important;
                 font-size: 15px;
+
             }
             .link-css{
                 line-height: 1.5;
@@ -26,6 +27,9 @@
             .link-css:hover{
                 color: green;
             }
+            .ui-widget .ui-widget {
+                font-size: 15px;
+            }
 
 
         </style>
@@ -33,31 +37,31 @@
     <h:body>
         <p:layout fullPage="true">
 
-            <p:layoutUnit position="north" style="background-color: lightgrey" size="80">               
+            <p:layoutUnit position="north" size="80" style="border:1px solid black;">               
                 <p:layout>
-                    <p:layoutUnit position="west" style="background-color: lightgrey" size="250">
-                        <h3 style="text-align:center;">LETS FOOT-SHAL</h3>
+                    <p:layoutUnit position="west" size="250">
+                        <h3 style="text-align:center; ">LETS FOOT-SHAL</h3>
                     </p:layoutUnit>
 
-                    <p:layoutUnit position="east" style="background-color: lightgrey" size="250">
+                    <p:layoutUnit position="east" size="250">
 
                         <h3 style="text-align:center;">
-                            <p:link class="link-css" outcome="/faces/index.xhtml" value="   Logout" />
+                            <p:link class="link-css" outcome="/faces/index.xhtml" value="Login" />
+                            <p:link class="link-css" outcome="/faces/view/Register/registerChoice.xhtml" value="Register" />
+
                         </h3>
                     </p:layoutUnit>
 
-                    <p:layoutUnit position="center" style="background-color: lightgrey">
+                    <p:layoutUnit position="center" >
                         <h3 style="text-align:center;">
-                            <p:link class="link-css" outcome="/faces/index.xhtml" value="LoginAsAdmin " />
-                            <p:link class="link-css" outcome="/faces/index.xhtml" value="LoginAsFutsal " />
-                            <p:link class="link-css" outcome="/faces/index.xhtml" value="LoginAsUser " />
+                            Search Futsal Here...
                         </h3>
                     </p:layoutUnit>
 
                 </p:layout>     
             </p:layoutUnit>
 
-            <p:layoutUnit position="south" size="200">
+            <p:layoutUnit position="south" size="200" style="border:1px solid black;">
                 <p:layout>
                     <p:layoutUnit position="west">
                         <div style="text-align: center">
@@ -72,7 +76,7 @@
                         <div style="text-align: center">
                             <h3>Quick Services</h3>
                             <p:link class="link-css" outcome="/faces/index.xhtml" value="Login Page" /><br/>
-                            <p:link class="link-css" outcome="/faces/index.xhtml" value="Home Page" /><br/>
+                            <p:link class="link-css" outcome="/faces/view/Home/home.xhtml" value="Home Page" /><br/>
                             <p:link class="link-css" outcome="/faces/index.xhtml" value="Futsal List" /><br/>
 
                         </div>
@@ -90,6 +94,8 @@
             </p:layoutUnit>
 
             <p:layoutUnit position="center">
+                <ui:insert name="content">
+                </ui:insert>
 
             </p:layoutUnit>
         </p:layout>

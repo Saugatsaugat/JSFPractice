@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <style>
+            .center-layout {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                font-size: 20px;
+                border-radius: 4px;
+            }
+            #form{
+                border: 1px solid black;
+                padding: 10px;
+                border-radius: 4px;
+            }
+            .errorMessage{
+                font-size: 10px;
+            }
+            .ui-layout-pane {
+                border: 0;
+                overflow:visible;
+                margin: 0;
+                padding: 0px 5px;
+
+            }
+            .ui-layout-unit-content{
+                overflow: visible !important;
+                font-size: 15px;
+
+            }
+
+            .ui-widget .ui-widget {
+                font-size: 15px;
+            }
+
+        </style>
+    </h:head>
+
+    <p:layout>
+
+        <p:layoutUnit position="center">
+            <p:messages styleClass="errorMessage" severity="error" autoUpdate="true" />
+            <div class="center-layout">
+                <h:form id="form">
+                    <h2 style="text-align: center; border-bottom: 1Px solid black;">Registration Page</h2>
+                    <div>
+                        <p:outputLabel style="font-weight: bold;" value="Register As"/><br/>
+                        <p:selectOneRadio id="RegisterAs" value="#{registerController.user.usertype}" required="true">
+                            <f:selectItem itemLabel="Admin" itemValue="admin" />
+                            <f:selectItem itemLabel="Futsal Owner" itemValue="futsalowner"/>
+                            <f:selectItem itemLabel="User" itemValue="user"/>
+                        </p:selectOneRadio>
+
+                    </div><br/>
+
+                    <div>
+                        <p:outputLabel style="font-weight: bold;" value="Email"/><br/>
+                        <p:inputText id="email" value="#{registerController.user.email}" required="true" />
+                    </div><br/>
+
+                    <div>
+                        <p:outputLabel style="font-weight: bold;" value="Firstname"/><br/>
+                        <p:inputText id="firstname" value="#{registerController.user.firstname}" required="true"/>
+                    </div><br/>
+
+                    <div>
+                        <p:outputLabel style="font-weight: bold;" value="Midname"/><br/>
+                        <p:inputText id="midname" value="#{registerController.user.midname}" />
+                    </div><br/>
+
+                    <div>
+                        <p:outputLabel style="font-weight: bold;" value="Lastname"/><br/>
+                        <p:inputText id="lastname" value="#{registerController.user.lastname}" required="true" />
+                    </div><br/>
+
+                    <div>
+                        <p:outputLabel style="font-weight: bold;" value="Mobile"/><br/>
+                        <p:inputText id="mobile" value="#{registerController.user.mobile}"  required="true"/>
+                    </div><br/>
+
+                    <div>
+                        <p:outputLabel style="font-weight: bold;" value="Password" /><br/>
+                        <p:password id="password" value="#{registerController.user.userpassword}" required="true" />
+                    </div><br/>
+                    <p:commandButton value="Register" id="register" actionListener="#{registerController.saveUser}"/>
+                    <br/><br/>
+                </h:form>
+            </div>
+        </p:layoutUnit>
+    </p:layout>
+</ui:composition>

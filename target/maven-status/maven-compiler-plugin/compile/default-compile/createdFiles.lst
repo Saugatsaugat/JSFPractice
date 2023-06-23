@@ -1,4 +1,5 @@
 Model/AbstractCRUD.class
+Controller/RegisterController.class
 Login/Login.class
 Entities/User.class
 Model/UserCRUD.class

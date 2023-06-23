@@ -2,8 +2,6 @@
 package Login;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 /**
  *
  * @author saugat
