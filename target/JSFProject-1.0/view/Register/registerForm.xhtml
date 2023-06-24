@@ -11,7 +11,7 @@
 
                     <div>
                         <p:outputLabel style="font-weight: bold;" value="Register As"/><br/>
-                        <p:selectOneRadio id="RegisterAs" value="#{registerController.user.usertype}" required="true">
+                        <p:selectOneRadio id="RegisterAs" value="#{userController.user.usertype}" required="true">
                             <f:selectItem itemLabel="Admin" itemValue="admin" />
                             <f:selectItem itemLabel="Futsal Owner" itemValue="futsalowner"/>
                             <f:selectItem itemLabel="User" itemValue="user"/>
@@ -20,33 +20,33 @@
 
                     <div>
                         <p:outputLabel style="font-weight: bold;" value="Email"/><br/>
-                        <p:inputText id="email" value="#{registerController.user.email}" required="true" />
+                        <p:inputText id="email" value="#{userController.user.email}" required="true" />
                     </div>
 
                     <div>
                         <p:outputLabel style="font-weight: bold;" value="Firstname"/><br/>
-                        <p:inputText id="firstname" value="#{registerController.user.firstname}" required="true"/>
+                        <p:inputText id="firstname" value="#{userController.user.firstname}" required="true"/>
                     </div>
 
                     <div>
                         <p:outputLabel style="font-weight: bold;" value="Midname"/><br/>
-                        <p:inputText id="midname" value="#{registerController.user.midname}" />
+                        <p:inputText id="midname" value="#{userController.user.midname}" />
                     </div>
 
                     <div>
                         <p:outputLabel style="font-weight: bold;" value="Lastname"/><br/>
-                        <p:inputText id="lastname" value="#{registerController.user.lastname}" required="true" />
+                        <p:inputText id="lastname" value="#{userController.user.lastname}" required="true" />
                     </div>
 
                     <div>
                         <p:outputLabel style="font-weight: bold;" value="Mobile"/><br/>
-                        <p:inputText id="mobile" value="#{registerController.user.mobile}"  required="true"/>
+                        <p:inputText id="mobile" value="#{userController.user.mobile}"  required="true"/>
                     </div>
 
                     <div>
                         <p:outputLabel style="font-weight: bold;" value="Password" /><br/>
-                        <p:password id="password" value="#{registerController.user.userpassword}" required="true" />
+                        <p:password id="password" value="#{userController.user.userpassword}" required="true" />
                     </div>
-                    <p:commandButton value="Save" id="register" action="#{registerController.saveUser}"/>
+                    <p:commandButton value="Save" id="register" action="#{userController.saveUser}"/>
 
 </ui:composition>

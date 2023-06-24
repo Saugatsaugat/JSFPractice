@@ -1,7 +1,7 @@
 package Controller;
 
 import Entities.User;
-import Model.UserCRUD;
+import Model.UserCrud;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -19,10 +19,10 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class RegisterController implements Serializable {
+public class UserController implements Serializable {
 
     @Inject
-    private UserCRUD userCRUD;
+    private UserCrud userCRUD;
 
     List<User> userList;
     private User user;

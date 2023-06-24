@@ -13,7 +13,7 @@
         <div style="text-align: center;">
         <p:commandButton id="addDialog" value="ADD New User" oncomplete="PF('addDialog').show()" />
         </div>
-        <p:dataTable value="#{registerController.userList}" var="item">
+        <p:dataTable value="#{userController.userList}" var="item">
             <p:column  headerText="Id">
                 #{item.id}
             </p:column>
@@ -34,13 +34,13 @@
             </p:column>
             <p:column  headerText="Edit">
                 <p:commandButton id="editDialog" value="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">
-                    <f:setPropertyActionListener target="#{registerController.user}" value="#{item}" />
+                    <f:setPropertyActionListener target="#{userController.user}" value="#{item}" />
                 </p:commandButton>
             </p:column>
             <p:column  headerText="Delete">
 
                 <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show()">
-                    <f:setPropertyActionListener target="#{registerController.user.id}" value="#{item.id}" />
+                    <f:setPropertyActionListener target="#{userController.user.id}" value="#{item.id}" />
                 </p:commandButton>
             </p:column>
         </p:dataTable>
@@ -65,7 +65,7 @@
 
         <p:dialog style="font-size: 10px;" id="deleteDialog" fitViewport="true" appendTo="@(body)" widgetVar="deleteDialog" modal="true" header="Confirmation" height="100px" width="300px">
             <p>Do you really want to delete it?</p><br/>
-            <p:commandButton value="Yes" id="delete" action="#{registerController.deleteUser}"/>
+            <p:commandButton value="Yes" id="delete" action="#{userController.deleteUser}"/>
             <p:commandButton value="No" onclick="PF('deleteDialog').hide()" style="float:right;" />
 
         </p:dialog>

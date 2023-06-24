@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
  * @author saugat
  * @param <T>
  */
-public abstract class AbstractCRUD<T extends IAbstractEntity> {
+public abstract class AbstractCrud<T extends IAbstractEntity> {
 
     protected abstract EntityManager getEntityManager();
     private T obj;

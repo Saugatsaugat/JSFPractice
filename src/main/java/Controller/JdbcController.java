@@ -12,9 +12,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class JDBCController {
+public class JdbcController {
     Connection con;
-    public JDBCController() throws ClassNotFoundException, SQLException {
+    public JdbcController() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         String database = "test";
         String server = "localhost";

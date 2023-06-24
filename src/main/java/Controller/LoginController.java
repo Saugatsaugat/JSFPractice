@@ -6,7 +6,7 @@ package Controller;
 
 import Entities.User;
 import Login.Login;
-import Model.UserCRUD;
+import Model.UserCrud;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -31,7 +31,7 @@ public class LoginController implements Serializable {
 
     private Login login;
     @Inject
-    private UserCRUD userCRUD;
+    private UserCrud userCRUD;
 
     public Login getLogin() {
         return login;

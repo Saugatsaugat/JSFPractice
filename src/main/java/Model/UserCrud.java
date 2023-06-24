@@ -13,7 +13,7 @@ import javax.persistence.Query;
  * @author saugat
  */
 @Stateless
-public class UserCRUD extends AbstractCRUD<User> {
+public class UserCrud extends AbstractCrud<User> {
 
     @PersistenceContext(name = "futsal")
     EntityManager em;
