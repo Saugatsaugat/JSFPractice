@@ -6,8 +6,6 @@ package Controller;
 
 
 import Entities.User;
-import Model.UserCRUD;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -83,21 +81,21 @@ public class ValidationController<T> {
         return errorMessage;
         
     }
-    public boolean checkIfEmailExist(String email) throws SQLException {
-        if(email!=null){
-        User userList = new UserCRUD(new User()).getEmailByData(email);
-        if(userList!=null){
-            return true;
-        }
-        else{
-                    return false;
-
-        }
-        }
-        else{
-            return false;
-        }
-    }
+//    public boolean checkIfEmailExist(String email) throws SQLException {
+//        if(email!=null){
+//        User userList = new UserCRUD(new User()).getEmailByData(email);
+//        if(userList!=null){
+//            return true;
+//        }
+//        else{
+//                    return false;
+//
+//        }
+//        }
+//        else{
+//            return false;
+//        }
+//    }
 //    public boolean checkIfIdExistForUser(Long id) throws SQLException {
 //        List<User> userList = new UserCRUD(new User()).getAllData();
 //        for (User user : userList) {

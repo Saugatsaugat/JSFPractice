@@ -4,12 +4,17 @@
  */
 package Controller;
 
+import Entities.User;
 import Login.Login;
 import Model.UserCRUD;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -42,23 +47,24 @@ public class LoginController implements Serializable {
     }
 
     public void checkUser() throws SQLException, ClassNotFoundException, IOException {
-//        try {
-            FacesContext context = FacesContext.getCurrentInstance();
-             context.getExternalContext().redirect("faces/view/Home/home.xhtml");
-//            User userRecord = userCRUD.findByUsernameAndPassword(login.getUsername(), login.getPassword());
-//
-//            if (userRecord != null) {
-//                Map<String, Object> flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-//                flash.put("user", userRecord);
-//               // context.getExternalContext().redirect("faces/view/Home/home.xhtml?faces-redirect=true");
-////               context.getExternalContext().redirect("faces/view/Home/eastHome.xhtml");
-//            } else {
-//                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Credentials", "Invalid Credentials");
-//                context.addMessage(null, message);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
+        try {
+
+            User userRecord = userCRUD.findByUsernameAndPassword(login.getUsername(), login.getPassword());
+
+            if (userRecord != null) {
+                Map<String, Object> flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+                flash.put("user", userRecord);
+                FacesContext context = FacesContext.getCurrentInstance();
+                ExternalContext externalContext = context.getExternalContext();
+                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Home/home.xhtml");
+            } else {
+                FacesContext context = FacesContext.getCurrentInstance();
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Credentials", "Invalid Credentials");
+                context.addMessage(null, message);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 }

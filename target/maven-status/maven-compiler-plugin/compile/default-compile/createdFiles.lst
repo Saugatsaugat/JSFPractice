@@ -1,10 +1,12 @@
 Model/AbstractCRUD.class
-Controller/RegisterController.class
 Login/Login.class
+Controller/ValidationController.class
+Controller/PasswordHashController.class
 Entities/User.class
-Model/UserCRUD.class
 Controller/JDBCController.class
-Model/UserModel.class
-Model/AbstractEntity.class
 Model/IAbstractEntity.class
 Controller/LoginController.class
+Controller/RegisterController.class
+Model/UserCRUD.class
+Model/UserModel.class
+Model/AbstractEntity.class

@@ -3,7 +3,6 @@ package Entities;
 import Model.AbstractEntity;
 import Model.IAbstractEntity;
 import java.io.Serializable;
-import javax.ejb.Stateless;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 

@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="../../template.xhtml">
+
+    <ui:define name="title">Home</ui:define>
+    <ui:define name="content" >
+        <div style="text-align: center;">
+        <p:commandButton id="addDialog" value="ADD New User" oncomplete="PF('addDialog').show()" />
+        </div>
+        <p:dataTable value="#{registerController.userList}" var="item">
+            <p:column  headerText="Id">
+                #{item.id}
+            </p:column>
+            <p:column  headerText="Firstname">
+                #{item.firstname}
+            </p:column>
+            <p:column  headerText="Midname">
+                #{item.midname}
+            </p:column>
+            <p:column  headerText="Lastname">
+                #{item.lastname}
+            </p:column>
+            <p:column  headerText="Email">
+                #{item.email}
+            </p:column>
+            <p:column  headerText="Mobile">
+                #{item.mobile}
+            </p:column>
+            <p:column  headerText="Edit">
+                <p:commandButton id="editDialog" value="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">
+                    <f:setPropertyActionListener target="#{registerController.user}" value="#{item}" />
+                </p:commandButton>
+            </p:column>
+            <p:column  headerText="Delete">
+
+                <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show()">
+                    <f:setPropertyActionListener target="#{registerController.user.id}" value="#{item.id}" />
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+
+
+        <p:dialog class="editDialog"  header="Edit User" fitViewport="true" appendTo="@(body)" widgetVar="editDialog" modal="true" height="600px" width="400px">
+            <div class="center-layout">
+                <h:form id="editDialogForm">
+                    <ui:include src="../Register/registerChoice.xhtml"/>
+                </h:form>
+            </div>
+        </p:dialog>
+        
+        <p:dialog class="addDialog"  header="New User" fitViewport="true" appendTo="@(body)" widgetVar="addDialog" modal="true" height="600px" width="400px">
+            <div class="center-layout">
+                <h:form id="addDialogForm">
+                    <ui:include src="../Register/registerChoice.xhtml"/>
+                </h:form>
+            </div>
+        </p:dialog>
+
+
+        <p:dialog style="font-size: 10px;" id="deleteDialog" fitViewport="true" appendTo="@(body)" widgetVar="deleteDialog" modal="true" header="Confirmation" height="100px" width="300px">
+            <p>Do you really want to delete it?</p><br/>
+            <p:commandButton value="Yes" id="delete" action="#{registerController.deleteUser}"/>
+            <p:commandButton value="No" onclick="PF('deleteDialog').hide()" style="float:right;" />
+
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>
