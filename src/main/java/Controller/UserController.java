@@ -16,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,6 +38,10 @@ public class UserController implements Serializable {
     List<User> userList;
     private User user;
     private FutsalUserRelation futsalUserRelation;
+    private Futsal futsal;
+    FacesContext context;
+    ExternalContext externalContext;
+    HttpSession session;
 
     public List<User> getUserList() {
         return userList;
@@ -58,72 +63,66 @@ public class UserController implements Serializable {
     @PostConstruct
     public void init() {
         user = new User();
+        futsal = new Futsal();
         futsalUserRelation = new FutsalUserRelation();
         userList = userCrud.getAllData();
+        context = FacesContext.getCurrentInstance();
+        externalContext = context.getExternalContext();
+        session = (HttpSession) externalContext.getSession(true);
     }
 
+//delete user, futsal detail if present, and Futsaluserrelation table data if present
     public void deleteUser() {
         if (user.getId() != null) {
-            futsalUserRelation = futsalUserRelationCrud.getFutsalUserRelationByUserId(user.getId());
-            if (futsalUserRelation != null) {
+            Long checkId = user.getId();
+
+            if (((futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId)) == null) && (futsalCrud.checkIfFutsalRegistered(checkId))==null) {
+                boolean status = userCrud.deleteById(checkId);
+                if (status) {
+                    try {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
+                    } catch (Exception e) {
+                    }
+                }
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
+                context.addMessage(null, message);
+
+            } else if ((futsalUserRelationCrud.getFutsalUserRelationByUserId(user.getId()) != null) && futsalCrud.checkIfFutsalRegistered(user.getId())!=null)  {
                 if (futsalUserRelationCrud.deleteById(futsalUserRelation.getId())) {
-                    Futsal futsal = futsalCrud.checkIfFutsalRegistered(user.getId());
-                    if (futsal != null) {
-                        if (futsalCrud.deleteById(futsal.getId())) {
-                            boolean status = userCrud.deleteById(user.getId());
-                            if (status) {
-                                try {
-                                    FacesContext context = FacesContext.getCurrentInstance();
-                                    ExternalContext externalContext = context.getExternalContext();
-                                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
-                                } catch (Exception e) {
-
-                                }
-
-                            } else {
-                                FacesContext context = FacesContext.getCurrentInstance();
-                                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
-                                context.addMessage(null, message);
-
-                            }
-                        }
-                    } else {
+                    if (futsalCrud.deleteById(futsal.getId())) {
                         boolean status = userCrud.deleteById(user.getId());
                         if (status) {
                             try {
-                                FacesContext context = FacesContext.getCurrentInstance();
-                                ExternalContext externalContext = context.getExternalContext();
                                 externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
                             } catch (Exception e) {
-
                             }
-
-                        } else {
-                            FacesContext context = FacesContext.getCurrentInstance();
-                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
-                            context.addMessage(null, message);
-
                         }
                     }
-                }
-            }
 
+                }
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
+                context.addMessage(null, message);
+
+            }
         }
     }
 
+    /**
+     *
+     * @author saugat Function: saveUser()
+     */
     public void saveUser() {
         if (user.getId() != null) {
             boolean status = userCrud.update(user, user.getId());
             if (status) {
                 try {
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    ExternalContext externalContext = context.getExternalContext();
+
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
                 } catch (Exception e) {
 
                 }
             } else {
-                FacesContext context = FacesContext.getCurrentInstance();
+
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Edit Failed", "Edit Failed");
                 context.addMessage(null, message);
 
@@ -134,14 +133,13 @@ public class UserController implements Serializable {
                 boolean status = userCrud.saveUser(user);
                 if (status) {
                     try {
-                        FacesContext context = FacesContext.getCurrentInstance();
-                        ExternalContext externalContext = context.getExternalContext();
+
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
                     } catch (Exception e) {
 
                     }
                 } else {
-                    FacesContext context = FacesContext.getCurrentInstance();
+
                     FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration Failed", "Registration Failed");
                     context.addMessage(null, message);
                 }

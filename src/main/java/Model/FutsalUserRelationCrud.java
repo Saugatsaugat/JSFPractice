@@ -39,34 +39,39 @@ public class FutsalUserRelationCrud extends AbstractCrud<FutsalUserRelation> {
         Query query = em.createQuery(deleteJpql);
         query.setParameter("userid", userId);
         int deletedCount = query.executeUpdate();
-        if (deletedCount > 0) {
+        if(deletedCount>0){
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
+    
+    
     public FutsalUserRelation getFutsalUserRelationById(Long id) {
         FutsalUserRelation user = null;
+        try{
         Query query = em.createQuery("SELECT u FROM FutsalUserRelation u WHERE u.id=:userId", User.class);
         query.setParameter("userId", id);
         user = (FutsalUserRelation) query.getSingleResult();
-        if (user != null) {
-            return user;
-        } else {
-            return user;
+        return user;
         }
+        catch(Exception e){
+            
+        }
+        return user;
     }
     
     public FutsalUserRelation getFutsalUserRelationByUserId(Long id) {
         FutsalUserRelation user = null;
+        try{
         Query query = em.createQuery("SELECT u FROM FutsalUserRelation u WHERE u.userid=:userId", FutsalUserRelation.class);
         query.setParameter("userId", id);
         user = (FutsalUserRelation) query.getSingleResult();
-        if (user != null) {
-            return user;
-        } else {
-            return user;
+        return user;
         }
+        catch(Exception e){
+            
+        }
+        return user;
     }
 
     

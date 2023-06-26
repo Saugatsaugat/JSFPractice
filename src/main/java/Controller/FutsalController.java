@@ -73,22 +73,30 @@ public class FutsalController implements Serializable {
     }
 
     public void deleteFutsal() {
-        if (futsal.getId() != null) {
-            boolean status = futsalCrud.deleteById(futsal.getId());
-            if (status) {
-                try {
+        Long futsalId = futsal.getId();
+        if (futsalId != null) {
+            futsal = futsalCrud.getFutsalById(futsalId);
+            if ((futsal != null)) {
+                Long userId = futsal.getOwnerid();
+                futsalUserRelation = futsalUserRelationCrud.getFutsalUserRelationByUserId(userId);
+                if (futsalUserRelation != null) {
+                    if (futsalUserRelationCrud.deleteById(futsalUserRelation.getId())) {
+                        boolean status = futsalCrud.deleteById(futsal.getId());
+                        if (status) {
+                            try {
+                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalView/futsalTable.xhtml");
+                            } catch (Exception e) {
+                            }
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalView/futsalTable.xhtml");
-                } catch (Exception e) {
-
+                        }
+                    }
                 }
 
-            } else {
-
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
-                context.addMessage(null, message);
-
             }
+
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
+            context.addMessage(null, message);
+
         }
     }
 
