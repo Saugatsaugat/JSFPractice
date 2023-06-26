@@ -108,7 +108,5 @@ public class UserCrud extends AbstractCrud<User> {
             return false;
         }
     }
-    
-  
 
 }

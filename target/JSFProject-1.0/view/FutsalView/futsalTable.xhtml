@@ -32,6 +32,9 @@
             <p:column  headerText="Address">
                 #{item.address}
             </p:column>
+            <p:column  headerText="OwnerId">
+                #{item.ownerid}
+            </p:column>
             
             <p:column  headerText="Edit">
                 <p:commandButton id="editDialog" value="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">

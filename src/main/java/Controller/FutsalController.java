@@ -5,7 +5,11 @@
 package Controller;
 
 import Entities.Futsal;
+import Entities.FutsalUserRelation;
+import Entities.User;
 import Model.FutsalCrud;
+import Model.FutsalUserRelationCrud;
+import Model.UserCrud;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -15,6 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,11 +29,22 @@ import javax.inject.Named;
 @ViewScoped
 public class FutsalController implements Serializable {
 
+    FacesContext context;
+    ExternalContext externalContext;
+    HttpSession session;
+
     @Inject
     private FutsalCrud futsalCrud;
 
+    @Inject
+    private UserCrud userCrud;
+
+    @Inject
+    private FutsalUserRelationCrud futsalUserRelationCrud;
+
     List<Futsal> futsalList;
     private Futsal futsal;
+    private FutsalUserRelation futsalUserRelation;
 
     public List<Futsal> getFutsalList() {
         return futsalList;
@@ -49,7 +65,11 @@ public class FutsalController implements Serializable {
     @PostConstruct
     public void init() {
         futsal = new Futsal();
+        futsalUserRelation = new FutsalUserRelation();
         futsalList = futsalCrud.getAllData();
+        context = FacesContext.getCurrentInstance();
+        externalContext = context.getExternalContext();
+        session = (HttpSession) externalContext.getSession(true);
     }
 
     public void deleteFutsal() {
@@ -57,15 +77,14 @@ public class FutsalController implements Serializable {
             boolean status = futsalCrud.deleteById(futsal.getId());
             if (status) {
                 try {
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    ExternalContext externalContext = context.getExternalContext();
+
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalView/futsalTable.xhtml");
                 } catch (Exception e) {
 
                 }
 
             } else {
-                FacesContext context = FacesContext.getCurrentInstance();
+
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
                 context.addMessage(null, message);
 
@@ -78,32 +97,43 @@ public class FutsalController implements Serializable {
             boolean status = futsalCrud.update(futsal, futsal.getId());
             if (status) {
                 try {
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    ExternalContext externalContext = context.getExternalContext();
+
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalView/futsalTable.xhtml");
                 } catch (Exception e) {
 
                 }
             } else {
-                FacesContext context = FacesContext.getCurrentInstance();
+
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Edit Failed", "Edit Failed");
                 context.addMessage(null, message);
 
             }
         } else {
             try {
+                Long userId = (Long) session.getAttribute("userId");
+                User user = userCrud.getUserById(userId);
+                futsal.setOwnerid(userId);
+                futsal.setMobile(user.getMobile());
+                boolean futsalstatus = futsalCrud.saveFutsal(futsal);
+                if (futsalstatus) {
+                    Long futsalId = futsal.getId();
+                    futsalUserRelation.setUserid(userId);
+                    futsalUserRelation.setFutsalid(futsalId);
+                    boolean futsaluserstatus = futsalUserRelationCrud.create(futsalUserRelation);
+                    if (futsaluserstatus) {
 
-                boolean status = futsalCrud.saveFutsal(futsal);
-                if (status) {
-                    try {
-                        FacesContext context = FacesContext.getCurrentInstance();
-                        ExternalContext externalContext = context.getExternalContext();
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalView/futsalTable.xhtml");
-                    } catch (Exception e) {
+                        try {
+                            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalView/futsalTable.xhtml");
+                        } catch (Exception e) {
 
+                        }
+                    } else {
+
+                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration Failed", "Registration Failed");
+                        context.addMessage(null, message);
                     }
                 } else {
-                    FacesContext context = FacesContext.getCurrentInstance();
+
                     FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration Failed", "Registration Failed");
                     context.addMessage(null, message);
                 }

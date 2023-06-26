@@ -4,9 +4,7 @@
  */
 package Model;
 
-import Controller.PasswordHashController;
 import Entities.Futsal;
-import Entities.User;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

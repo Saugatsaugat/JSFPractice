@@ -34,8 +34,7 @@ public class LoginController implements Serializable {
 
     FacesContext context;
     ExternalContext externalContext;
-     HttpSession session;
-
+    HttpSession session;
 
     private Login login;
     private Futsal futsal;
@@ -81,25 +80,30 @@ public class LoginController implements Serializable {
                 Long userid = userRecord.getId();
 
                 if (("admin".equals(userType)) || ("user".equals(userType))) {
+                    session.setAttribute("userId", userid);
 
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Home/home.xhtml");
                 } else if ("futsalowner".equals(userType)) {
 
-                    futsal = futsalCrud.checkIfFutsalRegistered(userid);
+                    
+                    futsalCrud.checkIfFutsalRegistered(userid);
 
-                    if (futsal == null) {
+                    if((futsalCrud.checkIfFutsalRegistered(userid))== null) {
+                        session.setAttribute("userId", userid);
                         RequestContext contextReq = RequestContext.getCurrentInstance();
                         contextReq.execute("PF('futsalRegisterDialog').show();");
 
                     } else {
-                        
+                        session.setAttribute("userId", userid);
+                        session.setAttribute("futsalId", futsal.getId());
+
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Home/home.xhtml");
                     }
 
                 }
 
             } else {
-               
+
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Credentials", "Invalid Credentials");
                 context.addMessage(null, message);
             }
