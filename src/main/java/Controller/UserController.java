@@ -73,8 +73,9 @@ public class UserController implements Serializable {
 
 //delete user, futsal detail if present, and Futsaluserrelation table data if present
     public void deleteUser() {
-        if (user.getId() != null) {
-            Long checkId = user.getId();
+        Long checkId = user.getId();
+        if (checkId != null) {
+            
 
             if (((futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId)) == null) && (futsalCrud.checkIfFutsalRegistered(checkId))==null) {
                 boolean status = userCrud.deleteById(checkId);
@@ -87,10 +88,13 @@ public class UserController implements Serializable {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
                 context.addMessage(null, message);
 
-            } else if ((futsalUserRelationCrud.getFutsalUserRelationByUserId(user.getId()) != null) && futsalCrud.checkIfFutsalRegistered(user.getId())!=null)  {
+            } else if ((futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId) != null) && futsalCrud.checkIfFutsalRegistered(checkId)!=null)  {
+                futsalUserRelation = futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId) ;
+                
                 if (futsalUserRelationCrud.deleteById(futsalUserRelation.getId())) {
+                    futsal = futsalCrud.checkIfFutsalRegistered(checkId);
                     if (futsalCrud.deleteById(futsal.getId())) {
-                        boolean status = userCrud.deleteById(user.getId());
+                        boolean status = userCrud.deleteById(checkId);
                         if (status) {
                             try {
                                 externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
