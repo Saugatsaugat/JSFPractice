@@ -22,11 +22,11 @@ import javax.inject.Named;
 public class UserController implements Serializable {
 
     @Inject
-    private UserCrud userCRUD;
+    private UserCrud userCrud;
 
     List<User> userList;
     private User user;
-    private User newUser;
+ 
 
     public List<User> getUserList() {
         return userList;
@@ -41,7 +41,6 @@ public class UserController implements Serializable {
     }
 
     public void setUser(User user) {
-        System.out.println("Hello");
         this.user = user;
 
     }
@@ -49,13 +48,12 @@ public class UserController implements Serializable {
     @PostConstruct
     public void init() {
         user = new User();
-        newUser = new User();
-        userList = userCRUD.getAllData();
+        userList = userCrud.getAllData();
     }
 
     public void deleteUser() {
         if (user.getId() != null) {
-            boolean status = userCRUD.deleteById(user.getId());
+            boolean status = userCrud.deleteById(user.getId());
             if (status) {
                 try {
                     FacesContext context = FacesContext.getCurrentInstance();
@@ -76,7 +74,7 @@ public class UserController implements Serializable {
 
     public void saveUser() {
         if (user.getId() != null) {
-            boolean status = userCRUD.update(user, user.getId());
+            boolean status = userCrud.update(user, user.getId());
             if (status) {
                 try {
                     FacesContext context = FacesContext.getCurrentInstance();
@@ -94,7 +92,7 @@ public class UserController implements Serializable {
         } else {
             try {
 
-                boolean status = userCRUD.saveUser(user);
+                boolean status = userCrud.saveUser(user);
                 if (status) {
                     try {
                         FacesContext context = FacesContext.getCurrentInstance();

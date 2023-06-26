@@ -4,13 +4,14 @@
  */
 package Controller;
 
+import Entities.Futsal;
 import Entities.User;
 import Login.Login;
+import Model.FutsalCrud;
 import Model.UserCrud;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
@@ -19,6 +20,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -29,9 +32,19 @@ import javax.inject.Named;
 
 public class LoginController implements Serializable {
 
+    FacesContext context;
+    ExternalContext externalContext;
+     HttpSession session;
+
+
     private Login login;
+    private Futsal futsal;
+
     @Inject
-    private UserCrud userCRUD;
+    private UserCrud userCrud;
+
+    @Inject
+    private FutsalCrud futsalCrud;
 
     public Login getLogin() {
         return login;
@@ -41,24 +54,52 @@ public class LoginController implements Serializable {
         this.login = login;
     }
 
+    public Futsal getFutsal() {
+        return futsal;
+    }
+
+    public void setFutsal(Futsal futsal) {
+        this.futsal = futsal;
+    }
+
     @PostConstruct
     public void init() {
         login = new Login();
+        futsal = new Futsal();
+        context = FacesContext.getCurrentInstance();
+        externalContext = context.getExternalContext();
+        session = (HttpSession) externalContext.getSession(true);
     }
 
     public void checkUser() throws SQLException, ClassNotFoundException, IOException {
         try {
 
-            User userRecord = userCRUD.findByUsernameAndPassword(login.getUsername(), login.getPassword());
+            User userRecord = userCrud.findByUsernameAndPassword(login.getUsername(), login.getPassword());
 
             if (userRecord != null) {
-                Map<String, Object> flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-                flash.put("user", userRecord);
-                FacesContext context = FacesContext.getCurrentInstance();
-                ExternalContext externalContext = context.getExternalContext();
-                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Home/home.xhtml");
+                String userType = userRecord.getUsertype();
+                Long userid = userRecord.getId();
+
+                if (("admin".equals(userType)) || ("user".equals(userType))) {
+
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Home/home.xhtml");
+                } else if ("futsalowner".equals(userType)) {
+
+                    futsal = futsalCrud.checkIfFutsalRegistered(userid);
+
+                    if (futsal == null) {
+                        RequestContext contextReq = RequestContext.getCurrentInstance();
+                        contextReq.execute("PF('futsalRegisterDialog').show();");
+
+                    } else {
+                        
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Home/home.xhtml");
+                    }
+
+                }
+
             } else {
-                FacesContext context = FacesContext.getCurrentInstance();
+               
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Credentials", "Invalid Credentials");
                 context.addMessage(null, message);
             }
