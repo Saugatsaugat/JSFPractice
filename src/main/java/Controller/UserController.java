@@ -1,6 +1,10 @@
 package Controller;
 
+import Entities.Futsal;
+import Entities.FutsalUserRelation;
 import Entities.User;
+import Model.FutsalCrud;
+import Model.FutsalUserRelationCrud;
 import Model.UserCrud;
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -22,11 +27,21 @@ import javax.inject.Named;
 public class UserController implements Serializable {
 
     @Inject
-    private UserCrud userCRUD;
+    private UserCrud userCrud;
+
+    @Inject
+    private FutsalCrud futsalCrud;
+
+    @Inject
+    private FutsalUserRelationCrud futsalUserRelationCrud;
 
     List<User> userList;
     private User user;
-    private User newUser;
+    private FutsalUserRelation futsalUserRelation;
+    private Futsal futsal;
+    FacesContext context;
+    ExternalContext externalContext;
+    HttpSession session;
 
     public List<User> getUserList() {
         return userList;
@@ -41,7 +56,6 @@ public class UserController implements Serializable {
     }
 
     public void setUser(User user) {
-        System.out.println("Hello");
         this.user = user;
 
     }
@@ -49,24 +63,43 @@ public class UserController implements Serializable {
     @PostConstruct
     public void init() {
         user = new User();
-        newUser = new User();
-        userList = userCRUD.getAllData();
+        futsal = new Futsal();
+        futsalUserRelation = new FutsalUserRelation();
+        userList = userCrud.getAllData();
+        context = FacesContext.getCurrentInstance();
+        externalContext = context.getExternalContext();
+        session = (HttpSession) externalContext.getSession(true);
     }
 
+//delete user, futsal detail if present, and Futsaluserrelation table data if present
     public void deleteUser() {
         if (user.getId() != null) {
-            boolean status = userCRUD.deleteById(user.getId());
-            if (status) {
-                try {
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    ExternalContext externalContext = context.getExternalContext();
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
-                } catch (Exception e) {
+            Long checkId = user.getId();
+
+            if (((futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId)) == null) && (futsalCrud.checkIfFutsalRegistered(checkId))==null) {
+                boolean status = userCrud.deleteById(checkId);
+                if (status) {
+                    try {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
+                    } catch (Exception e) {
+                    }
+                }
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
+                context.addMessage(null, message);
+
+            } else if ((futsalUserRelationCrud.getFutsalUserRelationByUserId(user.getId()) != null) && futsalCrud.checkIfFutsalRegistered(user.getId())!=null)  {
+                if (futsalUserRelationCrud.deleteById(futsalUserRelation.getId())) {
+                    if (futsalCrud.deleteById(futsal.getId())) {
+                        boolean status = userCrud.deleteById(user.getId());
+                        if (status) {
+                            try {
+                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
 
                 }
-
-            } else {
-                FacesContext context = FacesContext.getCurrentInstance();
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
                 context.addMessage(null, message);
 
@@ -74,19 +107,22 @@ public class UserController implements Serializable {
         }
     }
 
+    /**
+     *
+     * @author saugat Function: saveUser()
+     */
     public void saveUser() {
         if (user.getId() != null) {
-            boolean status = userCRUD.update(user, user.getId());
+            boolean status = userCrud.update(user, user.getId());
             if (status) {
                 try {
-                    FacesContext context = FacesContext.getCurrentInstance();
-                    ExternalContext externalContext = context.getExternalContext();
+
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
                 } catch (Exception e) {
 
                 }
             } else {
-                FacesContext context = FacesContext.getCurrentInstance();
+
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Edit Failed", "Edit Failed");
                 context.addMessage(null, message);
 
@@ -94,17 +130,16 @@ public class UserController implements Serializable {
         } else {
             try {
 
-                boolean status = userCRUD.saveUser(user);
+                boolean status = userCrud.saveUser(user);
                 if (status) {
                     try {
-                        FacesContext context = FacesContext.getCurrentInstance();
-                        ExternalContext externalContext = context.getExternalContext();
+
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
                     } catch (Exception e) {
 
                     }
                 } else {
-                    FacesContext context = FacesContext.getCurrentInstance();
+
                     FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration Failed", "Registration Failed");
                     context.addMessage(null, message);
                 }

@@ -28,10 +28,12 @@ public class UserCrud extends AbstractCrud<User> {
         try {
 
             Query query = em.createQuery("Select u from User u where u.email=:em and u.userpassword=:pa", User.class);
-            System.out.println(query);
+
+            String passHash = new PasswordHashController().getPasswordHash(password);
             query.setParameter("em", username);
-            query.setParameter("pa", password);
+            query.setParameter("pa", passHash);
             user = (User) query.getSingleResult();
+            return user;
         } catch (Exception e) {
         }
         return user;
@@ -47,7 +49,6 @@ public class UserCrud extends AbstractCrud<User> {
         } catch (Exception e) {
 
             return false;
-
         }
     }
 
@@ -72,7 +73,6 @@ public class UserCrud extends AbstractCrud<User> {
         } else {
             return null;
         }
-
     }
 
     public boolean update(User user, Long userId) {
@@ -96,15 +96,15 @@ public class UserCrud extends AbstractCrud<User> {
             return false;
         }
     }
-    public boolean deleteById(Long userId){
+
+    public boolean deleteById(Long userId) {
         String deleteJpql = "Delete from User e where e.id=:userid";
         Query query = em.createQuery(deleteJpql);
         query.setParameter("userid", userId);
         int deletedCount = query.executeUpdate();
-        if(deletedCount>0){
+        if (deletedCount > 0) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }

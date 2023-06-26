@@ -32,6 +32,9 @@
             <p:column  headerText="Mobile">
                 #{item.mobile}
             </p:column>
+            <p:column  headerText="UserType">
+                #{item.usertype}
+            </p:column>
             <p:column  headerText="Edit">
                 <p:commandButton id="editDialog" value="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">
                     <f:setPropertyActionListener target="#{userController.user}" value="#{item}" />

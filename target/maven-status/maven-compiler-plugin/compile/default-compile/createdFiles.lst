@@ -1,8 +1,17 @@
+Entities/Futsal.class
 Login/Login.class
+Model/FutsalUserRelationCrud.class
+Model/UserCrud.class
 Controller/ValidationController.class
 Controller/PasswordHashController.class
 Entities/User.class
+Controller/FutsalController.class
+Entities/FutsalUserRelation.class
 Model/IAbstractEntity.class
 Controller/LoginController.class
+Model/FutsalCrud.class
+Controller/JdbcController.class
+Controller/UserController.class
 Model/UserModel.class
 Model/AbstractEntity.class
+Model/AbstractCrud.class

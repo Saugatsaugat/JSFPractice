@@ -1,16 +1,24 @@
 <ui:composition xmlns="http://www.w3c.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title><ui:insert name="title">Template </ui:insert></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <style>
-
+            .center-layout {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 15px;
+                border-radius: 4px;
+            }
 
             .ui-layout-pane {
                 border: 0;
-                overflow:visible  ;
+                overflow: visible  ;
                 margin: 0;
                 padding: 0px 5px;
 
@@ -18,6 +26,7 @@
 
             .ui-layout-unit-content{
                 font-size: 15px;
+
             }
 
             .ui-widget .ui-widget {
@@ -31,30 +40,31 @@
 
         </style>
     </h:head>
-    <h:body>
-        <p:layout fullPage="true">
 
-            <p:layoutUnit position="north" size="50" >  
-                <h:form>
-                    <p:menubar>
-                        <p:menuitem value="Home" url="/faces/view/UserView/userTable.xhtml" />
-                        <p:menuitem value="About" url="/about.xhtml" />
-                        <p:menuitem value="Services" url="/services.xhtml" />
-                        <p:menuitem value="Contact" url="/contact.xhtml" />
-                    </p:menubar>
-                </h:form>
-            </p:layoutUnit>
+    <p:layout fullPage="true">
 
-            <p:layoutUnit position="center">
-                    <ui:insert name="content" />
-
-            </p:layoutUnit>
-
-        </p:layout>
+        <p:layoutUnit position="north" size="50" >  
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="User List" url="/faces/view/UserView/userTable.xhtml"/>
+                    <p:menuitem value="Futsal List" url="/faces/view/FutsalView/futsalTable.xhtml"/>
+                    <p:menuitem value="Login" url="/faces/view/Login/loginForm.xhtml"/>
+                </p:menubar>
 
 
+            </h:form>
 
-    </h:body> 
+        </p:layoutUnit>
+
+        <p:layoutUnit position="center">
+            <ui:insert name="content" />
+        </p:layoutUnit>
+
+    </p:layout>
+ 
+
+
+
 
 
 </ui:composition>
