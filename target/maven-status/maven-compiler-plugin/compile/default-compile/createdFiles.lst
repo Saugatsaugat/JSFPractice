@@ -12,8 +12,8 @@ Controller/FutsalController.class
 Entities/FutsalUserRelation.class
 Model/IAbstractEntity.class
 Controller/LoginController.class
-Model/FutsalScheduleCrud.class
 Model/FutsalCrud.class
+Model/FutsalScheduleCruds.class
 Controller/JdbcController.class
 Controller/UserController.class
 Entities/DateEntity.class

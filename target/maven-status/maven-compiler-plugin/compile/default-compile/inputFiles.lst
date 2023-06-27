@@ -2,7 +2,6 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/FutsalUserRelation.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/User.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalCrud.java
-/home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalScheduleCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/IAbstractEntity.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/JdbcController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/UserCrud.java
@@ -14,6 +13,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/PasswordHashController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Login/Login.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalScheduleCruds.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalScheduleController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/Futsal.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalUserRelationCrud.java

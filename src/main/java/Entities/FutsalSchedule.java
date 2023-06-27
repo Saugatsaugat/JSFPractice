@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Entities;
 
 import Model.AbstractEntity;
@@ -22,7 +19,7 @@ public class FutsalSchedule extends AbstractEntity implements IAbstractEntity,Se
     private int endhour;
     private Date scheduledate; 
     private String status;
-    private Long userid;
+    private Long futsalid;
     private float rate;
 
     public float getRate() {
@@ -65,12 +62,12 @@ public class FutsalSchedule extends AbstractEntity implements IAbstractEntity,Se
         this.status = status;
     }
 
-    public Long getUserid() {
-        return userid;
+    public Long getFutsalid() {
+        return futsalid;
     }
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setFutsalid(Long futsalid) {
+        this.futsalid = futsalid;
     }
 
     @Override
