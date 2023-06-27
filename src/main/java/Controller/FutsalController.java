@@ -99,6 +99,10 @@ public class FutsalController implements Serializable {
 
         }
     }
+    
+    /*
+    * saving updates or new futsal information.
+    */
 
     public void saveFutsal() {
         if (futsal.getId() != null) {
@@ -152,4 +156,10 @@ public class FutsalController implements Serializable {
 
         }
     }
+    
+    
+    
+    /*
+    * continue from here...
+    */
 }

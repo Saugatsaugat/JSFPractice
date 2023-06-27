@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+   
+    <p:outputLabel value="Available Slots" />
+    <p:dataTable value="#{futsalScheduleController.futsalSchedule}" var="item">
+        <p:column  headerText="Id">
+            #{item.id}
+        </p:column>
+        <p:column  headerText="TimeFrom">
+            #{item.starthour}
+        </p:column>
+        <p:column  headerText="TimeTo">
+            #{item.endhour}
+        </p:column>
+        <p:column  headerText="Rate(Rs.)">
+            #{item.rate}
+        </p:column>
+        <p:column  headerText="Status">
+            #{item.status}
+        </p:column>
+        <p:column  headerText="ClickToBook">
+            
+        </p:column>
+        
+        
+        
+    </p:dataTable>
+
+
+
+
+</ui:composition>

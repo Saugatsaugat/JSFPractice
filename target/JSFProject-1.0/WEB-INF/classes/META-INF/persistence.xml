@@ -4,6 +4,9 @@
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>java:jboss/datasources/futsal</jta-data-source>
     <class>Entities.User</class>
+    <class>Entities.Futsal</class>
+    <class>Entities.FutsalSchedule</class>
+    <class>Entities.FutsalUserRelation</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.show_sql" value="true"/>
