@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -17,6 +18,8 @@ import javax.persistence.Table;
 public class FutsalSchedule extends AbstractEntity implements IAbstractEntity,Serializable{
     private int starthour;
     private int endhour;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date scheduledate; 
     private String status;
     private Long futsalid;

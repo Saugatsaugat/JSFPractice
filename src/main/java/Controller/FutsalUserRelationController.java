@@ -110,8 +110,6 @@ public void delete() {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
                 context.addMessage(null, message);
             }
-        } else {
-            System.out.println("K bhaeracha");
         }
     }
 

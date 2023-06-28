@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -44,13 +45,22 @@ public class FutsalScheduleController implements Serializable {
         this.newDate = newDate;
     }
 
-    List<FutsalSchedule> futsalSchedule;
+    private List<FutsalSchedule> futsalScheduleList;
+    private FutsalSchedule futsalSchedule;
 
-    public List<FutsalSchedule> getFutsalSchedule() {
+    public List<FutsalSchedule> getFutsalScheduleList() {
+        return futsalScheduleList;
+    }
+
+    public void setFutsalScheduleList(List<FutsalSchedule> futsalScheduleList) {
+        this.futsalScheduleList = futsalScheduleList;
+    }
+
+    public FutsalSchedule getFutsalSchedule() {
         return futsalSchedule;
     }
 
-    public void setFutsalSchedule(List<FutsalSchedule> futsalSchedule) {
+    public void setFutsalSchedule(FutsalSchedule futsalSchedule) {
         this.futsalSchedule = futsalSchedule;
     }
 
@@ -64,35 +74,107 @@ public class FutsalScheduleController implements Serializable {
 
     @PostConstruct
     public void init() {
+        futsalSchedule = new FutsalSchedule();
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);
         newDate = new Date();
         futsal = new Futsal();
-        futsalSchedule = null;
-//        futsalSchedule = fsc.getCurrentDateFutsalSchedule();
+        futsalScheduleList = fsc.getCurrentDateFutsalSchedule();
 
     }
 
     public void onDateSelect(SelectEvent event) {
-        futsalSchedule = null;
+        futsalScheduleList = null;
         newDate = (Date) event.getObject();
 
-        futsalSchedule = fsc.getFutsalScheduleByDateAndUserId(newDate, futsal.getId());
+        futsalScheduleList = fsc.getFutsalScheduleByDateAndUserId(newDate, futsal.getId());
 
     }
 
     public void showFutsalSchedule(Futsal futsal) {
         this.futsal = futsal;
-        this.futsalSchedule = new ArrayList<>();
+        this.futsalScheduleList = new ArrayList<>();
     }
 
-    public void bookFutsalSchedule() {
-        if (session.getAttribute("userId") != null) {
+    public void showFutsalSchedule(FutsalSchedule futsalSchedule) {
+        this.futsalSchedule = futsalSchedule;
+    }
+
+    public void setFutsalScheduleId(Long id) {
+        futsalSchedule.setId(id);
+    }
+
+    public void save() {
+        if (futsalSchedule.getId() != null) {
+            if (session.getAttribute("userId") != null) {
+                Long userId = (Long) session.getAttribute("userId");
+                futsal = futsalCrud.checkIfFutsalRegistered(userId);
+                Long futsalId = futsal.getId();
+                futsalSchedule.setFutsalid(futsalId);
+                if (futsalSchedule.getStatus() == null) {
+                    futsalSchedule.setStatus("available");
+                }
+                if (fsc.update(futsalSchedule, futsalSchedule.getId())) {
+                    try {
+
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+                    } catch (Exception e) {
+
+                    }
+                } else {
+
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Update Failed", "Update Failed");
+                    context.addMessage(null, message);
+
+                }
+            }
+        }
+
+    
+        else {
+            if (session.getAttribute("userId") != null) {
             Long userId = (Long) session.getAttribute("userId");
-            Long futsalId = (Long) futsal.getId();
+            futsal = futsalCrud.checkIfFutsalRegistered(userId);
+            Long futsalId = futsal.getId();
+            futsalSchedule.setFutsalid(futsalId);
+            if (futsalSchedule.getStatus() == null) {
+                futsalSchedule.setStatus("available");
+            }
+
+            if (fsc.save(futsalSchedule)) {
+                try {
+
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+                } catch (Exception e) {
+
+                }
+            } else {
+
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
+                context.addMessage(null, message);
+
+            }
 
         }
     }
+}
 
+public void delete() {
+        if (futsalSchedule.getId() != null) {
+            if (fsc.deleteById(futsalSchedule.getId())) {
+                try {
+
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+                } catch (Exception e) {
+
+                }
+            } else {
+
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
+                context.addMessage(null, message);
+
+            }
+        }
+    }
 }
