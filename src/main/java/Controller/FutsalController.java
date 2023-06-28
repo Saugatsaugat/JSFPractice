@@ -126,7 +126,7 @@ public class FutsalController implements Serializable {
                 User user = userCrud.getUserById(userId);
                 futsal.setOwnerid(userId);
                 futsal.setMobile(user.getMobile());
-                boolean futsalstatus = futsalCrud.saveFutsal(futsal);
+                boolean futsalstatus = futsalCrud.save(futsal);
                 if (futsalstatus) {
                     Long futsalId = futsal.getId();
                     futsalUserRelation.setUserid(userId);

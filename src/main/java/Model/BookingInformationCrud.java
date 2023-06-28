@@ -6,6 +6,7 @@ package Model;
 
 import Entities.BookingInformation;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -76,6 +77,7 @@ public class BookingInformationCrud extends AbstractCrud<BookingInformation> {
 
     public boolean update(BookingInformation data, Long id) {
         try {
+            if(Objects.equals(data.getId(), id)){
             java.sql.Date sqlEntryDate = new java.sql.Date(data.getEntrydate().getTime());
             java.sql.Date sqlFromDate = new java.sql.Date(data.getFromdate().getTime());
             java.sql.Date sqlToDate = new java.sql.Date(data.getTodate().getTime());
@@ -92,6 +94,7 @@ public class BookingInformationCrud extends AbstractCrud<BookingInformation> {
                 return true;
             }
             
+        }
         }catch(Exception e){
             
         }
