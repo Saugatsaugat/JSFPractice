@@ -1,11 +1,13 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/User.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/IAbstractEntity.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/UserCrud.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/BookingDetailController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/AbstractCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/ValidationController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/BookingInformationController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/LoginController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/PasswordHashController.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/FutsalDetail.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Login/Login.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalScheduleController.java
@@ -20,7 +22,10 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/BookingInformation.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/BookingInformationCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/FutsalSchedule.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/BookingDetailCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/DateController.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalDetailCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalScheduleCruds.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/Futsal.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalUserRelationController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/UserController.java

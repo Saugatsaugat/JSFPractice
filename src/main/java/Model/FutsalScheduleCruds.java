@@ -86,12 +86,15 @@ public class FutsalScheduleCruds extends AbstractCrud<FutsalSchedule> {
         return futsalSchedule;
     }
     
-    public boolean deleteById(FutsalSchedule obj){
+    public boolean deleteById(Long id){
         try{
-            em.remove(obj);
-            return true;
-        }
-        catch(Exception e){
+          Query query = em.createQuery("Delete from FutsalSchedule u where u.id=:id");
+          query.setParameter("id",id);
+          int deleteCounted = query.executeUpdate();
+          if(deleteCounted>0){
+              return true;
+          }
+        }catch(Exception e){
             
         }
         return false;

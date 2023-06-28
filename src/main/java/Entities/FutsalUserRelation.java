@@ -18,10 +18,10 @@ import javax.persistence.Temporal;
  * @author saugat
  */
 @Entity
-@Table(name = "FutsalUserRelation")
+@Table(name="FutsalUserRelation")
 public class FutsalUserRelation extends AbstractEntity implements IAbstractEntity, Serializable {
 
-    @Column(name = "entrydate", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(javax.persistence.TemporalType.DATE)
     Date entrydate;
     Long userid;
     Long futsalid;

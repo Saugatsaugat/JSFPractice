@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 /**
  *
@@ -20,9 +21,12 @@ import javax.persistence.Table;
 @Table(name = "BookingInformation")
 public class BookingInformation extends AbstractEntity implements IAbstractEntity, Serializable{
     
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date entrydate;
     private float amount;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date fromdate;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date todate;
     private Long userid;
 

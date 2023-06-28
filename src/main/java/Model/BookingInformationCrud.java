@@ -27,14 +27,16 @@ public class BookingInformationCrud extends AbstractCrud<BookingInformation> {
         return em;
     }
 
-    public boolean save(List<BookingInformation> data) {
+    public List<BookingInformation> getAllData() {
+        List<BookingInformation> bookingInformationList = null;
         try {
-            em.persist(data);
-            return true;
+            Query query = em.createQuery("SELECT u from BookingInformation u", BookingInformation.class);
+            bookingInformationList = query.getResultList();
+            return bookingInformationList;
         } catch (Exception e) {
 
         }
-        return false;
+        return bookingInformationList;
     }
 
     public BookingInformation getDataById(Long id) {
@@ -50,6 +52,40 @@ public class BookingInformationCrud extends AbstractCrud<BookingInformation> {
         return bookingInformation;
     }
 
+    public boolean save(BookingInformation data) {
+        try {
+//            java.sql.Date sqlEntryDate = new java.sql.Date(data.getEntrydate().getTime());
+//            java.sql.Date sqlFromDate = new java.sql.Date(data.getFromdate().getTime());
+//            java.sql.Date sqlToDate = new java.sql.Date(data.getTodate().getTime());
+//            data.setEntrydate(sqlEntryDate);
+//            data.setFromdate(sqlFromDate);
+//            data.setTodate(sqlToDate);
+            em.persist(data);
+            return true;
+        } catch (Exception e) {
+
+        }
+        return false;
+    }
+
+    public boolean saveAll(List<BookingInformation> datas) {
+        try {
+            for (BookingInformation data : datas) {
+//                java.sql.Date sqlEntryDate = new java.sql.Date(data.getEntrydate().getTime());
+//                java.sql.Date sqlFromDate = new java.sql.Date(data.getFromdate().getTime());
+//                java.sql.Date sqlToDate = new java.sql.Date(data.getTodate().getTime());
+//                data.setEntrydate(sqlEntryDate);
+//                data.setFromdate(sqlFromDate);
+//                data.setTodate(sqlToDate);
+                em.persist(data);
+            }
+            return true;
+        } catch (Exception e) {
+
+        }
+        return false;
+    }
+
     public boolean deleteById(Long id) {
         try {
             if (getDataById(id) != null) {
@@ -63,40 +99,28 @@ public class BookingInformationCrud extends AbstractCrud<BookingInformation> {
         return false;
     }
 
-    public boolean saveAll(List<BookingInformation> data) {
-        try {
-            for (BookingInformation obj : data) {
-                em.persist(obj);
-            }
-            return true;
-        } catch (Exception e) {
-
-        }
-        return false;
-    }
-
     public boolean update(BookingInformation data, Long id) {
         try {
-            if(Objects.equals(data.getId(), id)){
-            java.sql.Date sqlEntryDate = new java.sql.Date(data.getEntrydate().getTime());
-            java.sql.Date sqlFromDate = new java.sql.Date(data.getFromdate().getTime());
-            java.sql.Date sqlToDate = new java.sql.Date(data.getTodate().getTime());
-            
-            Query query = em.createQuery("Update BookingInformation u set u.entrydate=:entrydate,u.fromdate=:fromdate,u.todate=:todate,u.amount=:amount,u.userid=:userid where u.id=:id", BookingInformation.class);
-            query.setParameter("id", id);
-            query.setParameter("entrydate", sqlEntryDate);
-            query.setParameter("fromdate", sqlFromDate);
-            query.setParameter("todate", sqlToDate);
-            query.setParameter("amount",data.getAmount());
-            query.setParameter("userid", data.getUserid());
-            int updatedCount = query.executeUpdate();
-            if(updatedCount>0){
-                return true;
+            if (Objects.equals(data.getId(), id)) {
+//                java.sql.Date sqlFromDate = new java.sql.Date(data.getFromdate().getTime());
+//                java.sql.Date sqlToDate = new java.sql.Date(data.getTodate().getTime());
+
+                Query query = em.createQuery("Update BookingInformation u set u.fromdate=:fromdate,u.todate=:todate,u.amount=:amount,u.userid=:userid where u.id=:id");
+                query.setParameter("id", id);
+//                query.setParameter("fromdate", sqlFromDate);
+//                query.setParameter("todate", sqlToDate);
+                query.setParameter("fromdate", data.getFromdate());
+                query.setParameter("todate", data.getTodate());
+                query.setParameter("amount", data.getAmount());
+                query.setParameter("userid", data.getUserid());
+                int updatedCount = query.executeUpdate();
+                if (updatedCount > 0) {
+                    return true;
+                }
+
             }
-            
-        }
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return false;
     }
