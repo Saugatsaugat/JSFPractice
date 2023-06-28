@@ -3,6 +3,7 @@ package Model;
 
 import Entities.BookingDetail;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -87,7 +88,7 @@ public class BookingDetailCrud extends AbstractCrud<BookingDetail> {
     
     public boolean update(BookingDetail data, Long id){
         try{
-            if(data.getId()==0){
+            if(Objects.equals(data.getId(), id)){
                 Query query=em.createQuery("UPDATE BookingDetail u set u.paymentstatus=:paymentstatus,u.bookinginformationid=:bookinginformationid,u.futsalscheduleid=:futsalscheduleid where u.id=:id",BookingDetail.class);
                 query.setParameter("id",id);
                 query.setParameter("paymentstatus",data.getPaymentstatus());
