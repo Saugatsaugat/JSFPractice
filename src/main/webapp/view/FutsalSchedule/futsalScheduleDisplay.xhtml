@@ -3,7 +3,8 @@
 <ui:composition xmlns="http://www.w3c.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
    
     <p:outputLabel value="Available Slots" />
@@ -23,8 +24,10 @@
         <p:column  headerText="Status">
             #{item.status}
         </p:column>
-        <p:column  headerText="ClickToBook">
-            
+        <p:column  headerText="">
+            <p:commandButton value="Click To Book" actionListener="#{futsalScheduleController.bookFutsalSchedule}" >
+                <f:setPropertyActionListener target="#{futsalScheduleController.futsal.id}" value="#{item.futsalid}" />
+            </p:commandButton>
         </p:column>
         
         

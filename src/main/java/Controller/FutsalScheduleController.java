@@ -86,5 +86,13 @@ public class FutsalScheduleController implements Serializable {
         RequestContext contextReq = RequestContext.getCurrentInstance();
         contextReq.execute("PF('bookNowDialog').show();");
     }
+    
+    public void bookFutsalSchedule(){
+        if(session.getAttribute("userId")!=null){
+            Long userId = (Long)session.getAttribute("userId");
+            Long futsalId = (Long) futsal.getId();
+            
+        }
+    }
 
 }
