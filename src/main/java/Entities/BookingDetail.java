@@ -17,6 +17,33 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "BookingDetail")
 public class BookingDetail extends AbstractEntity implements IAbstractEntity, Serializable {
+    private String paymentstatus;
+    private Long futsalscheduleid;
+    private Long bookinginformationid;
+
+    public String getPaymentstatus() {
+        return paymentstatus;
+    }
+
+    public void setPaymentstatus(String paymentstatus) {
+        this.paymentstatus = paymentstatus;
+    }
+
+    public Long getFutsalscheduleid() {
+        return futsalscheduleid;
+    }
+
+    public void setFutsalscheduleid(Long futsalscheduleid) {
+        this.futsalscheduleid = futsalscheduleid;
+    }
+
+    public Long getBookinginformationid() {
+        return bookinginformationid;
+    }
+
+    public void setBookinginformationid(Long bookinginformationid) {
+        this.bookinginformationid = bookinginformationid;
+    }
     
     
 
