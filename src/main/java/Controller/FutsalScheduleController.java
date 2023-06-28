@@ -5,6 +5,7 @@ import Entities.FutsalSchedule;
 import Model.FutsalCrud;
 import Model.FutsalScheduleCruds;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -69,7 +70,7 @@ public class FutsalScheduleController implements Serializable {
         session = (HttpSession) externalContext.getSession(true);
         newDate = new Date();
         futsal = new Futsal();
-        futsalSchedule=null;
+        futsalSchedule = null;
 //        futsalSchedule = fsc.getCurrentDateFutsalSchedule();
 
     }
@@ -77,21 +78,21 @@ public class FutsalScheduleController implements Serializable {
     public void onDateSelect(SelectEvent event) {
         futsalSchedule = null;
         newDate = (Date) event.getObject();
-        
-        futsalSchedule = fsc.getFutsalScheduleByDateAndUserId(newDate,futsal.getId());
-       
+
+        futsalSchedule = fsc.getFutsalScheduleByDateAndUserId(newDate, futsal.getId());
+
     }
 
-    public void displayDialog() {
-        RequestContext contextReq = RequestContext.getCurrentInstance();
-        contextReq.execute("PF('bookNowDialog').show();");
+    public void showFutsalSchedule(Futsal futsal) {
+        this.futsal = futsal;
+        this.futsalSchedule = new ArrayList<>();
     }
-    
-    public void bookFutsalSchedule(){
-        if(session.getAttribute("userId")!=null){
-            Long userId = (Long)session.getAttribute("userId");
+
+    public void bookFutsalSchedule() {
+        if (session.getAttribute("userId") != null) {
+            Long userId = (Long) session.getAttribute("userId");
             Long futsalId = (Long) futsal.getId();
-            
+
         }
     }
 

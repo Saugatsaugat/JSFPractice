@@ -4,11 +4,13 @@
  */
 package Controller;
 
+import Model.BookingInformationCrud;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
@@ -23,6 +25,9 @@ public class BookingInformationController implements Serializable {
     FacesContext context;
     ExternalContext externalContext;
     HttpSession session;
+    
+    @Inject
+    private BookingInformationCrud bookingInformationCrud;
 
     @PostConstruct
     public void init() {

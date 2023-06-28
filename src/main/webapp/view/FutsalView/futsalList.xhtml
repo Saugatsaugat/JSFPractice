@@ -22,8 +22,8 @@
             #{item.mobile}
         </p:column>
         <p:column  headerText="">
-            <p:commandButton value="Book Now" id="bookNowBtn" actionListener="#{futsalScheduleController.displayDialog}">
-                <f:setPropertyActionListener target="#{futsalScheduleController.futsal}" value="#{item}" />
+            <p:commandButton value="Book Now" id="bookNowBtn" oncomplete="PF('bookNowDialog').show();"
+                             actionListener="#{futsalScheduleController.showFutsalSchedule(item)}" update="scheduleDisplay">
                 
             </p:commandButton>
         </p:column>
@@ -31,7 +31,7 @@
     </p:dataTable>
     <p:dialog style="font-size: 10px;" id="bookNowDialog" fitViewport="true" appendTo="@(body)" 
               widgetVar="bookNowDialog" modal="true" header="Book Now" height="500px" width="1000px"
-              onHide="" >
+               >
 
         <h:form>
             <p:outputLabel >Choose Date</p:outputLabel>
