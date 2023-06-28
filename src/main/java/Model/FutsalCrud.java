@@ -39,7 +39,7 @@ public class FutsalCrud extends AbstractCrud<Futsal> {
 
     }
 
-    public boolean saveFutsal(Futsal futsal) {
+    public boolean save(Futsal futsal) {
         try {
             em.persist(futsal);
             return true;
@@ -52,40 +52,46 @@ public class FutsalCrud extends AbstractCrud<Futsal> {
 
     public Futsal getFutsalById(Long id) {
         Futsal futsal = null;
+        try{
         Query query = em.createQuery("SELECT u FROM Futsal u WHERE u.id=:userId", Futsal.class);
         query.setParameter("userId", id);
         futsal = (Futsal) query.getSingleResult();
-        if (futsal != null) {
-            return futsal;
-        } else {
-            return futsal;
+        return futsal;
+        }catch(Exception e){
+            
         }
+        return futsal;
     }
 
     public List<Futsal> getAllData() {
         List<Futsal> futsal = null;
+        try{
         Query query = em.createQuery("SELECT u FROM Futsal u", Futsal.class);
-        futsal = (List<Futsal>) query.getResultList();
-        if (futsal != null) {
-            return futsal;
-        } else {
-            return null;
+        futsal = query.getResultList();
+        return futsal;
+        }catch(Exception e){
+            
         }
+        return futsal;
     }
 
     public boolean deleteById(Long userId) {
-        String deleteJpql = "Delete from Futsal e where e.id=:userid";
-        Query query = em.createQuery(deleteJpql);
-        query.setParameter("userid", userId);
-        int deletedCount = query.executeUpdate();
-        if (deletedCount > 0) {
-            return true;
-        } else {
-            return false;
+        try{
+            if(getFutsalById(userId)!=null)
+            {
+                Futsal obj = getFutsalById(userId);
+                em.remove(obj);
+                return true;
+            }
+        }catch(Exception e){
+            
         }
+        return false;
+       
     }
 
     public boolean update(Futsal futsal, Long futsalId) {
+        try{
         String updateJpql = "UPDATE Futsal e SET e.pan=:pan,e.name=:name,e.rate=:rate,e.address=:address WHERE e.id = :entityId";
         Query query = em.createQuery(updateJpql);
         query.setParameter("entityId", futsalId);
@@ -96,9 +102,11 @@ public class FutsalCrud extends AbstractCrud<Futsal> {
         int updatedCount = query.executeUpdate();
         if (updatedCount > 0) {
             return true;
-        } else {
-            return false;
+        } 
+        }catch(Exception e){
+            
         }
+        return false;
     }
 
 }
