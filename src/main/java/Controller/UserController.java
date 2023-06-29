@@ -65,7 +65,7 @@ public class UserController implements Serializable {
         user = new User();
         futsal = new Futsal();
         futsalUserRelation = new FutsalUserRelation();
-        userList = userCrud.getAllData();
+        userList = userCrud.getAllData(User.class);
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);
@@ -134,7 +134,7 @@ public class UserController implements Serializable {
         } else {
             try {
 
-                boolean status = userCrud.saveUser(user);
+                boolean status = userCrud.save(user);
                 if (status) {
                     try {
 
