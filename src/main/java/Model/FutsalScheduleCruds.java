@@ -73,18 +73,18 @@ public class FutsalScheduleCruds extends AbstractCrud<FutsalSchedule> {
         return false;
     }
     
-    public FutsalSchedule getDataById(Long id){
-        FutsalSchedule futsalSchedule = null;
-        try{
-            Query query = em.createQuery("SELECT u from FutsalSchedule u where u.id=:id",FutsalSchedule.class );
-            query.setParameter("id", id);
-            futsalSchedule = (FutsalSchedule)query.getSingleResult();
-            return futsalSchedule;
-        }catch(Exception e){
-            
-        }
-        return futsalSchedule;
-    }
+//    public FutsalSchedule getDataById(Long id){
+//        FutsalSchedule futsalSchedule = null;
+//        try{
+//            Query query = em.createQuery("SELECT u from FutsalSchedule u where u.id=:id",FutsalSchedule.class );
+//            query.setParameter("id", id);
+//            futsalSchedule = (FutsalSchedule)query.getSingleResult();
+//            return futsalSchedule;
+//        }catch(Exception e){
+//            
+//        }
+//        return futsalSchedule;
+//    }
     
     public boolean deleteById(Long id){
         try{

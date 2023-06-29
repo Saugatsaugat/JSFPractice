@@ -65,7 +65,7 @@ public class UserController implements Serializable {
         user = new User();
         futsal = new Futsal();
         futsalUserRelation = new FutsalUserRelation();
-        userList = userCrud.getAllData();
+        userList = userCrud.getAllData(User.class);
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);
@@ -77,7 +77,7 @@ public class UserController implements Serializable {
             Long checkId = user.getId();
 
             if (((futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId)) == null) && (futsalCrud.checkIfFutsalRegistered(checkId))==null) {
-                boolean status = userCrud.deleteById(checkId);
+                boolean status = userCrud.delete(checkId);
                 if (status) {
                     try {
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
@@ -130,7 +130,7 @@ public class UserController implements Serializable {
         } else {
             try {
 
-                boolean status = userCrud.saveUser(user);
+                boolean status = userCrud.save(user);
                 if (status) {
                     try {
 
