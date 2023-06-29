@@ -54,7 +54,7 @@ public class FutsalUserRelationController implements Serializable {
     @PostConstruct
     public void init() {
         futsalUserRelation = new FutsalUserRelation();
-        futsalUserRelationList = futsalUserRelationCrud.getAllData();
+        futsalUserRelationList = futsalUserRelationCrud.getAllData(FutsalUserRelation.class);
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);

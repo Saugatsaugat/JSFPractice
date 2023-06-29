@@ -64,7 +64,7 @@ public class BookingInformationController implements Serializable {
 
     @PostConstruct
     public void init() {
-        bookingInformationList = bookingInformationCrud.getAllData();
+        bookingInformationList = bookingInformationCrud.getAllData(BookingInformation.class);
         bookingInformation = new BookingInformation();
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();

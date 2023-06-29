@@ -74,7 +74,7 @@ public abstract class AbstractCrud<T extends IAbstractEntity> {
         return false;
     }
     
-    public boolean delete(Long id){
+    public boolean deleteById(Long id){
         try{
             T obj = getDataById(id);
             getEntityManager().remove(obj);

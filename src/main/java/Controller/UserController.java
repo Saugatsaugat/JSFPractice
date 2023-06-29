@@ -77,7 +77,7 @@ public class UserController implements Serializable {
             Long checkId = user.getId();
 
             if (((futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId)) == null) && (futsalCrud.checkIfFutsalRegistered(checkId))==null) {
-                boolean status = userCrud.delete(checkId);
+                boolean status = userCrud.deleteById(checkId);
                 if (status) {
                     try {
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");

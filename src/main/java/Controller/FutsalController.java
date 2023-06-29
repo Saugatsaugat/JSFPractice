@@ -66,7 +66,7 @@ public class FutsalController implements Serializable {
     public void init() {
         futsal = new Futsal();
         futsalUserRelation = new FutsalUserRelation();
-        futsalList = futsalCrud.getAllData();
+        futsalList = futsalCrud.getAllData(Futsal.class);
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);
@@ -75,7 +75,7 @@ public class FutsalController implements Serializable {
     public void deleteFutsal() {
         Long futsalId = futsal.getId();
         if (futsalId != null) {
-            futsal = futsalCrud.getFutsalById(futsalId);
+            futsal = futsalCrud.getDataById(futsalId);
             if ((futsal != null)) {
                 Long userId = futsal.getOwnerid();
                 futsalUserRelation = futsalUserRelationCrud.getFutsalUserRelationByUserId(userId);
@@ -123,7 +123,7 @@ public class FutsalController implements Serializable {
         } else {
             try {
                 Long userId = (Long) session.getAttribute("userId");
-                User user = userCrud.getUserById(userId);
+                User user = userCrud.getDataById(userId);
                 futsal.setOwnerid(userId);
                 futsal.setMobile(user.getMobile());
                 boolean futsalstatus = futsalCrud.save(futsal);
@@ -131,7 +131,7 @@ public class FutsalController implements Serializable {
                     Long futsalId = futsal.getId();
                     futsalUserRelation.setUserid(userId);
                     futsalUserRelation.setFutsalid(futsalId);
-                    boolean futsaluserstatus = futsalUserRelationCrud.create(futsalUserRelation);
+                    boolean futsaluserstatus = futsalUserRelationCrud.save(futsalUserRelation);
                     if (futsaluserstatus) {
 
                         try {
