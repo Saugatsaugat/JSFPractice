@@ -86,7 +86,7 @@ public class BookingInformationController implements Serializable {
 
                 if (bookingInformationCrud.update(bookingInformation, bookingInformation.getId())) {
                     try {
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/BookingInformation/bookingInformationTable.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/bookingInformationTable.xhtml");
                     } catch (Exception e) {
 
                     }
@@ -105,7 +105,7 @@ public class BookingInformationController implements Serializable {
                 bookingInformation.setEntrydate(new Date());
                 if (bookingInformationCrud.save(bookingInformation)) {
                     try {
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/BookingInformation/bookingInformationTable.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/bookingInformationTable.xhtml");
                     } catch (Exception e) {
 
                     }
@@ -127,7 +127,7 @@ public class BookingInformationController implements Serializable {
         if (bookingInformation.getId() != null) {
             if (bookingInformationCrud.deleteById(bookingInformation.getId())) {
                 try {
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/BookingInformation/bookingInformationTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/bookingInformationTable.xhtml");
                 } catch (Exception e) {
 
                 }

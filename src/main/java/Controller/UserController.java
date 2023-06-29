@@ -80,7 +80,7 @@ public class UserController implements Serializable {
                 boolean status = userCrud.deleteById(checkId);
                 if (status) {
                     try {
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
                     } catch (Exception e) {
                     }
                 }
@@ -93,7 +93,7 @@ public class UserController implements Serializable {
                         boolean status = userCrud.deleteById(user.getId());
                         if (status) {
                             try {
-                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
+                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
                             } catch (Exception e) {
                             }
                         }
@@ -117,7 +117,7 @@ public class UserController implements Serializable {
             if (status) {
                 try {
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
                 } catch (Exception e) {
 
                 }
@@ -134,7 +134,7 @@ public class UserController implements Serializable {
                 if (status) {
                     try {
 
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserView/userTable.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
                     } catch (Exception e) {
 
                     }

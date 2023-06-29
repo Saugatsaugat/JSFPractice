@@ -79,16 +79,16 @@ public class LoginController implements Serializable {
                 String userType = userRecord.getUsertype();
                 Long userid = userRecord.getId();
 
-                if (("admin".equals(userType)) || ("user".equals(userType))) {
+                if (("admin".equals(userType))) {
                     session.setAttribute("userId", userid);
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/home.xhtml");
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Home/home.xhtml");
+                } else if (("user".equals(userType))) {
+                    session.setAttribute("userId", userid);
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
+
                 } else if ("futsalowner".equals(userType)) {
-
-                    
-                    futsalCrud.checkIfFutsalRegistered(userid);
-
-                    if((futsalCrud.checkIfFutsalRegistered(userid))== null) {
+                    if ((futsalCrud.checkIfFutsalRegistered(userid)) == null) {
                         session.setAttribute("userId", userid);
                         RequestContext contextReq = RequestContext.getCurrentInstance();
                         contextReq.execute("PF('futsalRegisterDialog').show();");
@@ -96,14 +96,13 @@ public class LoginController implements Serializable {
                     } else {
                         session.setAttribute("userId", userid);
                         session.setAttribute("futsalId", futsal.getId());
-
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Home/home.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/home.xhtml");
                     }
 
                 }
 
             } else {
-
+                context = FacesContext.getCurrentInstance();
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Credentials", "Invalid Credentials");
                 context.addMessage(null, message);
             }

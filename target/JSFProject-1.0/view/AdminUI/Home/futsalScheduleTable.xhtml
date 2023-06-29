@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="../adminTemplate.xhtml">
+    <ui:define name="content">
+        <div style="text-align: center;">
+            <p:commandButton id="addDialog" value="ADD Schedule" oncomplete="PF('addDialog').show()" />
+        </div>
+        <h3 style="text-align: center;">Futsal Schedule Table</h3>
+        <h:form>
+            <p:dataTable value="#{futsalScheduleController.futsalScheduleList}" var="item">
+                <p:column  headerText="ScheduledDate">
+                    #{item.scheduledate}
+                </p:column>
+                <p:column  headerText="StartHour">
+                    #{item.starthour}
+                </p:column>
+                <p:column  headerText="EndHour">
+                    #{item.endhour}
+                </p:column>
+                <p:column  headerText="Rate">
+                    #{item.rate}
+                </p:column>
+                <p:column  headerText="Status">
+                    #{item.status}
+                </p:column>
+                <p:column  headerText="Edit">
+                    <p:commandButton id="editDialog" value="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{futsalScheduleController.showFutsalSchedule(item)}"/>
+
+                </p:column>
+                <p:column  headerText="Delete">
+                    <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{futsalScheduleController.setFutsalScheduleId(item.id)}" />
+
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog class="editDialog"  header="Edit Futsal" fitViewport="true" appendTo="@(body)" widgetVar="editDialog" modal="true" height="400px" width="400px">
+            <div class="center-layout">
+                <h:form id="editDialogForm">
+                    <ui:include src="futsalScheduleForm.xhtml"/>
+                </h:form>
+            </div>
+        </p:dialog>
+
+
+        <p:dialog style="font-size: 10px;" id="deleteDialog" fitViewport="true" appendTo="@(body)" widgetVar="deleteDialog" modal="true" header="Confirmation" height="100px" width="300px">
+            <p>Do you really want to delete it?</p><br/>
+            <p:commandButton value="Yes" id="delete" actionListener="#{futsalScheduleController.delete}"/>
+            <p:commandButton value="No" onclick="PF('deleteDialog').hide()" style="float:right;" />
+        </p:dialog>
+
+        <p:dialog class="addDialog"  header="New Schedule" fitViewport="true" appendTo="@(body)" widgetVar="addDialog" modal="true" height="400px" width="300px">
+            <div class="center-layout">
+                <h:form id="addDialogForm">
+                    <ui:include src="futsalScheduleForm.xhtml"/>
+                </h:form>
+            </div>
+        </p:dialog>
+
+    </ui:define>
+</ui:composition>

@@ -73,7 +73,7 @@ public class FutsalUserRelationController implements Serializable {
 
             if (futsalUserRelationCrud.update(futsalUserRelation, futsalUserRelation.getId())) {
                 try {
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalUserRelation/futsalUserRelationTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalUserRelationTable.xhtml");
                 } catch (Exception e) {
 
                 }
@@ -85,7 +85,7 @@ public class FutsalUserRelationController implements Serializable {
         else {
             if (futsalUserRelationCrud.save(futsalUserRelation)) {
                 try {
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalUserRelation/futsalUserRelationTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalUserRelationTable.xhtml");
                 } catch (Exception e) {
 
                 }
@@ -102,7 +102,7 @@ public void delete() {
         if ( futsalUserRelation.getId()!= null) {
             if (futsalUserRelationCrud.deleteById(futsalUserRelation.getId())) {
                 try {
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalUserRelation/futsalUserRelationTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalUserRelationTable.xhtml");
                 } catch (Exception e) {
 
                 }
