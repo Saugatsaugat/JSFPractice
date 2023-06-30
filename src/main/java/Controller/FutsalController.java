@@ -72,94 +72,58 @@ public class FutsalController implements Serializable {
         session = (HttpSession) externalContext.getSession(true);
     }
 
+    public void updateFutsal() {
+        if (futsal.getId() != null) {
+            if (futsalCrud.update(futsal, futsal.getId())) {
+                try {
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
+                } catch (Exception e) {
+                }
+            }
+        }
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Update Failed", "Update Failed");
+        context.addMessage(null, message);
+
+    }
+
+    public void saveFutsal() {
+        if (futsal.getId() == null) {
+            if (futsalCrud.save(futsal)) {
+                try {
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
+                } catch (Exception e) {
+                }
+            }
+
+        }
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Save Failed", "Save Failed");
+        context.addMessage(null, message);
+
+    }
+
     public void deleteFutsal() {
         Long futsalId = futsal.getId();
         if (futsalId != null) {
             futsal = futsalCrud.getDataById(futsalId);
             if ((futsal != null)) {
-                Long userId = futsal.getOwnerid();
-                futsalUserRelation = futsalUserRelationCrud.getFutsalUserRelationByUserId(userId);
-                if (futsalUserRelation != null) {
-                    if (futsalUserRelationCrud.deleteById(futsalUserRelation.getId())) {
-                        boolean status = futsalCrud.deleteById(futsal.getId());
-                        if (status) {
-                            try {
-                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalView/futsalTable.xhtml");
-                            } catch (Exception e) {
-                            }
-
-                        }
+                boolean status = futsalCrud.deleteById(futsal.getId());
+                if (status) {
+                    try {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
+                    } catch (Exception e) {
                     }
+                } else {
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
+                    context.addMessage(null, message);
                 }
 
             }
 
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No futsal Record ", "No Futsal Record");
             context.addMessage(null, message);
 
         }
     }
-    
-    /*
-    * saving updates or new futsal information.
-    */
 
-    public void saveFutsal() {
-        if (futsal.getId() != null) {
-            boolean status = futsalCrud.update(futsal, futsal.getId());
-            if (status) {
-                try {
-
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalView/futsalTable.xhtml");
-                } catch (Exception e) {
-
-                }
-            } else {
-
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Edit Failed", "Edit Failed");
-                context.addMessage(null, message);
-
-            }
-        } else {
-            try {
-                Long userId = (Long) session.getAttribute("userId");
-                User user = userCrud.getDataById(userId);
-                futsal.setOwnerid(userId);
-                futsal.setMobile(user.getMobile());
-                boolean futsalstatus = futsalCrud.save(futsal);
-                if (futsalstatus) {
-                    Long futsalId = futsal.getId();
-                    futsalUserRelation.setUserid(userId);
-                    futsalUserRelation.setFutsalid(futsalId);
-                    boolean futsaluserstatus = futsalUserRelationCrud.save(futsalUserRelation);
-                    if (futsaluserstatus) {
-
-                        try {
-                            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalView/futsalTable.xhtml");
-                        } catch (Exception e) {
-
-                        }
-                    } else {
-
-                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration Failed", "Registration Failed");
-                        context.addMessage(null, message);
-                    }
-                } else {
-
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration Failed", "Registration Failed");
-                    context.addMessage(null, message);
-                }
-
-            } catch (Exception e) {
-
-            }
-
-        }
-    }
-    
-    
-    
-    /*
-    * continue from here...
-    */
+   
 }

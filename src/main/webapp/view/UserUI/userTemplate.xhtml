@@ -12,27 +12,40 @@
         <title><ui:insert name="title">Default Template </ui:insert></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <style>
+            .center-layout {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 15px;
+                border-radius: 4px;
+            }
+
             .ui-layout-pane {
                 border: 0;
                 overflow: visible  ;
                 margin: 0;
                 padding: 0px 5px;
-                
+
             }
+
             .ui-layout-unit-content{
                 font-size: 15px;
+
             }
+
             .ui-widget .ui-widget {
                 font-size: 15px;
-                
             }
             .ui-tabs{
                 border: 0;
             }
-            #ui-datepicker-div{
+            .ui-datepicker{
                 font-size: 16px;
-                
             }
+            .ui-dialog-titlebar{
+                font-size:15px;
+            }
+
         </style>
     </h:head>
     <p:layout fullPage="true">
@@ -40,6 +53,8 @@
             <h:form>
                 <p:menubar>
                     <p:menuitem value="Home" url="/faces/view/Home/home.xhtml"/>
+                    <p:menuitem value="Login" url="/faces/view/Login/loginForm.xhtml"/>
+                    <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout}" />
 
                 </p:menubar>
 

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Controller;
 
 import Entities.Futsal;
@@ -9,6 +6,7 @@ import Entities.User;
 import Login.Login;
 import Model.FutsalCrud;
 import Model.UserCrud;
+import com.saugat.beans.UserBean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -44,6 +42,10 @@ public class LoginController implements Serializable {
 
     @Inject
     private FutsalCrud futsalCrud;
+    
+    @Inject
+    private UserBean userBean;
+
 
     public Login getLogin() {
         return login;
@@ -68,27 +70,29 @@ public class LoginController implements Serializable {
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);
+
     }
 
     public void checkUser() throws SQLException, ClassNotFoundException, IOException {
         try {
 
             User userRecord = userCrud.findByUsernameAndPassword(login.getUsername(), login.getPassword());
-
             if (userRecord != null) {
-                String userType = userRecord.getUsertype();
+                String userType = userRecord.getUsertype().toString();
                 Long userid = userRecord.getId();
+                userBean.setUser(userRecord);
+               
 
-                if (("admin".equals(userType)) || ("user".equals(userType))) {
+                if (("admin".equals(userType))) {
                     session.setAttribute("userId", userid);
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/home.xhtml");
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Home/home.xhtml");
+                } else if (("user".equals(userType))) {
+                    session.setAttribute("userId", userid);
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
+
                 } else if ("futsalowner".equals(userType)) {
-
-                    
-                    futsalCrud.checkIfFutsalRegistered(userid);
-
-                    if((futsalCrud.checkIfFutsalRegistered(userid))== null) {
+                    if ((futsalCrud.checkIfFutsalRegistered(userid)) == null) {
                         session.setAttribute("userId", userid);
                         RequestContext contextReq = RequestContext.getCurrentInstance();
                         contextReq.execute("PF('futsalRegisterDialog').show();");
@@ -96,14 +100,13 @@ public class LoginController implements Serializable {
                     } else {
                         session.setAttribute("userId", userid);
                         session.setAttribute("futsalId", futsal.getId());
-
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Home/home.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/home.xhtml");
                     }
 
                 }
 
             } else {
-
+                context = FacesContext.getCurrentInstance();
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Credentials", "Invalid Credentials");
                 context.addMessage(null, message);
             }

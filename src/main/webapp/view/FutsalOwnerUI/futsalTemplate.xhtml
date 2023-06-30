@@ -1,0 +1,75 @@
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title><ui:insert name="title">Template </ui:insert></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style>
+            .center-layout {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 15px;
+                border-radius: 4px;
+            }
+
+            .ui-layout-pane {
+                border: 0;
+                overflow: visible  ;
+                margin: 0;
+                padding: 0px 5px;
+
+            }
+
+            .ui-layout-unit-content{
+                font-size: 15px;
+
+            }
+
+            .ui-widget .ui-widget {
+                font-size: 15px;
+            }
+            .ui-tabs{
+                border: 0;
+            }
+            .ui-datepicker{
+                font-size: 16px;
+            }
+            .ui-dialog-titlebar{
+                font-size:15px;
+            }
+
+        </style>
+    </h:head>
+
+    <p:layout fullPage="true">
+
+        <p:layoutUnit position="north" size="50" >  
+            <h:form>
+                <p:menubar>
+                    <p:menuitem value="FutsalList" url="/faces/view/FutsalOwnerUI/Home/futsalTable.xhtml"/>
+                    <p:menuitem value="FutsalSchedule" url="/faces/view/FutsalOwnerUI/Home/futsalScheduleTable.xhtml"/>
+                    <p:menuitem styleClass="right-align" value="Logout" ajax="false" action="#{logoutController.logout}" />
+
+                </p:menubar>
+
+
+            </h:form>
+
+        </p:layoutUnit>
+
+        <p:layoutUnit position="center">
+            <ui:insert name="content" />
+        </p:layoutUnit>
+
+    </p:layout>
+
+
+
+
+
+
+</ui:composition>

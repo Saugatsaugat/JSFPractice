@@ -4,11 +4,16 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="../../view/UserUI/userTemplate.xhtml">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="../../view/template.xhtml">
 
     <ui:define name="title">Home</ui:define>
     <ui:define name="content" >
-        <ui:include src="../FutsalView/futsalList.xhtml" />
+        
+
+            <ui:include src="../AdminUI/Home/futsalList.xhtml" />
+        
     </ui:define>
 
 </ui:composition>

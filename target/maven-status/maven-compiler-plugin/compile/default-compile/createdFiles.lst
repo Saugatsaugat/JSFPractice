@@ -2,6 +2,7 @@ Entities/Futsal.class
 Controller/FutsalScheduleController.class
 Login/Login.class
 Entities/BookingDetail.class
+com/saugat/beans/UserBean.class
 Entities/FutsalSchedule.class
 Entities/User.class
 Model/BookingInformationCrud.class
@@ -28,4 +29,6 @@ Controller/JdbcController.class
 Model/FutsalDetailCrud.class
 Entities/DateEntity.class
 Model/UserModel.class
+Controller/LogoutController.class
 Model/AbstractCrud.class
+com/saugat/bean/enums/UserType.class

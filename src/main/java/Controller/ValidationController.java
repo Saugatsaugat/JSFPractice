@@ -4,7 +4,6 @@
  */
 package Controller;
 
-
 import Entities.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,35 +50,36 @@ public class ValidationController<T> {
         }
         return msg;
     }
-    public List<String> validateUserRegistration(User registerInformation){
+
+    public List<String> validateUserRegistration(User registerInformation) {
         List<String> errorMessage = new ArrayList<>();
-       
-        String type = registerInformation.getUsertype();
+
+        String type = registerInformation.getUsertype().toString().toLowerCase();
         String firstname = registerInformation.getFirstname();
         String lastname = registerInformation.getLastname();
         String email = registerInformation.getEmail();
         String password = registerInformation.getUserpassword();
         Long mobile = registerInformation.getMobile();
-        
-        if((firstname==null)||(lastname==null)||(email==null)||(password==null)||(mobile==null)){
+
+        if ((firstname == null) || (lastname == null) || (email == null) || (password == null) || (mobile == null)) {
             errorMessage.add("Only midname can be null");
         }
         String msg1 = checkEmail(email);
-        String msg2 = checkNumber((T)mobile);
+        String msg2 = checkNumber((T) mobile);
         String msg3 = checkName(firstname);
         String msg4 = checkName(lastname);
-        if(msg1!=null){
+        if (msg1 != null) {
             errorMessage.add(msg1);
-            
+
         }
-        if(msg2!=null){
+        if (msg2 != null) {
             errorMessage.add(msg2);
         }
-        if((msg3!=null)||(msg4!=null)){
+        if ((msg3 != null) || (msg4 != null)) {
             errorMessage.add(msg3);
         }
         return errorMessage;
-        
+
     }
 //    public boolean checkIfEmailExist(String email) throws SQLException {
 //        if(email!=null){
@@ -115,6 +115,4 @@ public class ValidationController<T> {
 //        return false;
 //    }
 
-    
-        
 }

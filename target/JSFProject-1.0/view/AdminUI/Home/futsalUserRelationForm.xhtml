@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <p:messages styleClass="errorMessage" showSummary="true" closable="true" severity="error" autoUpdate="true" />
+
+    <p:outputLabel >Entry Date</p:outputLabel>
+    <p:calendar id="calendar" pattern="yyyy-MM-dd" value="#{futsalUserRelationController.futsalUserRelation.entrydate}"/>
+
+    <div>
+        <p:outputLabel style="font-weight: bold;" value="UserId"/><br/>
+        <p:inputText id="userid" value="#{futsalUserRelationController.futsalUserRelation.userid}" required="true" />
+    </div>
+    <div>
+        <p:outputLabel style="font-weight: bold;" value="FutsalId"/><br/>
+        <p:inputText id="futsalid" value="#{futsalUserRelationController.futsalUserRelation.futsalid}" required="true" />
+    </div>
+    <p:commandButton value="Save" rendered="#{empty futsalUserRelationController.futsalUserRelation.id}" id="save" action="#{futsalUserRelationController.save}"/>
+    <p:commandButton value="Update" rendered="#{not empty futsalUserRelationController.futsalUserRelation.id}" id="update" action="#{futsalUserRelationController.update}"/>
+
+
+</ui:composition>

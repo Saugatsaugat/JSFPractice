@@ -46,6 +46,7 @@ public class FutsalScheduleController implements Serializable {
     }
 
     private List<FutsalSchedule> futsalScheduleList;
+
     private FutsalSchedule futsalSchedule;
 
     public List<FutsalSchedule> getFutsalScheduleList() {
@@ -87,25 +88,14 @@ public class FutsalScheduleController implements Serializable {
     public void onDateSelect(SelectEvent event) {
         futsalScheduleList = null;
         newDate = (Date) event.getObject();
-
         futsalScheduleList = fsc.getFutsalScheduleByDateAndUserId(newDate, futsal.getId());
-
-    }
-
-    public void showFutsalSchedule(Futsal futsal) {
-        this.futsal = futsal;
-        this.futsalScheduleList = new ArrayList<>();
     }
 
     public void showFutsalSchedule(FutsalSchedule futsalSchedule) {
         this.futsalSchedule = futsalSchedule;
     }
 
-    public void setFutsalScheduleId(Long id) {
-        futsalSchedule.setId(id);
-    }
-
-    public void save() {
+    public void update() {
         if (futsalSchedule.getId() != null) {
             if (session.getAttribute("userId") != null) {
                 Long userId = (Long) session.getAttribute("userId");
@@ -117,23 +107,23 @@ public class FutsalScheduleController implements Serializable {
                 }
                 if (fsc.update(futsalSchedule, futsalSchedule.getId())) {
                     try {
-                        
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/futsalScheduleTable.xhtml");
                     } catch (Exception e) {
 
                     }
-                } else {
-
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Update Failed", "Update Failed");
-                    context.addMessage(null, message);
-
                 }
             }
         }
 
-    
-        else {
-            if (session.getAttribute("userId") != null) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Update Failed", "Update Failed");
+        context.addMessage(null, message);
+
+    }
+
+    public void save() {
+
+        if (session.getAttribute("userId") != null) {
             Long userId = (Long) session.getAttribute("userId");
             futsal = futsalCrud.checkIfFutsalRegistered(userId);
             Long futsalId = futsal.getId();
@@ -145,29 +135,46 @@ public class FutsalScheduleController implements Serializable {
             if (fsc.save(futsalSchedule)) {
                 try {
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/futsalScheduleTable.xhtml");
                 } catch (Exception e) {
 
                 }
-            } else {
-
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
-                context.addMessage(null, message);
-
             }
 
         }
-    }
-}
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
+        context.addMessage(null, message);
 
-public void delete() {
+    }
+
+    public boolean saveFutsal(Futsal futsal) {
+        if (session.getAttribute("userId") == null) {
+
+            context = FacesContext.getCurrentInstance();
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Required", "Must Login to Continue!");
+            context.addMessage(null, message);
+            return false;
+        } else {
+            this.futsal = futsal;
+            this.futsalScheduleList = new ArrayList<>();
+            return true;
+        }
+
+    }
+
+    public void setFutsalScheduleId(Long id) {
+        futsalSchedule.setId(id);
+    }
+
+ 
+    public void delete() {
         if (futsalSchedule.getId() != null) {
             if (fsc.deleteById(futsalSchedule.getId())) {
                 futsalSchedule = fsc.getDataById(futsalSchedule.getId());
 
                 try {
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalScheduleTable.xhtml");
                 } catch (Exception e) {
 
                 }
@@ -178,5 +185,9 @@ public void delete() {
 
             }
         }
+    }
+
+    public void bookFutsalSchedule() {
+
     }
 }
