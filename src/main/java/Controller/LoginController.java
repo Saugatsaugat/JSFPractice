@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Controller;
 
 import Entities.Futsal;
@@ -9,6 +6,7 @@ import Entities.User;
 import Login.Login;
 import Model.FutsalCrud;
 import Model.UserCrud;
+import com.saugat.beans.UserBean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -44,6 +42,10 @@ public class LoginController implements Serializable {
 
     @Inject
     private FutsalCrud futsalCrud;
+    
+    @Inject
+    private UserBean userBean;
+
 
     public Login getLogin() {
         return login;
@@ -75,10 +77,11 @@ public class LoginController implements Serializable {
         try {
 
             User userRecord = userCrud.findByUsernameAndPassword(login.getUsername(), login.getPassword());
-
             if (userRecord != null) {
-                String userType = userRecord.getUsertype();
+                String userType = userRecord.getUsertype().toString();
                 Long userid = userRecord.getId();
+                userBean.setUser(userRecord);
+               
 
                 if (("admin".equals(userType))) {
                     session.setAttribute("userId", userid);

@@ -19,6 +19,8 @@
         <p:outputLabel style="font-weight: bold;" value="FutsalId"/><br/>
         <p:inputText id="futsalid" value="#{futsalUserRelationController.futsalUserRelation.futsalid}" required="true" />
     </div>
-    <p:commandButton value="Save" id="register" action="#{futsalUserRelationController.save}"/>
+    <p:commandButton value="Save" rendered="#{empty futsalUserRelationController.futsalUserRelation.id}" id="save" action="#{futsalUserRelationController.save}"/>
+    <p:commandButton value="Update" rendered="#{not empty futsalUserRelationController.futsalUserRelation.id}" id="update" action="#{futsalUserRelationController.update}"/>
+
 
 </ui:composition>

@@ -1,3 +1,4 @@
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/beans/UserBean.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/User.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/IAbstractEntity.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/UserCrud.java
@@ -25,6 +26,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/FutsalSchedule.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/BookingDetailCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/DateController.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/bean/enums/UserType.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalDetailCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalScheduleCruds.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/Futsal.java

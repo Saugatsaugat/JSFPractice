@@ -27,6 +27,8 @@
         <f:selectItem itemLabel="Booked" itemValue="booked"/>
     </p:selectOneRadio><br/><br/>
 
-    <p:commandButton value="Save" id="register" action="#{futsalScheduleController.save()}"/>
+    <p:commandButton value="Save" rendered="#{empty futsalScheduleController.futsalSchedule.id}" id="saveFutsalSchedule" action="#{futsalScheduleController.save()}"/>
+    <p:commandButton value="Update" rendered="#{not empty futsalScheduleController.futsalSchedule.id}" id="editFutsalSchedule" action="#{futsalScheduleController.update()}"/>
+
 
 </ui:composition>

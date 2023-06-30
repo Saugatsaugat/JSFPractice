@@ -79,7 +79,7 @@ public class BookingInformationController implements Serializable {
         this.bookingInformation.setId(id);
     }
 
-    public void save() {
+    public void update() {
         if (bookingInformation.getId() != null) {
             if (session.getAttribute("userId") != null) {
                 Long userId = (Long) session.getAttribute("userId");
@@ -97,32 +97,34 @@ public class BookingInformationController implements Serializable {
 
                 }
             }
-
-        } else {
-            if (session.getAttribute("userId") != null) {
-                Long userId = (Long) session.getAttribute("userId");
-                bookingInformation.setUserid(userId);
-                bookingInformation.setEntrydate(new Date());
-                if (bookingInformationCrud.save(bookingInformation)) {
-                    try {
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/bookingInformationTable.xhtml");
-                    } catch (Exception e) {
-
-                    }
-                } else {
-
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Update Failed", "Update Failed");
-                    context.addMessage(null, message);
-
-                }
-
-            } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Must Login to Continue", "Login to continue");
-                context.addMessage(null, message);
-            }
         }
     }
 
+    public void save() {
+        if (session.getAttribute("userId") != null) {
+            Long userId = (Long) session.getAttribute("userId");
+            bookingInformation.setUserid(userId);
+            bookingInformation.setEntrydate(new Date());
+            if (bookingInformationCrud.save(bookingInformation)) {
+                try {
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/bookingInformationTable.xhtml");
+                } catch (Exception e) {
+
+                }
+            } else {
+
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Update Failed", "Update Failed");
+                context.addMessage(null, message);
+
+            }
+
+        } else {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Must Login to Continue", "Login to continue");
+            context.addMessage(null, message);
+        }
+    }
+
+    
     public void delete() {
         if (bookingInformation.getId() != null) {
             if (bookingInformationCrud.deleteById(bookingInformation.getId())) {

@@ -2,8 +2,11 @@ package Entities;
 
 import Model.AbstractEntity;
 import Model.IAbstractEntity;
+import com.saugat.bean.enums.UserType;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 /**
@@ -11,9 +14,10 @@ import javax.persistence.Table;
  * @author saugat
  */
 @Entity
-@Table(name="User")
-public class User extends AbstractEntity implements IAbstractEntity, Serializable{
-    private String usertype;
+@Table(name = "User")
+public class User extends AbstractEntity implements IAbstractEntity, Serializable {
+    @Enumerated(EnumType.STRING)
+    private UserType usertype;
     private String email;
     private String firstname;
     private String midname;
@@ -21,11 +25,11 @@ public class User extends AbstractEntity implements IAbstractEntity, Serializabl
     private Long mobile;
     private String userpassword;
 
-    public String getUsertype() {
+    public UserType getUsertype() {
         return usertype;
     }
 
-    public void setUsertype(String usertype) {
+    public void setUsertype(UserType usertype) {
         this.usertype = usertype;
     }
 
@@ -81,6 +85,5 @@ public class User extends AbstractEntity implements IAbstractEntity, Serializabl
     public String getTableName() {
         return "User";
     }
-    
 
 }

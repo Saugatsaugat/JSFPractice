@@ -6,7 +6,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                template="../adminTemplate.xhtml">
+                template="../../template.xhtml">
 
     <ui:define name="title">Home</ui:define>
     <ui:define name="content" >
@@ -50,7 +50,7 @@
         </p:dataTable>
 
 
-        <p:dialog class="editDialog"  header="Edit Futsal" fitViewport="true" appendTo="@(body)" widgetVar="editDialog" modal="true" height="600px" width="400px">
+        <p:dialog class="editDialog"  header="Edit Futsal" fitViewport="true" appendTo="@(body)" widgetVar="editDialog" modal="true" height="300px" width="300px">
             <div class="center-layout">
                 <h:form id="editDialogForm">
                     <ui:include src="futsalRegisterForm.xhtml"/>
@@ -58,7 +58,7 @@
             </div>
         </p:dialog>
         
-        <p:dialog class="addDialog"  header="New Futsal" fitViewport="true" appendTo="@(body)" widgetVar="addDialog" modal="true" height="600px" width="400px">
+        <p:dialog class="addDialog"  header="New Futsal" fitViewport="true" appendTo="@(body)" widgetVar="addDialog" modal="true" height="300px" width="300px">
             <div class="center-layout">
                 <h:form id="addDialogForm">
                     <ui:include src="futsalRegisterForm.xhtml"/>

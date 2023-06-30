@@ -19,6 +19,7 @@
     <p:outputLabel style="font-weight: bold;" value="Amount"/><br/>
     <p:inputNumber id="amount" value="#{bookingInformationController.bookingInformation.amount}" required="true" /><br/><br/>
 
-    <p:commandButton value="Save" id="register" action="#{bookingInformationController.save}"/>
+    <p:commandButton rendered="#{empty bookingInformationController.bookingInformation.id}" value="Save" id="save" action="#{bookingInformationController.save}"/>
+    <p:commandButton rendered="#{not empty bookingInformationController.bookingInformation.id}" value="Update" id="update" action="#{bookingInformationController.update}"/>
 
 </ui:composition>

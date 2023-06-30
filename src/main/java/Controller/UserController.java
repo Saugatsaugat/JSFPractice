@@ -71,6 +71,34 @@ public class UserController implements Serializable {
         session = (HttpSession) externalContext.getSession(true);
     }
 
+    public void updateUser() {
+        if (user.getId() != null) {
+            if (userCrud.update(user, user.getId())) {
+                try {
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
+                } catch (Exception e) {
+                }
+            }
+        }
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Updation Failed", "Update Failed");
+        context.addMessage(null, message);
+
+    }
+
+    public void saveUser() {
+        if (user.getId() == null) {
+            if (userCrud.save(user)) {
+                try {
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
+                } catch (Exception e) {
+                }
+            }
+        }
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Creation Failed", "Creation Failed");
+            context.addMessage(null, message);
+
+    }
+
 //delete user, futsal detail if present, and Futsaluserrelation table data if present
     public void deleteUser() {
         if (user.getId() != null) {
@@ -104,53 +132,6 @@ public class UserController implements Serializable {
                 context.addMessage(null, message);
 
             }
-        }
-    }
-
-    /**
-     *
-     * @author saugat Function: saveUser()
-     */
-    public void saveUser() {
-        if (user.getId() != null) {
-            if (user.getUserpassword() != null) {
-                user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
-            }
-            boolean status = userCrud.update(user, user.getId());
-            if (status) {
-                try {
-
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
-                } catch (Exception e) {
-
-                }
-            } else {
-
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Edit Failed", "Edit Failed");
-                context.addMessage(null, message);
-
-            }
-        } else {
-            try {
-                user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
-                boolean status = userCrud.save(user);
-                if (status) {
-                    try {
-
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
-                    } catch (Exception e) {
-
-                    }
-                } else {
-
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration Failed", "Registration Failed");
-                    context.addMessage(null, message);
-                }
-
-            } catch (Exception e) {
-
-            }
-
         }
     }
 

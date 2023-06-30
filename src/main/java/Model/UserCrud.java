@@ -25,9 +25,7 @@ public class UserCrud extends AbstractCrud<User> {
     public User findByUsernameAndPassword(String username, String password) {
         User user = null;
         try {
-
             Query query = em.createQuery("Select u from User u where u.email=:em and u.userpassword=:pa", User.class);
-
             String passHash = new PasswordHashController().getPasswordHash(password);
             query.setParameter("em", username);
             query.setParameter("pa", passHash);

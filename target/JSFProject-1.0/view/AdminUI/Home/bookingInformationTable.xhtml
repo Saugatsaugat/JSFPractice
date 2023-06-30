@@ -6,7 +6,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
-                template="../adminTemplate.xhtml">
+                template="../../template.xhtml">
     <ui:define name="content">
         <div style="text-align: center;">
             <p:commandButton id="addDialog" value="ADD Booking Information" oncomplete="PF('addDialog').show()" />
@@ -40,7 +40,7 @@
             </p:dataTable>
         </h:form>
 
-        <p:dialog class="editDialog"  header="Edit Booking Information" fitViewport="true" appendTo="@(body)" widgetVar="editDialog" modal="true" height="400px" width="400px">
+        <p:dialog class="editDialog"  header="Edit Booking Information" fitViewport="true" appendTo="@(body)" widgetVar="editDialog" modal="true" height="400px" width="300px">
             <div class="center-layout">
                 <h:form id="editDialogForm">
                     <ui:include src="bookingInformationForm.xhtml"/>

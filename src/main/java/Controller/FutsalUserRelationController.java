@@ -68,7 +68,7 @@ public class FutsalUserRelationController implements Serializable {
         this.futsalUserRelation.setId(id);
     }
 
-    public void save() {
+    public void update() {
         if (futsalUserRelation.getId() != null) {
 
             if (futsalUserRelationCrud.update(futsalUserRelation, futsalUserRelation.getId())) {
@@ -81,25 +81,24 @@ public class FutsalUserRelationController implements Serializable {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Update Failed", "Update Failed");
                 context.addMessage(null, message);
             }
-        } 
-        else {
-            if (futsalUserRelationCrud.save(futsalUserRelation)) {
-                try {
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalUserRelationTable.xhtml");
-                } catch (Exception e) {
-
-                }
-            } else {
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
-                context.addMessage(null, message);
-            }
         }
+    }
 
-    
-}
+    public void save() {
+        if (futsalUserRelationCrud.save(futsalUserRelation)) {
+            try {
+                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalUserRelationTable.xhtml");
+            } catch (Exception e) {
 
-public void delete() {
-        if ( futsalUserRelation.getId()!= null) {
+            }
+        } else {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
+            context.addMessage(null, message);
+        }
+    }
+
+    public void delete() {
+        if (futsalUserRelation.getId() != null) {
             if (futsalUserRelationCrud.deleteById(futsalUserRelation.getId())) {
                 try {
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalUserRelationTable.xhtml");
