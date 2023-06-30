@@ -76,7 +76,7 @@ public class UserController implements Serializable {
         if (user.getId() != null) {
             Long checkId = user.getId();
 
-            if (((futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId)) == null) && (futsalCrud.checkIfFutsalRegistered(checkId))==null) {
+            if (((futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId)) == null) && (futsalCrud.checkIfFutsalRegistered(checkId)) == null) {
                 boolean status = userCrud.deleteById(checkId);
                 if (status) {
                     try {
@@ -87,7 +87,7 @@ public class UserController implements Serializable {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
                 context.addMessage(null, message);
 
-            } else if ((futsalUserRelationCrud.getFutsalUserRelationByUserId(user.getId()) != null) && futsalCrud.checkIfFutsalRegistered(user.getId())!=null)  {
+            } else if ((futsalUserRelationCrud.getFutsalUserRelationByUserId(user.getId()) != null) && futsalCrud.checkIfFutsalRegistered(user.getId()) != null) {
                 if (futsalUserRelationCrud.deleteById(futsalUserRelation.getId())) {
                     if (futsalCrud.deleteById(futsal.getId())) {
                         boolean status = userCrud.deleteById(user.getId());
@@ -113,6 +113,9 @@ public class UserController implements Serializable {
      */
     public void saveUser() {
         if (user.getId() != null) {
+            if (user.getUserpassword() != null) {
+                user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
+            }
             boolean status = userCrud.update(user, user.getId());
             if (status) {
                 try {
@@ -129,7 +132,7 @@ public class UserController implements Serializable {
             }
         } else {
             try {
-
+                user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
                 boolean status = userCrud.save(user);
                 if (status) {
                     try {

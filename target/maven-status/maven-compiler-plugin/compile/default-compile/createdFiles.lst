@@ -28,4 +28,5 @@ Controller/JdbcController.class
 Model/FutsalDetailCrud.class
 Entities/DateEntity.class
 Model/UserModel.class
+Controller/LogoutController.class
 Model/AbstractCrud.class

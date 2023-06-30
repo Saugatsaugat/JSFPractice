@@ -68,6 +68,7 @@ public class LoginController implements Serializable {
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);
+
     }
 
     public void checkUser() throws SQLException, ClassNotFoundException, IOException {
