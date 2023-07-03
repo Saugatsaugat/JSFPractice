@@ -213,6 +213,7 @@ public class FutsalScheduleController implements Serializable {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Required", "Login Required");
             context.addMessage(null, message);
         } else {
+            
 
         }
 

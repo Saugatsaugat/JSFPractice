@@ -6,7 +6,6 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <p:messages styleClass="errorMessage" showSummary="true" closable="true" severity="error" autoUpdate="true" />
-
     <p:outputLabel value="Available Slots" >
     </p:outputLabel>
         <p:dataTable value="#{futsalScheduleController.futsalScheduleList}" var="item">
@@ -26,7 +25,7 @@
                 #{item.status}
             </p:column>
             <p:column  headerText="">
-                <p:commandButton rendered="#{item.status.equalsIgnoreCase('available')}" value="Book" actionListener="#{futsalScheduleController.bookFutsalSchedule}" >
+                <p:commandButton rendered="#{item.status.equalsIgnoreCase('available')}" value="Book" actionListener="#{futsalScheduleController.bookFutsalSchedule(item)}" >
                     <f:setPropertyActionListener target="#{futsalScheduleController.futsal.id}" value="#{item.futsalid}" />
                 </p:commandButton>
             </p:column>
