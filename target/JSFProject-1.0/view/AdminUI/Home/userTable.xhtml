@@ -13,39 +13,40 @@
         <div style="text-align: center;">
             <p:commandButton id="addDialog" value="ADD New User" oncomplete="PF('addDialog').show()" />
         </div>
-        <p:dataTable value="#{userController.userList}" var="item">
-            <p:column  headerText="Id">
-                #{item.id}
-            </p:column>
-            <p:column  headerText="Firstname">
-                #{item.firstname}
-            </p:column>
-            <p:column  headerText="Midname">
-                #{item.midname}
-            </p:column>
-            <p:column  headerText="Lastname">
-                #{item.lastname}
-            </p:column>
-            <p:column  headerText="Email">
-                #{item.email}
-            </p:column>
-            <p:column  headerText="Mobile">
-                #{item.mobile}
-            </p:column>
-            <p:column  headerText="UserType">
-                #{item.usertype}
-            </p:column>
-            <p:column  headerText="Edit">
-                <p:commandButton id="editDialog" value="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">
-                    <f:setPropertyActionListener target="#{userController.user}" value="#{item}" />
-                </p:commandButton>
-            </p:column>
-            <p:column  headerText="Delete">
+        <p:dataTable value="#{userController.userList}" rowIndexVar="rowIndex" var="item">
+            
+            <p:column headerText="S.N." >
+                    <h:outputText value="#{rowIndex + 1}" />
+                </p:column>
+                <p:column  headerText="Firstname">
+                    #{item.firstname}
+                </p:column>
+                <p:column  headerText="Midname">
+                    #{item.midname}
+                </p:column>
+                <p:column  headerText="Lastname">
+                    #{item.lastname}
+                </p:column>
+                <p:column  headerText="Email">
+                    #{item.email}
+                </p:column>
+                <p:column  headerText="Mobile">
+                    #{item.mobile}
+                </p:column>
+                <p:column  headerText="UserType">
+                    #{item.usertype}
+                </p:column>
+                <p:column  headerText="Edit">
+                    <p:commandButton id="editDialog" value="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">
+                        <f:setPropertyActionListener target="#{userController.user}" value="#{item}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column  headerText="Delete">
 
-                <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show()">
-                    <f:setPropertyActionListener target="#{userController.user.id}" value="#{item.id}" />
-                </p:commandButton>
-            </p:column>
+                    <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show()">
+                        <f:setPropertyActionListener target="#{userController.user.id}" value="#{item.id}" />
+                    </p:commandButton>
+                </p:column>
         </p:dataTable>
 
 

@@ -13,7 +13,10 @@
         </div>
         <h3 style="text-align: center;">Futsal Schedule Table</h3>
         <h:form>
-            <p:dataTable value="#{futsalScheduleController.futsalScheduleList}" var="item">
+            <p:dataTable value="#{futsalScheduleController.futsalScheduleList}" rowIndexVar="rowIndex" var="item">
+                <p:column headerText="S.N." >
+                    <h:outputText value="#{rowIndex + 1}" />
+                </p:column>
                 <p:column  headerText="ScheduledDate">
                     #{item.scheduledate}
                 </p:column>

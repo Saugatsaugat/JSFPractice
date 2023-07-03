@@ -13,9 +13,9 @@
         </div>
         <h3 style="text-align: center;">FutsalUserRelation Table</h3>
         <h:form>
-            <p:dataTable value="#{futsalUserRelationController.futsalUserRelationList}" var="item">
-                <p:column  headerText="Id">
-                    #{item.id}
+            <p:dataTable value="#{futsalUserRelationController.futsalUserRelationList}" rowIndexVar="rowIndex" var="item">
+                <p:column headerText="S.N." >
+                    <h:outputText value="#{rowIndex + 1}" />
                 </p:column>
                 <p:column  headerText="EntryDate">
                     #{item.entrydate}
