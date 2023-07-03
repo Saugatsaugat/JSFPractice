@@ -1,15 +1,17 @@
-
 package Controller;
 
 import Entities.Futsal;
+import Entities.FutsalSchedule;
 import Entities.User;
 import Login.Login;
 import Model.FutsalCrud;
+import Model.FutsalScheduleCruds;
 import Model.UserCrud;
 import com.saugat.beans.UserBean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
@@ -37,15 +39,20 @@ public class LoginController implements Serializable {
     private Login login;
     private Futsal futsal;
 
+
     @Inject
     private UserCrud userCrud;
 
     @Inject
     private FutsalCrud futsalCrud;
-    
+
     @Inject
     private UserBean userBean;
 
+    @Inject
+    private FutsalScheduleCruds fsc;
+    
+ 
 
     public Login getLogin() {
         return login;
@@ -81,7 +88,6 @@ public class LoginController implements Serializable {
                 String userType = userRecord.getUsertype().toString();
                 Long userid = userRecord.getId();
                 userBean.setUser(userRecord);
-               
 
                 if (("admin".equals(userType))) {
                     session.setAttribute("userId", userid);
@@ -98,9 +104,12 @@ public class LoginController implements Serializable {
                         contextReq.execute("PF('futsalRegisterDialog').show();");
 
                     } else {
+                        Futsal futsalData = futsalCrud.checkIfFutsalRegistered(userid);
                         session.setAttribute("userId", userid);
-                        session.setAttribute("futsalId", futsal.getId());
+                        session.setAttribute("futsalId", futsalData.getId());
+                        
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/home.xhtml");
+
                     }
 
                 }
@@ -115,4 +124,6 @@ public class LoginController implements Serializable {
         }
 
     }
+    
+
 }

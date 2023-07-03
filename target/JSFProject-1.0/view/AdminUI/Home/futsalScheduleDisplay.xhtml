@@ -5,8 +5,10 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:messages styleClass="errorMessage" showSummary="true" closable="true" severity="error" autoUpdate="true" />
 
-        <p:outputLabel value="Available Slots" />
+    <p:outputLabel value="Available Slots" >
+    </p:outputLabel>
         <p:dataTable value="#{futsalScheduleController.futsalScheduleList}" var="item">
             <p:column  headerText="Id">
                 #{item.id}
@@ -24,14 +26,9 @@
                 #{item.status}
             </p:column>
             <p:column  headerText="">
-                <p:commandButton value="Click To Book" actionListener="#{futsalScheduleController.bookFutsalSchedule}" >
+                <p:commandButton rendered="#{item.status.equalsIgnoreCase('available')}" value="Book" actionListener="#{futsalScheduleController.bookFutsalSchedule}" >
                     <f:setPropertyActionListener target="#{futsalScheduleController.futsal.id}" value="#{item.futsalid}" />
                 </p:commandButton>
             </p:column>
-
         </p:dataTable>
-
-
-
-
 </ui:composition>
