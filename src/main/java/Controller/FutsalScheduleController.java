@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -36,6 +37,7 @@ public class FutsalScheduleController implements Serializable {
     HttpSession session;
     private Futsal futsal;
     private Date newDate;
+  
 
     public Date getNewDate() {
         return newDate;

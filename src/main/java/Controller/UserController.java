@@ -73,6 +73,7 @@ public class UserController implements Serializable {
 
     public void updateUser() {
         if (user.getId() != null) {
+            user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
             if (userCrud.update(user, user.getId())) {
                 try {
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
@@ -87,6 +88,7 @@ public class UserController implements Serializable {
 
     public void saveUser() {
         if (user.getId() == null) {
+            user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
             if (userCrud.save(user)) {
                 try {
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
@@ -94,8 +96,8 @@ public class UserController implements Serializable {
                 }
             }
         }
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Creation Failed", "Creation Failed");
-            context.addMessage(null, message);
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Creation Failed", "Creation Failed");
+        context.addMessage(null, message);
 
     }
 

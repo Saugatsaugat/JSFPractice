@@ -59,6 +59,8 @@
                     <p:menuitem value="FutsalSchedule" rendered="#{userBean.isAdmin or userBean.isFutsalOwner}" url="/faces/view/AdminUI/Home/futsalScheduleTable.xhtml"/>
                     <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
                     <p:menuitem value="Home" url="/faces/view/Home/home.xhtml"/>
+                    <p:menuitem value="GridView" url="/faces/view/FutsalCart/futsalCartBox.xhtml"/>
+
                     <p:menuitem value="Login" rendered="#{empty userBean.user}" url="/faces/view/Login/loginForm.xhtml"/>
                     <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout}" />
                 </p:menubar>
@@ -71,12 +73,10 @@
 
             </ui:insert>
         </p:layoutUnit>
-        
-        <p:layoutUnit position="south" size="100">
-            <ui:include src="Footer/footer.xhtml" />
-        </p:layoutUnit>
-        
-    
+
+
+
+
 
     </p:layout>
 

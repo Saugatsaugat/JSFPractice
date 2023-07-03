@@ -3,6 +3,7 @@ package Model;
 import Entities.FutsalSchedule;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,6 +24,8 @@ public class FutsalScheduleCruds extends AbstractCrud<FutsalSchedule> {
     protected EntityManager getEntityManager() {
         return em;
     }
+
+    
 
     public List<FutsalSchedule> getFutsalScheduleByDateAndUserId(java.util.Date date, Long futsalId) {
         List<FutsalSchedule> futsalSchedule = null;
