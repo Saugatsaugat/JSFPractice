@@ -118,13 +118,8 @@ public class UserController implements Serializable {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
                 context.addMessage(null, message);
 
-<<<<<<< HEAD
-            } else if ((futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId) != null) && futsalCrud.checkIfFutsalRegistered(checkId)!=null)  {
-                futsalUserRelation = futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId) ;
-                
-=======
             } else if ((futsalUserRelationCrud.getFutsalUserRelationByUserId(user.getId()) != null) && futsalCrud.checkIfFutsalRegistered(user.getId()) != null) {
->>>>>>> workingbranch
+
                 if (futsalUserRelationCrud.deleteById(futsalUserRelation.getId())) {
                     futsal = futsalCrud.checkIfFutsalRegistered(checkId);
                     if (futsalCrud.deleteById(futsal.getId())) {
