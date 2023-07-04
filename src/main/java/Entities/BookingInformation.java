@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "BookingInformation")
-public class BookingInformation extends AbstractEntity implements IAbstractEntity, Serializable{
+public class BookingInformation extends AbstractEntity<BookingInformation> implements IAbstractEntity, Serializable{
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date entrydate;

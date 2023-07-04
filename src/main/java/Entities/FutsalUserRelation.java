@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "FutsalUserRelation")
-public class FutsalUserRelation extends AbstractEntity implements IAbstractEntity, Serializable {
+public class FutsalUserRelation extends AbstractEntity<FutsalUserRelation> implements IAbstractEntity, Serializable {
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date entrydate;

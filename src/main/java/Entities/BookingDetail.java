@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "BookingDetail")
-public class BookingDetail extends AbstractEntity implements IAbstractEntity, Serializable {
+public class BookingDetail extends AbstractEntity<BookingDetail> implements IAbstractEntity, Serializable {
     private String paymentstatus;
     
     @ManyToOne

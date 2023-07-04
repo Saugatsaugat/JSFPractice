@@ -18,7 +18,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "FutsalDetail")
-public class FutsalDetail extends AbstractEntity implements IAbstractEntity, Serializable {
+public class FutsalDetail extends AbstractEntity<FutsalDetail> implements IAbstractEntity, Serializable {
     private float length;
     private float breadth;
     private boolean dressingroom;

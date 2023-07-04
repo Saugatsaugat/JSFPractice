@@ -33,7 +33,6 @@ public abstract class AbstractEntity<T> {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-//        T otherUser = (T) obj;
         return Objects.equals(this.getId(), getId());
     }
     

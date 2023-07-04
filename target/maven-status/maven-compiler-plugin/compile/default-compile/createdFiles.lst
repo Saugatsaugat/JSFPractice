@@ -15,6 +15,7 @@ Controller/UserController.class
 Controller/BookingDetailController.class
 Model/AbstractEntity.class
 com/saugat/converter/FutsalConverter.class
+com/saugat/converter/AbstractEntityConverter.class
 Model/FutsalUserRelationCrud.class
 Model/UserCrud.class
 Controller/ValidationController.class

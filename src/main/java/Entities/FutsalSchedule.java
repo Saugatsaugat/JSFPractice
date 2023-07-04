@@ -17,7 +17,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name="FutsalSchedule")
-public class FutsalSchedule extends AbstractEntity implements IAbstractEntity,Serializable{
+public class FutsalSchedule extends AbstractEntity<FutsalSchedule> implements IAbstractEntity,Serializable{
     private int starthour;
     private int endhour;
     @Temporal(javax.persistence.TemporalType.DATE)
