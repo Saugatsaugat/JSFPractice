@@ -88,6 +88,20 @@ public class FutsalController implements Serializable {
 
     public void saveFutsal() {
         if (futsal.getId() == null) {
+            if(futsal.getOwnerid()!=null){
+                User userData = userCrud.getDataById(futsal.getOwnerid());
+                futsal.setMobile(userData.getMobile());
+                futsal.setOwnerid(userData.getId());
+            }
+            else{
+            if(session.getAttribute("userId")!=null){
+                Long userId =(Long) session.getAttribute("userId");
+                User userData = userCrud.getDataById(userId);
+                futsal.setMobile(userData.getMobile());
+                futsal.setOwnerid(userId);
+            }
+            }
+            
             if (futsalCrud.save(futsal)) {
                 try {
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");

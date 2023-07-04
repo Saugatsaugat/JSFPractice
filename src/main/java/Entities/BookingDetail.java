@@ -8,6 +8,8 @@ import Model.AbstractEntity;
 import Model.IAbstractEntity;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -16,10 +18,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "BookingDetail")
-public class BookingDetail extends AbstractEntity implements IAbstractEntity, Serializable {
+public class BookingDetail extends AbstractEntity<BookingDetail> implements IAbstractEntity, Serializable {
     private String paymentstatus;
-    private Long futsalscheduleid;
-    private Long bookinginformationid;
+    
+    @ManyToOne
+    @JoinColumn(name = "futsalscheduleid")
+    private FutsalSchedule futsalschedule;
+    
+    @ManyToOne
+    @JoinColumn(name = "bookinginformationid")
+    private BookingInformation bookinginformation;
 
     public String getPaymentstatus() {
         return paymentstatus;
@@ -29,21 +37,23 @@ public class BookingDetail extends AbstractEntity implements IAbstractEntity, Se
         this.paymentstatus = paymentstatus;
     }
 
-    public Long getFutsalscheduleid() {
-        return futsalscheduleid;
+    public FutsalSchedule getFutsalschedule() {
+        return futsalschedule;
     }
 
-    public void setFutsalscheduleid(Long futsalscheduleid) {
-        this.futsalscheduleid = futsalscheduleid;
+    public void setFutsalschedule(FutsalSchedule futsalschedule) {
+        this.futsalschedule = futsalschedule;
     }
 
-    public Long getBookinginformationid() {
-        return bookinginformationid;
+    public BookingInformation getBookinginformation() {
+        return bookinginformation;
     }
 
-    public void setBookinginformationid(Long bookinginformationid) {
-        this.bookinginformationid = bookinginformationid;
+    public void setBookinginformation(BookingInformation bookinginformation) {
+        this.bookinginformation = bookinginformation;
     }
+
+    
     
     
 

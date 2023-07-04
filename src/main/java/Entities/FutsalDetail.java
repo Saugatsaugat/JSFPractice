@@ -8,6 +8,8 @@ import Model.AbstractEntity;
 import Model.IAbstractEntity;
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -16,12 +18,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "FutsalDetail")
-public class FutsalDetail extends AbstractEntity implements IAbstractEntity, Serializable {
+public class FutsalDetail extends AbstractEntity<FutsalDetail> implements IAbstractEntity, Serializable {
     private float length;
     private float breadth;
     private boolean dressingroom;
     private boolean washroom;
-    private Long futsalid;
+    
+    @ManyToOne
+    @JoinColumn(name = "futsalid")
+    private Futsal futsal;
 
     public float getLength() {
         return length;
@@ -55,13 +60,15 @@ public class FutsalDetail extends AbstractEntity implements IAbstractEntity, Ser
         this.washroom = washroom;
     }
 
-    public Long getFutsalid() {
-        return futsalid;
+    public Futsal getFutsal() {
+        return futsal;
     }
 
-    public void setFutsalid(Long futsalid) {
-        this.futsalid = futsalid;
+    public void setFutsal(Futsal futsal) {
+        this.futsal = futsal;
     }
+
+  
     
 
     @Override

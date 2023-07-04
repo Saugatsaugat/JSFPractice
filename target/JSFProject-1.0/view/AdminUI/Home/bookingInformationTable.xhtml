@@ -13,7 +13,10 @@
         </div>
         <h3 style="text-align: center;">Booking Information Table</h3>
         <h:form>
-            <p:dataTable value="#{bookingInformationController.bookingInformationList}" var="item">
+            <p:dataTable value="#{bookingInformationController.bookingInformationList}" rowIndexVar="rowIndex" var="item">
+                <p:column headerText="S.N." >
+                    <h:outputText value="#{rowIndex + 1}" />
+                </p:column>
                 <p:column  headerText="EntryDate">
                     #{item.entrydate}
                 </p:column>
@@ -27,7 +30,7 @@
                     #{item.amount}
                 </p:column>
                 <p:column  headerText="userid">
-                    #{item.userid}
+                    #{item.user.id}
                 </p:column>
                 <p:column  headerText="Edit">
                     <p:commandButton id="editDialog" value="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>

@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -30,7 +31,7 @@ public class FutsalScheduleController implements Serializable {
     private FutsalCrud futsalCrud;
     @Inject
     private FutsalScheduleCruds fsc;
-
+   
     FacesContext context;
     ExternalContext externalContext;
     HttpSession session;
@@ -55,6 +56,7 @@ public class FutsalScheduleController implements Serializable {
 
     public void setFutsalScheduleList(List<FutsalSchedule> futsalScheduleList) {
         this.futsalScheduleList = futsalScheduleList;
+
     }
 
     public FutsalSchedule getFutsalSchedule() {
@@ -81,14 +83,35 @@ public class FutsalScheduleController implements Serializable {
         session = (HttpSession) externalContext.getSession(true);
         newDate = new Date();
         futsal = new Futsal();
-        futsalScheduleList = fsc.getCurrentDateFutsalSchedule();
+        if (session.getAttribute("futsalId") != null) {
+            Long futsalId = (Long) session.getAttribute("futsalId");
+            futsalScheduleList = fsc.getCurrentDateDataByFutsalId(futsalId);
+        } else {
+            futsalScheduleList = fsc.getCurrentDateFutsalSchedule();
+        }
 
+    }
+
+    public void updateFutsalSchedule(Long futsalId) {
+        if (futsalId != null) {
+            futsalScheduleList = fsc.getCurrentDateDataByFutsalId(futsalId);
+        }
     }
 
     public void onDateSelect(SelectEvent event) {
         futsalScheduleList = null;
         newDate = (Date) event.getObject();
         futsalScheduleList = fsc.getFutsalScheduleByDateAndUserId(newDate, futsal.getId());
+    }
+
+    public void futsalScheduleByFutsalId(Long futsalId) {
+        if (futsalId != null) {
+            try {
+                futsalScheduleList = fsc.getCurrentDateDataByFutsalId(futsalId);
+            } catch (Exception e) {
+
+            }
+        }
     }
 
     public void showFutsalSchedule(FutsalSchedule futsalSchedule) {
@@ -101,7 +124,7 @@ public class FutsalScheduleController implements Serializable {
                 Long userId = (Long) session.getAttribute("userId");
                 futsal = futsalCrud.checkIfFutsalRegistered(userId);
                 Long futsalId = futsal.getId();
-                futsalSchedule.setFutsalid(futsalId);
+                futsalSchedule.setFutsal(futsalCrud.getDataById(futsalId));
                 if (futsalSchedule.getStatus() == null) {
                     futsalSchedule.setStatus("available");
                 }
@@ -122,12 +145,11 @@ public class FutsalScheduleController implements Serializable {
     }
 
     public void save() {
-
         if (session.getAttribute("userId") != null) {
             Long userId = (Long) session.getAttribute("userId");
             futsal = futsalCrud.checkIfFutsalRegistered(userId);
             Long futsalId = futsal.getId();
-            futsalSchedule.setFutsalid(futsalId);
+            futsalSchedule.setFutsal(futsalCrud.getDataById(futsalId));
             if (futsalSchedule.getStatus() == null) {
                 futsalSchedule.setStatus("available");
             }
@@ -166,7 +188,6 @@ public class FutsalScheduleController implements Serializable {
         futsalSchedule.setId(id);
     }
 
- 
     public void delete() {
         if (futsalSchedule.getId() != null) {
             if (fsc.deleteById(futsalSchedule.getId())) {
@@ -188,6 +209,13 @@ public class FutsalScheduleController implements Serializable {
     }
 
     public void bookFutsalSchedule() {
+        if (session.getAttribute("userId") == null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Required", "Login Required");
+            context.addMessage(null, message);
+        } else {
+
+        }
 
     }
+
 }

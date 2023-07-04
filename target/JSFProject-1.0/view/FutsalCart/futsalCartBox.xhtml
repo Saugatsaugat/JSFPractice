@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="../template.xhtml">
+
+    <ui:define name="content" >
+
+        <p:dataGrid value="#{futsalController.futsalList}" var="item" columns="3" rows="#{futsalController.futsalList.size()}">
+            <p:column>
+                <p:panel>
+                    <h:panelGrid columns="1">
+                        <p:graphicImage height="100px" library="images" name="starting_futsal.jpg" alt="#{item.name}"/>                        
+                        <h:outputText value="#{item.name}" />
+                        <h:outputText value="Rs. #{item.rate}" />
+                        <h:outputText value="#{item.address}"/>
+                        <p:commandButton id="viewSchedules" action="#{futsalScheduleController.futsalScheduleByFutsalId(item.id)}" value="View Schedules" oncomplete="PF('viewSchedules').show();" process="@this" update="scheduleList" />
+                    </h:panelGrid>
+                </p:panel>
+            </p:column>
+        </p:dataGrid>
+        <p:dialog class="viewSchedules"  header="Schedules" fitViewport="true" appendTo="@(body)" widgetVar="viewSchedules" modal="true" height="600px" width="1000px">
+            <div class="center-layout">
+                <h:form id="scheduleList">
+
+                    <ui:include src="../AdminUI/Home/futsalScheduleDisplay.xhtml" />
+                </h:form>
+            </div>
+        </p:dialog>
+    </ui:define>
+
+</ui:composition>

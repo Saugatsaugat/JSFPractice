@@ -9,6 +9,8 @@ import Model.IAbstractEntity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -19,7 +21,7 @@ import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "BookingInformation")
-public class BookingInformation extends AbstractEntity implements IAbstractEntity, Serializable{
+public class BookingInformation extends AbstractEntity<BookingInformation> implements IAbstractEntity, Serializable{
     
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date entrydate;
@@ -28,7 +30,10 @@ public class BookingInformation extends AbstractEntity implements IAbstractEntit
     private Date fromdate;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date todate;
-    private Long userid;
+    
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private User user;
 
     public Date getEntrydate() {
         return entrydate;
@@ -62,13 +67,15 @@ public class BookingInformation extends AbstractEntity implements IAbstractEntit
         this.todate = todate;
     }
 
-    public Long getUserid() {
-        return userid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+
     
     @Override
     public String getTableName() {

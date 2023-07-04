@@ -13,13 +13,18 @@
         <div style="text-align: center;">
             <p:commandButton id="addDialog" value="ADD New User" oncomplete="PF('addDialog').show()" />
         </div>
-        <p:dataTable value="#{userController.userList}" var="item">
-            <p:column  headerText="Id">
+        <p:dataTable value="#{userController.userList}" rowIndexVar="rowIndex" var="item">
+
+            <p:column headerText="S.N." >
+                <h:outputText value="#{rowIndex + 1}" />
+            </p:column>
+            <p:column  headerText="ID">
                 #{item.id}
             </p:column>
             <p:column  headerText="Firstname">
                 #{item.firstname}
             </p:column>
+            
             <p:column  headerText="Midname">
                 #{item.midname}
             </p:column>

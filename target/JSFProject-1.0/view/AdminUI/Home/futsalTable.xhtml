@@ -11,9 +11,12 @@
     <ui:define name="title">Home</ui:define>
     <ui:define name="content" >
         <div style="text-align: center;">
-        <p:commandButton id="addDialog" value="Add Futsal" oncomplete="PF('addDialog').show()" />
+            <p:commandButton id="addDialog" value="Add Futsal" oncomplete="PF('addDialog').show()" />
         </div>
-        <p:dataTable value="#{futsalController.futsalList}" var="item">
+        <p:dataTable value="#{futsalController.futsalList}" rowIndexVar="rowIndex" var="item">
+            <p:column headerText="S.N." >
+                <h:outputText value="#{rowIndex + 1}" />
+            </p:column>
             <p:column  headerText="Id">
                 #{item.id}
             </p:column>
@@ -35,7 +38,7 @@
             <p:column  headerText="OwnerId">
                 #{item.ownerid}
             </p:column>
-            
+
             <p:column  headerText="Edit">
                 <p:commandButton id="editDialog" value="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">
                     <f:setPropertyActionListener target="#{futsalController.futsal}" value="#{item}" />
@@ -57,7 +60,7 @@
                 </h:form>
             </div>
         </p:dialog>
-        
+
         <p:dialog class="addDialog"  header="New Futsal" fitViewport="true" appendTo="@(body)" widgetVar="addDialog" modal="true" height="300px" width="300px">
             <div class="center-layout">
                 <h:form id="addDialogForm">
