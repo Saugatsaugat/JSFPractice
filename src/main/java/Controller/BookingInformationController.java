@@ -7,6 +7,7 @@ package Controller;
 import Entities.BookingInformation;
 import Entities.FutsalSchedule;
 import Model.BookingInformationCrud;
+import Model.UserCrud;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -61,6 +62,9 @@ public class BookingInformationController implements Serializable {
 
     @Inject
     private BookingInformationCrud bookingInformationCrud;
+    
+    @Inject
+    private UserCrud userCrud;
 
     @PostConstruct
     public void init() {
@@ -103,7 +107,7 @@ public class BookingInformationController implements Serializable {
     public void save() {
         if (session.getAttribute("userId") != null) {
             Long userId = (Long) session.getAttribute("userId");
-            bookingInformation.setUserid(userId);
+            bookingInformation.setUser(userCrud.getDataById(userId));
             bookingInformation.setEntrydate(new Date());
             if (bookingInformationCrud.save(bookingInformation)) {
                 try {

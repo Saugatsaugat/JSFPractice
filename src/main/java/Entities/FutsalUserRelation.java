@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -18,13 +20,19 @@ import javax.persistence.Temporal;
  * @author saugat
  */
 @Entity
-@Table(name="FutsalUserRelation")
+@Table(name = "FutsalUserRelation")
 public class FutsalUserRelation extends AbstractEntity implements IAbstractEntity, Serializable {
 
     @Temporal(javax.persistence.TemporalType.DATE)
-    Date entrydate;
-    Long userid;
-    Long futsalid;
+    private Date entrydate;
+
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "futsalid")
+    private Futsal futsal;
 
     public Date getEntrydate() {
         return entrydate;
@@ -34,21 +42,23 @@ public class FutsalUserRelation extends AbstractEntity implements IAbstractEntit
         this.entrydate = entrydate;
     }
 
-    public Long getUserid() {
-        return userid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getFutsalid() {
-        return futsalid;
+    public Futsal getFutsal() {
+        return futsal;
     }
 
-    public void setFutsalid(Long futsalid) {
-        this.futsalid = futsalid;
+    public void setFutsal(Futsal futsal) {
+        this.futsal = futsal;
     }
+
+    
 
     @Override
     public String getTableName() {

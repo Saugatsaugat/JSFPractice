@@ -17,6 +17,9 @@
             <p:column headerText="S.N." >
                 <h:outputText value="#{rowIndex + 1}" />
             </p:column>
+            <p:column  headerText="Id">
+                #{item.id}
+            </p:column>
             <p:column  headerText="Pan">
                 #{item.pan}
             </p:column>

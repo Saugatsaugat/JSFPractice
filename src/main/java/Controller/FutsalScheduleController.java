@@ -31,7 +31,7 @@ public class FutsalScheduleController implements Serializable {
     private FutsalCrud futsalCrud;
     @Inject
     private FutsalScheduleCruds fsc;
-
+   
     FacesContext context;
     ExternalContext externalContext;
     HttpSession session;
@@ -124,7 +124,7 @@ public class FutsalScheduleController implements Serializable {
                 Long userId = (Long) session.getAttribute("userId");
                 futsal = futsalCrud.checkIfFutsalRegistered(userId);
                 Long futsalId = futsal.getId();
-                futsalSchedule.setFutsalid(futsalId);
+                futsalSchedule.setFutsal(futsalCrud.getDataById(futsalId));
                 if (futsalSchedule.getStatus() == null) {
                     futsalSchedule.setStatus("available");
                 }
@@ -149,7 +149,7 @@ public class FutsalScheduleController implements Serializable {
             Long userId = (Long) session.getAttribute("userId");
             futsal = futsalCrud.checkIfFutsalRegistered(userId);
             Long futsalId = futsal.getId();
-            futsalSchedule.setFutsalid(futsalId);
+            futsalSchedule.setFutsal(futsalCrud.getDataById(futsalId));
             if (futsalSchedule.getStatus() == null) {
                 futsalSchedule.setStatus("available");
             }
@@ -213,7 +213,6 @@ public class FutsalScheduleController implements Serializable {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Required", "Login Required");
             context.addMessage(null, message);
         } else {
-            
 
         }
 

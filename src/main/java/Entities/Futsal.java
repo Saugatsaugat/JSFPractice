@@ -4,6 +4,7 @@ import Model.AbstractEntity;
 import Model.IAbstractEntity;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -13,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Futsal")
-public class Futsal extends AbstractEntity implements IAbstractEntity, Serializable {
+public class Futsal extends AbstractEntity<Futsal> implements IAbstractEntity, Serializable {
     private String name;
     private Long pan;
     private String address;

@@ -15,7 +15,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "User")
-public class User extends AbstractEntity implements IAbstractEntity, Serializable {
+public class User extends AbstractEntity<User> implements IAbstractEntity, Serializable {
+
     @Enumerated(EnumType.STRING)
     private UserType usertype;
     private String email;

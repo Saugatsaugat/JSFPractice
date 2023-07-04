@@ -6,6 +6,8 @@ import Model.IAbstractEntity;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -21,7 +23,11 @@ public class FutsalSchedule extends AbstractEntity implements IAbstractEntity,Se
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date scheduledate; 
     private String status;
-    private Long futsalid;
+    
+    @ManyToOne
+    @JoinColumn(name = "futsalid")
+    private Futsal futsal;
+    
     private float rate;
 
     public float getRate() {
@@ -64,19 +70,16 @@ public class FutsalSchedule extends AbstractEntity implements IAbstractEntity,Se
         this.status = status;
     }
 
-    public Long getFutsalid() {
-        return futsalid;
-    }
-
-    public void setFutsalid(Long futsalid) {
-        this.futsalid = futsalid;
-    }
-
     @Override
     public String getTableName() {
         return "FutsalSchedule";
     }
     
-  
-    
+    public Futsal getFutsal() {
+        return futsal;
+    }
+
+    public void setFutsal(Futsal futsal) {
+        this.futsal = futsal;
+    }
 }

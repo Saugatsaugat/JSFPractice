@@ -7,12 +7,14 @@ Entities/FutsalSchedule.class
 Entities/User.class
 Model/BookingInformationCrud.class
 Entities/FutsalUserRelation.class
+com/saugat/converter/UserConverter.class
 Model/BookingDetailCrud.class
 Model/FutsalScheduleCruds.class
 Controller/BookingInformationController.class
 Controller/UserController.class
 Controller/BookingDetailController.class
 Model/AbstractEntity.class
+com/saugat/converter/FutsalConverter.class
 Model/FutsalUserRelationCrud.class
 Model/UserCrud.class
 Controller/ValidationController.class

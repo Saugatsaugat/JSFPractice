@@ -34,6 +34,15 @@ public class FutsalUserRelationController implements Serializable {
 
     private List<FutsalUserRelation> futsalUserRelationList;
     private FutsalUserRelation futsalUserRelation;
+    private List<Object> totalFutsalUserTable;
+
+    public List<Object> getTotalFutsalUserTable() {
+        return totalFutsalUserTable;
+    }
+
+    public void setTotalFutsalUserTable(List<Object> totalFutsalUserTable) {
+        this.totalFutsalUserTable = totalFutsalUserTable;
+    }
 
     public List<FutsalUserRelation> getFutsalUserRelationList() {
         return futsalUserRelationList;
@@ -53,6 +62,7 @@ public class FutsalUserRelationController implements Serializable {
 
     @PostConstruct
     public void init() {
+        totalFutsalUserTable = futsalUserRelationCrud.getAllDataFutsalUser();
         futsalUserRelation = new FutsalUserRelation();
         futsalUserRelationList = futsalUserRelationCrud.getAllData(FutsalUserRelation.class);
         context = FacesContext.getCurrentInstance();

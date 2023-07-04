@@ -30,7 +30,7 @@
                     #{item.amount}
                 </p:column>
                 <p:column  headerText="userid">
-                    #{item.userid}
+                    #{item.user.id}
                 </p:column>
                 <p:column  headerText="Edit">
                     <p:commandButton id="editDialog" value="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
