@@ -5,6 +5,8 @@ import Entities.FutsalSchedule;
 import Model.FutsalCrud;
 import Model.FutsalScheduleCruds;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +33,7 @@ public class FutsalScheduleController implements Serializable {
     private FutsalCrud futsalCrud;
     @Inject
     private FutsalScheduleCruds fsc;
-   
+
     FacesContext context;
     ExternalContext externalContext;
     HttpSession session;
@@ -85,29 +87,31 @@ public class FutsalScheduleController implements Serializable {
         futsal = new Futsal();
         if (session.getAttribute("futsalId") != null) {
             Long futsalId = (Long) session.getAttribute("futsalId");
-            futsalScheduleList = fsc.getCurrentDateDataByFutsalId(futsalId);
+            futsalScheduleList = fsc.getCurrentDateDataByFutsal(futsalCrud.getDataById(futsalId));
+            System.out.println("");
         } else {
             futsalScheduleList = fsc.getCurrentDateFutsalSchedule();
+            System.out.println("");
         }
 
     }
 
     public void updateFutsalSchedule(Long futsalId) {
         if (futsalId != null) {
-            futsalScheduleList = fsc.getCurrentDateDataByFutsalId(futsalId);
+            futsalScheduleList = fsc.getCurrentDateDataByFutsal(futsalCrud.getDataById(futsalId));
         }
     }
 
     public void onDateSelect(SelectEvent event) {
         futsalScheduleList = null;
         newDate = (Date) event.getObject();
-        futsalScheduleList = fsc.getFutsalScheduleByDateAndUserId(newDate, futsal.getId());
+        futsalScheduleList = fsc.getFutsalScheduleByDateAndUserId(newDate, futsalCrud.getDataById(futsal.getId()));
     }
 
     public void futsalScheduleByFutsalId(Long futsalId) {
         if (futsalId != null) {
             try {
-                futsalScheduleList = fsc.getCurrentDateDataByFutsalId(futsalId);
+                futsalScheduleList = fsc.getCurrentDateDataByFutsal(futsalCrud.getDataById(futsalId));
             } catch (Exception e) {
 
             }

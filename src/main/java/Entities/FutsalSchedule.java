@@ -1,33 +1,40 @@
-
 package Entities;
 
 import Model.AbstractEntity;
 import Model.IAbstractEntity;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author saugat
  */
 @Entity
-@Table(name="FutsalSchedule")
-public class FutsalSchedule extends AbstractEntity<FutsalSchedule> implements IAbstractEntity,Serializable{
-    private int starthour;
-    private int endhour;
+@Table(name = "FutsalSchedule")
+public class FutsalSchedule extends AbstractEntity<FutsalSchedule> implements IAbstractEntity, Serializable {
+
+    @Temporal(TemporalType.TIME)
+    private Date starthour;
+
+    @Temporal(TemporalType.TIME)
+    private Date endhour;
+
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date scheduledate; 
+    private Date scheduledate;
+
     private String status;
-    
+
     @ManyToOne
     @JoinColumn(name = "futsalid")
     private Futsal futsal;
-    
+
     private float rate;
 
     public float getRate() {
@@ -38,19 +45,19 @@ public class FutsalSchedule extends AbstractEntity<FutsalSchedule> implements IA
         this.rate = rate;
     }
 
-    public int getStarthour() {
+    public Date getStarthour() {
         return starthour;
     }
 
-    public void setStarthour(int starthour) {
+    public void setStarthour(Date starthour) {
         this.starthour = starthour;
     }
 
-    public int getEndhour() {
+    public Date getEndhour() {
         return endhour;
     }
 
-    public void setEndhour(int endhour) {
+    public void setEndhour(Date endhour) {
         this.endhour = endhour;
     }
 
@@ -74,7 +81,7 @@ public class FutsalSchedule extends AbstractEntity<FutsalSchedule> implements IA
     public String getTableName() {
         return "FutsalSchedule";
     }
-    
+
     public Futsal getFutsal() {
         return futsal;
     }

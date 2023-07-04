@@ -29,8 +29,11 @@
                 <p:column  headerText="Amount">
                     #{item.amount}
                 </p:column>
-                <p:column  headerText="userid">
-                    #{item.user.id}
+                <p:column  headerText="UserName">
+                    #{item.user.firstname}
+                </p:column>
+                <p:column  headerText="Mobile">
+                    #{item.user.mobile}
                 </p:column>
                 <p:column  headerText="Edit">
                     <p:commandButton id="editDialog" value="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
