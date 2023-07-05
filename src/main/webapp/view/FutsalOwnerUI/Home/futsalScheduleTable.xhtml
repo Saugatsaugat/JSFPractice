@@ -37,7 +37,8 @@
 
                 </p:column>
                 <p:column  headerText="Delete">
-                    <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{futsalScheduleController.setFutsalScheduleId(item.id)}" />
+                    <p:commandButton rendered="#{item.status.compareTo('available')}" value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{futsalScheduleController.setFutsalScheduleId(item.id)}" />
+                    <p:commandButton disabled="true" rendered="#{item.status.compareTo('booked')}" value="Delete" id="deleteDialog"/>
 
                 </p:column>
             </p:dataTable>

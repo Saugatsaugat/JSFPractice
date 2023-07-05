@@ -7,10 +7,10 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 <div style="text-align: center;">
-            <p:commandButton id="addDialog" value="ADD New User" oncomplete="PF('addDialog').show()" />
+    <p:commandButton id="addDialog" icon="fa fa-plus"  title="Add New User" oncomplete="PF('addDialog').show()"/>
+
         </div>
         <p:dataTable value="#{userController.userList}" rowIndexVar="rowIndex" var="item">
-
             <p:column headerText="S.N." >
                 <h:outputText value="#{rowIndex + 1}" />
             </p:column>
@@ -34,13 +34,13 @@
                 #{item.usertype}
             </p:column>
             <p:column  headerText="Edit">
-                <p:commandButton id="editDialog" value="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">
+                <p:commandButton id="editDialog" icon="fa fa-pencil" title="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">
                     <f:setPropertyActionListener target="#{userController.user}" value="#{item}" />
                 </p:commandButton>
             </p:column>
             <p:column  headerText="Delete">
 
-                <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show()">
+                <p:commandButton icon="fa fa-trash"  id="deleteDialog" title="Delete" oncomplete="PF('deleteDialog').show()">
                     <f:setPropertyActionListener target="#{userController.user.id}" value="#{item.id}" />
                 </p:commandButton>
             </p:column>

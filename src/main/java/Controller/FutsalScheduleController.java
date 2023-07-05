@@ -39,6 +39,14 @@ public class FutsalScheduleController implements Serializable {
     private Futsal futsal;
     private Date newDate;
 
+    public String rowStyleClass(FutsalSchedule item) {
+        if ("available".equalsIgnoreCase(item.getStatus())) {
+            return "green";
+        } else {
+            return "red";
+        }
+    }
+
     public Date getNewDate() {
         return newDate;
     }
@@ -124,7 +132,7 @@ public class FutsalScheduleController implements Serializable {
 
     public void bookFutsalSchedule(FutsalSchedule futsalScheule) {
         if (session.getAttribute("userId") == null) {
-         
+
             RequestContext contextReq = RequestContext.getCurrentInstance();
             contextReq.execute("PF('loginRequired').show();");
 

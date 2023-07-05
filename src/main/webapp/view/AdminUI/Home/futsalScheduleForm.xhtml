@@ -14,11 +14,11 @@
 
     <p:outputLabel value="Start Hour:" /><br/>
     <p:calendar timeControlType="select" pattern="HH:mm" timeInput="true" id="starthour" timeOnly="true" value="#{futsalScheduleController.futsalSchedule.starthour}"/><br/><br/>
-    <br/><br/>
+    
 
     <p:outputLabel value="End Hour:" /><br/>
     <p:calendar timeControlType="select" pattern="HH:mm" timeInput="true" id="endhour" timeOnly="true" value="#{futsalScheduleController.futsalSchedule.endhour}"/><br/><br/>
-    <br/><br/>
+    
 
     <p:outputLabel style="font-weight: bold;" value="Rate"/><br/>
     <p:inputNumber id="rate" value="#{futsalScheduleController.futsalSchedule.rate}" required="true" /><br/><br/>
