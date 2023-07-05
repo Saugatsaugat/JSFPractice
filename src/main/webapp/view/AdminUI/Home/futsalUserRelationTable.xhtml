@@ -21,10 +21,10 @@
                     #{item.entrydate}
                 </p:column>
                 <p:column  headerText="FutsalId">
-                    #{item.futsal.id}
+                    #{item.futsal.name}
                 </p:column>
                 <p:column  headerText="UserId">
-                    #{item.user.id}
+                    #{item.user.firstname}
                 </p:column>
                 <p:column  headerText="Edit">
                     <p:commandButton id="editDialog" value="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{futsalUserRelationController.showFutsalUserRelation(item)}"/>

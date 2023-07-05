@@ -4,10 +4,16 @@
  */
 package Controller;
 
+import Entities.BookingDetail;
 import Entities.BookingInformation;
 import Entities.FutsalSchedule;
+import Entities.User;
+import Model.BookingDetailCrud;
 import Model.BookingInformationCrud;
+import Model.FutsalCrud;
 import Model.UserCrud;
+import com.saugat.bean.enums.UserType;
+import com.saugat.beans.UserBean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -62,17 +68,34 @@ public class BookingInformationController implements Serializable {
 
     @Inject
     private BookingInformationCrud bookingInformationCrud;
-    
+
     @Inject
     private UserCrud userCrud;
+    @Inject
+    private FutsalCrud futsalCrud;
 
     @PostConstruct
     public void init() {
-        bookingInformationList = bookingInformationCrud.getAllData(BookingInformation.class);
         bookingInformation = new BookingInformation();
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);
+        Long sessionUserId = (Long) session.getAttribute("userId");
+        if (sessionUserId != null) {
+            User user = userCrud.getDataById(sessionUserId);
+            if (user != null) {
+                if (user.getUsertype().equals(UserType.admin)) {
+                    bookingInformationList = bookingInformationCrud.getCurrentAndFutureBookingInformation();
+
+                } else {
+                    bookingInformationList = bookingInformationCrud.getCurrentAndFutureBookingInformationByUser(user);
+                }
+            } else {
+                bookingInformationList = bookingInformationCrud.getCurrentAndFutureBookingInformation();
+
+            }
+
+        }
     }
 
     public void bookingInformationSchedule(BookingInformation bookingInformation) {
@@ -128,7 +151,6 @@ public class BookingInformationController implements Serializable {
         }
     }
 
-    
     public void delete() {
         if (bookingInformation.getId() != null) {
             if (bookingInformationCrud.deleteById(bookingInformation.getId())) {

@@ -11,15 +11,13 @@
     <ui:define name="title">Home</ui:define>
     <ui:define name="content" >
         <div style="text-align: center;">
-            <p:commandButton id="addDialog" value="Add Futsal" oncomplete="PF('addDialog').show()" />
+            <p:commandButton icon="fa fa-plus" id="addDialog" title="Add New Futsal" oncomplete="PF('addDialog').show()" />
         </div>
         <p:dataTable value="#{futsalController.futsalList}" rowIndexVar="rowIndex" var="item">
             <p:column headerText="S.N." >
                 <h:outputText value="#{rowIndex + 1}" />
             </p:column>
-            <p:column  headerText="Id">
-                #{item.id}
-            </p:column>
+
             <p:column  headerText="Pan">
                 #{item.pan}
             </p:column>
@@ -35,18 +33,15 @@
             <p:column  headerText="Address">
                 #{item.address}
             </p:column>
-            <p:column  headerText="OwnerId">
-                #{item.ownerid}
-            </p:column>
 
             <p:column  headerText="Edit">
-                <p:commandButton id="editDialog" value="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">
+                <p:commandButton icon="fa fa-pencil" id="editDialog" title="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm">
                     <f:setPropertyActionListener target="#{futsalController.futsal}" value="#{item}" />
                 </p:commandButton>
             </p:column>
             <p:column  headerText="Delete">
 
-                <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show()">
+                <p:commandButton icon="fa fa-trash" title="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show()">
                     <f:setPropertyActionListener target="#{futsalController.futsal.id}" value="#{item.id}" />
                 </p:commandButton>
             </p:column>

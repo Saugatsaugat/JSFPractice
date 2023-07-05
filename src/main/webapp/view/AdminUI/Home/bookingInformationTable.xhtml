@@ -9,35 +9,44 @@
                 template="../../template.xhtml">
     <ui:define name="content">
         <div style="text-align: center;">
-            <p:commandButton id="addDialog" value="ADD Booking Information" oncomplete="PF('addDialog').show()" />
+            <p:commandButton icon="fa fa-plus" disabled="true" id="addDialog" title="ADD New Booking Information" oncomplete="PF('addDialog').show()" />
         </div>
         <h3 style="text-align: center;">Booking Information Table</h3>
         <h:form>
-            <p:dataTable value="#{bookingInformationController.bookingInformationList}" rowIndexVar="rowIndex" var="item">
+            <p:dataTable value="#{bookingDetailController.bookingDetailList}" rowIndexVar="rowIndex" var="item">
                 <p:column headerText="S.N." >
                     <h:outputText value="#{rowIndex + 1}" />
                 </p:column>
-                <p:column  headerText="EntryDate">
-                    #{item.entrydate}
+                <p:column  headerText="ScheduleDate">
+                    #{item.futsalschedule.scheduledate}
                 </p:column>
                 <p:column  headerText="FromDate">
-                    #{item.fromdate}
+                    #{item.bookinginformation.fromdate}
                 </p:column>
                 <p:column  headerText="ToDate">
-                    #{item.todate}
+                    #{item.bookinginformation.todate}
+                </p:column>
+                  <p:column  headerText="StartHour">
+                    #{item.futsalschedule.starthour}
+                </p:column>
+                  <p:column  headerText="EndHour">
+                    #{item.futsalschedule.endhour}
                 </p:column>
                 <p:column  headerText="Amount">
-                    #{item.amount}
+                    #{item.futsalschedule.rate}
                 </p:column>
-                <p:column  headerText="userid">
-                    #{item.user.id}
+                <p:column  headerText="UserName">
+                    #{item.bookinginformation.user.firstname}
+                </p:column>
+                <p:column  headerText="Mobile">
+                    #{item.bookinginformation.user.mobile}
                 </p:column>
                 <p:column  headerText="Edit">
-                    <p:commandButton id="editDialog" value="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
+                    <p:commandButton icon="fa fa-pencil" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
 
                 </p:column>
                 <p:column  headerText="Delete">
-                    <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{bookingInformationController.setBookingInformationId(item.id)}" />
+                    <p:commandButton icon="fa fa-trash" title="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{bookingInformationController.setBookingInformationId(item.id)}" />
 
                 </p:column>
             </p:dataTable>

@@ -1,6 +1,5 @@
 package Model;
 
-import Entities.User;
 import java.util.Objects;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

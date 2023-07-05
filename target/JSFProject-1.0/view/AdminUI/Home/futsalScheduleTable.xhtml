@@ -7,13 +7,14 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="../../template.xhtml">
+
     <ui:define name="content">
         <div style="text-align: center;">
-            <p:commandButton id="addDialog" value="ADD Schedule" oncomplete="PF('addDialog').show()" />
+            <p:commandButton icon="fa fa-plus" id="addDialog" oncomplete="PF('addDialog').show()" />
         </div>
         <h3 style="text-align: center;">Futsal Schedule Table</h3>
         <h:form>
-            <p:dataTable value="#{futsalScheduleController.futsalScheduleList}" rowIndexVar="rowIndex" var="item">
+            <p:dataTable rowStyleClass="#{futsalScheduleController.rowStyleClass(item)}"  value="#{futsalScheduleController.futsalScheduleList}" rowIndexVar="rowIndex" var="item">
                 <p:column headerText="S.N." >
                     <h:outputText value="#{rowIndex + 1}" />
                 </p:column>
@@ -33,12 +34,11 @@
                     #{item.status}
                 </p:column>
                 <p:column  headerText="Edit">
-                    <p:commandButton id="editDialog" value="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{futsalScheduleController.showFutsalSchedule(item)}"/>
+                    <p:commandButton icon="fa fa-pencil" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" process="@this" actionListener="#{futsalScheduleController.showFutsalSchedule(item)}"/>
 
                 </p:column>
                 <p:column  headerText="Delete">
-                    <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{futsalScheduleController.setFutsalScheduleId(item.id)}" />
-
+                    <p:commandButton icon="fa fa-trash" rendered="#{item.status.matches('available')}" title="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{futsalScheduleController.setFutsalScheduleId(item.id)}" />
                 </p:column>
             </p:dataTable>
         </h:form>

@@ -13,9 +13,12 @@
     <p:calendar id="scheduledate" pattern="yyyy-MM-dd" value="#{futsalScheduleController.futsalSchedule.scheduledate}"/><br/><br/>
 
     <p:outputLabel value="Start Hour:" /><br/>
-    <p:inputNumber id="starthour" value="#{futsalScheduleController.futsalSchedule.starthour}" required="true" /><br/><br/>
+    <p:calendar timeControlType="select" pattern="HH:mm" timeInput="true" id="starthour" timeOnly="true" value="#{futsalScheduleController.futsalSchedule.starthour}"/><br/><br/>
+    
+
     <p:outputLabel value="End Hour:" /><br/>
-    <p:inputNumber id="endhour" value="#{futsalScheduleController.futsalSchedule.endhour}" required="true" /><br/><br/>
+    <p:calendar timeControlType="select" pattern="HH:mm" timeInput="true" id="endhour" timeOnly="true" value="#{futsalScheduleController.futsalSchedule.endhour}"/><br/><br/>
+    
 
     <p:outputLabel style="font-weight: bold;" value="Rate"/><br/>
     <p:inputNumber id="rate" value="#{futsalScheduleController.futsalSchedule.rate}" required="true" /><br/><br/>

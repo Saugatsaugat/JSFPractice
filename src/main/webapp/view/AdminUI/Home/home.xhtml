@@ -4,16 +4,15 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="../../template.xhtml">
 
     <ui:define name="title">Home</ui:define>
-    <ui:define name="content" >
-        <h:outputLabel>
-            <div style="text-align: center; margin-top: 100px;">
-                <h2>Welcome Admin!!!</h2>  
-            </div>
-        </h:outputLabel>
-               
+
+    <ui:define name="content">
+       <ui:include src="userTableBody.xhtml" />
     </ui:define>
+
 
 </ui:composition>

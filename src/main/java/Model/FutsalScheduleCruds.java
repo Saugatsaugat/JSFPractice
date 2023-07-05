@@ -1,5 +1,6 @@
 package Model;
 
+import Entities.Futsal;
 import Entities.FutsalSchedule;
 import java.util.Date;
 import java.util.List;
@@ -24,13 +25,15 @@ public class FutsalScheduleCruds extends AbstractCrud<FutsalSchedule> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
 
-    public List<FutsalSchedule> getCurrentDateDataByFutsalId(Long futsalId) {
+
+    public List<FutsalSchedule> getCurrentDateDataByFutsal(Futsal futsal) {
         List<FutsalSchedule> futsalSchedule = null;
         try {
             
-            Query query = em.createQuery("SELECT u from FutsalSchedule u where u.futsalid=:futsalId and u.scheduledate=:date", FutsalSchedule.class);
-            query.setParameter("futsalId", futsalId);
+            Query query = em.createQuery("SELECT u from FutsalSchedule u where u.futsal=:futsal and u.scheduledate=:date", FutsalSchedule.class);
+            query.setParameter("futsal", futsal);
             query.setParameter("date", new Date());
             futsalSchedule = query.getResultList();
             return futsalSchedule;
@@ -40,13 +43,13 @@ public class FutsalScheduleCruds extends AbstractCrud<FutsalSchedule> {
         return futsalSchedule;
     }
 
-    public List<FutsalSchedule> getFutsalScheduleByDateAndUserId(java.util.Date date, Long futsalId) {
+    public List<FutsalSchedule> getFutsalScheduleByDateAndUserId(java.util.Date date, Futsal futsal) {
         List<FutsalSchedule> futsalSchedule = null;
         try {
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-            Query query = em.createQuery("SELECT u from FutsalSchedule u where u.scheduledate=:date and u.futsalid=:futsalId", FutsalSchedule.class);
+            Query query = em.createQuery("SELECT u from FutsalSchedule u where u.scheduledate=:date and u.futsal=:futsal", FutsalSchedule.class);
             query.setParameter("date", sqlDate);
-            query.setParameter("futsalId", futsalId);
+            query.setParameter("futsal", futsal);
             futsalSchedule = query.getResultList();
             return futsalSchedule;
         } catch (Exception e) {
