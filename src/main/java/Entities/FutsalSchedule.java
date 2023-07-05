@@ -3,7 +3,6 @@ package Entities;
 import Model.AbstractEntity;
 import Model.IAbstractEntity;
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

@@ -5,29 +5,33 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:outputLabel value="Available Slots" />
     <p:messages styleClass="errorMessage" showSummary="true" closable="true" severity="error" autoUpdate="true" />
-    <p:outputLabel value="Available Slots" >
-    </p:outputLabel>
-        <p:dataTable value="#{futsalScheduleController.futsalScheduleList}" var="item">
-            <p:column  headerText="Id">
-                #{item.id}
-            </p:column>
-            <p:column  headerText="TimeFrom">
-                #{item.starthour}
-            </p:column>
-            <p:column  headerText="TimeTo">
-                #{item.endhour}
-            </p:column>
-            <p:column  headerText="Rate(Rs.)">
-                #{item.rate}
-            </p:column>
-            <p:column  headerText="Status">
-                #{item.status}
-            </p:column>
-            <p:column  headerText="">
-                <p:commandButton rendered="#{item.status.equalsIgnoreCase('available')}" value="Book" actionListener="#{futsalScheduleController.bookFutsalSchedule(item)}" >
-                    <f:setPropertyActionListener target="#{futsalScheduleController.futsal.id}" value="#{item.futsalid}" />
-                </p:commandButton>
-            </p:column>
-        </p:dataTable>
+    <p:dataTable rowIndexVar="rowIndex" value="#{futsalScheduleController.futsalScheduleList}" var="item">
+
+        <p:column headerText="S.N." >
+            <h:outputText value="#{rowIndex + 1}" />
+        </p:column>
+        <p:column  headerText="TimeFrom">
+            #{item.starthour}
+        </p:column>
+        <p:column  headerText="TimeTo">
+            #{item.endhour}
+        </p:column>
+        <p:column  headerText="Rate(Rs.)">
+            #{item.rate}
+        </p:column>
+        <p:column  headerText="Status">
+            #{item.status}
+        </p:column>
+        <p:column  headerText="">
+            <p:commandButton rendered="#{item.status.equalsIgnoreCase('available')}" value="Book" actionListener="#{futsalScheduleController.bookFutsalSchedule(item)}" >
+                <f:setPropertyActionListener target="#{futsalScheduleController.futsal.id}" value="#{item.futsal.id}" />
+            </p:commandButton>
+        </p:column>
+    </p:dataTable>
+    
+    <p:dialog style="font-size: 10px;" id="loginRequired" fitViewport="true" appendTo="@(body)" widgetVar="loginRequired" modal="true" header="" height="50px" width="300px">
+        <p>Login to continue</p><br/>
+    </p:dialog>
 </ui:composition>

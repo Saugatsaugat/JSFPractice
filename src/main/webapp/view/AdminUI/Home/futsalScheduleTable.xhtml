@@ -33,7 +33,7 @@
                     #{item.status}
                 </p:column>
                 <p:column  headerText="Edit">
-                    <p:commandButton id="editDialog" value="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{futsalScheduleController.showFutsalSchedule(item)}"/>
+                    <p:commandButton id="editDialog" value="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" process="@this" actionListener="#{futsalScheduleController.showFutsalSchedule(item)}"/>
 
                 </p:column>
                 <p:column  headerText="Delete">

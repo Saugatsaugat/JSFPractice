@@ -5,8 +5,6 @@ import Entities.FutsalSchedule;
 import Model.FutsalCrud;
 import Model.FutsalScheduleCruds;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +17,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -119,7 +118,18 @@ public class FutsalScheduleController implements Serializable {
     }
 
     public void showFutsalSchedule(FutsalSchedule futsalSchedule) {
-        this.futsalSchedule = futsalSchedule;
+        setFutsalSchedule(futsalSchedule);
+//        this.futsalSchedule = futsalSchedule;
+    }
+
+    public void bookFutsalSchedule(FutsalSchedule futsalScheule) {
+        if (session.getAttribute("userId") == null) {
+         
+            RequestContext contextReq = RequestContext.getCurrentInstance();
+            contextReq.execute("PF('loginRequired').show();");
+
+        }
+
     }
 
     public void update() {
