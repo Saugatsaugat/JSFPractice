@@ -16,6 +16,13 @@
     <p:outputLabel value="To Date" />
     <p:calendar id="todate" pattern="yyyy-MM-dd" value="#{bookingInformationController.bookingInformation.todate}"/><br/><br/>
 
+    <p:outputLabel  style="font-weight: bold;" value="User Name"/><br/>
+    <p:selectOneMenu converter="userconverter" value="#{bookingInformationController.bookingInformation.user}" >
+        <f:selectItem itemLabel="Select One" itemValue="" />
+        <f:selectItems value="#{userController.userList}" var="item"
+                       itemLabel="#{item.firstname}#{item.mobile}" itemValue="#{item}"/>
+    </p:selectOneMenu><br/>
+    
     <p:outputLabel style="font-weight: bold;" value="Amount"/><br/>
     <p:inputNumber id="amount" value="#{bookingInformationController.bookingInformation.amount}" required="true" /><br/><br/>
 

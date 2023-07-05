@@ -53,10 +53,6 @@ public class BookingDetail extends AbstractEntity<BookingDetail> implements IAbs
         this.bookinginformation = bookinginformation;
     }
 
-    
-    
-    
-
     @Override
     public String getTableName() {
         return "BookingDetail";
