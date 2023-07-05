@@ -61,9 +61,13 @@
 
                     <p:menuitem value="UserList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/userTable.xhtml"/>
                     <p:menuitem value="FutsalList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/futsalTable.xhtml"/>
+                    <p:menuitem rendered="#{userBean.isFutsalOwner}" value="Home" url="/faces/view/FutsalOwnerUI/Home/home.xhtml"/>
+
                     <p:menuitem value="FutsalSchedule" rendered="#{userBeasn.isAdmin or userBean.isFutsalOwner}" url="/faces/view/AdminUI/Home/futsalScheduleTable.xhtml"/>
+
                     <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
                     <p:menuitem rendered="#{userBean.isUser}" value="Home" url="/faces/view/FutsalCart/futsalCartBox.xhtml"/>
+
                     <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout}" />
                     <p:menuitem  value="Login" rendered="#{empty userBean.user}" url="/faces/view/Login/loginForm.xhtml"/>
 
