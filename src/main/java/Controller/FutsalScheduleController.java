@@ -153,7 +153,7 @@ public class FutsalScheduleController implements Serializable {
                 if (fsc.update(futsalSchedule, futsalSchedule.getId())) {
                     try {
 
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/futsalScheduleTable.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
                     } catch (Exception e) {
 
                     }
@@ -179,7 +179,7 @@ public class FutsalScheduleController implements Serializable {
             if (fsc.save(futsalSchedule)) {
                 try {
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/futsalScheduleTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
                 } catch (Exception e) {
 
                 }
@@ -217,7 +217,7 @@ public class FutsalScheduleController implements Serializable {
 
                 try {
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalScheduleTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
                 } catch (Exception e) {
 
                 }

@@ -47,7 +47,7 @@
             .ui-dialog-titlebar{
                 font-size:15px;
             }
-            .ui-menuitem.ui-widget.ui-corner-all:last-child {
+            .ui-menuitem.ui-widget.ui-corner-all:nth-last-child(-n+2){
                 float: right;
                 margin-right: 2px;
             }
@@ -60,7 +60,7 @@
                 color: white;
 
             }
-            
+
 
 
 
@@ -76,13 +76,15 @@
                     <p:menuitem value="FutsalList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/futsalTable.xhtml"/>
                     <p:menuitem rendered="#{userBean.isFutsalOwner}" value="Home" url="/faces/view/FutsalOwnerUI/Home/home.xhtml"/>
 
-                    <p:menuitem value="FutsalSchedule" rendered="#{userBeasn.isAdmin or userBean.isFutsalOwner}" url="/faces/view/AdminUI/Home/futsalScheduleTable.xhtml"/>
+                    <p:menuitem value="FutsalSchedule" rendered="#{userBeasn.isAdmin or userBean.isFutsalOwner}" url="/faces/view/FutsalSchedule/futsalScheduleTable.xhtml"/>
 
                     <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
-                    <p:menuitem rendered="#{userBean.isUser}" value="Home" url="/faces/view/FutsalCart/futsalCartBox.xhtml"/>
+                    <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" icon="fa fa-lg fa-home" url="/faces/view/FutsalCart/futsalCartBox.xhtml"/>
 
+                    <p:menuitem />
                     <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout}" />
-                    <p:menuitem value="Login" rendered="#{empty userBean.user}" url="/faces/view/Login/loginForm.xhtml"/>
+                    <p:menuitem value="Register" rendered="#{empty userBean.user}" url="/faces/view/Register/userRegisterForm.xhtml"/>
+                    <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" url="/faces/view/Login/loginForm.xhtml"/>
 
                 </p:menubar>
 
