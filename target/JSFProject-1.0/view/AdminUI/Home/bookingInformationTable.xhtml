@@ -26,26 +26,29 @@
                 <p:column  headerText="ToDate">
                     #{item.bookinginformation.todate}
                 </p:column>
-                  <p:column  headerText="StartHour">
+                <p:column  headerText="StartHour">
                     #{item.futsalschedule.starthour}
                 </p:column>
-                  <p:column  headerText="EndHour">
+                <p:column  headerText="EndHour">
                     #{item.futsalschedule.endhour}
                 </p:column>
                 <p:column  headerText="Amount">
                     #{item.futsalschedule.rate}
                 </p:column>
-                <p:column  headerText="UserName">
+                <p:column rendered="#{userBean.isAdmin or userBean.isFutsalOwner}"  headerText="UserName">
                     #{item.bookinginformation.user.firstname}
                 </p:column>
                 <p:column  headerText="Mobile">
                     #{item.bookinginformation.user.mobile}
                 </p:column>
-                <p:column  headerText="Edit">
+                <p:column headerText="PaymentStatus">
+                    #{item.paymentstatus}
+                </p:column>
+                <p:column rendered="#{userBean.isAdmin}" headerText="Edit">
                     <p:commandButton icon="fa fa-pencil" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
 
                 </p:column>
-                <p:column  headerText="Delete">
+                <p:column rendered="#{userBean.isAdmin or userBean.isFutsalOwner}" headerText="Delete">
                     <p:commandButton icon="fa fa-trash" title="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{bookingInformationController.setBookingInformationId(item.id)}" />
 
                 </p:column>

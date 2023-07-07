@@ -71,15 +71,14 @@
         <p:layoutUnit position="north" size="50">
             <h:form>
                 <p:menubar>
-
+                    <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" icon="fa fa-lg fa-home" url="/faces/view/FutsalCart/futsalCartBox.xhtml"/>
+                    <p:menuitem rendered="#{userBean.isFutsalOwner}" value="Home" url="/faces/view/FutsalOwnerUI/Home/home.xhtml"/>
                     <p:menuitem value="UserList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/userTable.xhtml"/>
                     <p:menuitem value="FutsalList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/futsalTable.xhtml"/>
-                    <p:menuitem rendered="#{userBean.isFutsalOwner}" value="Home" url="/faces/view/FutsalOwnerUI/Home/home.xhtml"/>
 
                     <p:menuitem value="FutsalSchedule" rendered="#{userBeasn.isAdmin or userBean.isFutsalOwner}" url="/faces/view/FutsalSchedule/futsalScheduleTable.xhtml"/>
 
-                    <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
-                    <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" icon="fa fa-lg fa-home" url="/faces/view/FutsalCart/futsalCartBox.xhtml"/>
+                    <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
 
                     <p:menuitem />
                     <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout}" />

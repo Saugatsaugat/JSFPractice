@@ -98,5 +98,17 @@ public abstract class AbstractCrud<T extends IAbstractEntity> {
         }
         return false;
     }
+    
+    public boolean checkIfExits(T obj){
+        try{
+            T existingObj = getEntityManager().find(getEntityClass(), obj.getId());
+            if(existingObj.equals(obj)){
+                return true;
+            }
+        }catch(Exception e){
+            
+        }
+        return false;
+    }
 
 }
