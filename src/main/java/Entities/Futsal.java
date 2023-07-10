@@ -70,9 +70,6 @@ public class Futsal extends AbstractEntity<Futsal> implements IAbstractEntity, S
         this.ownerid = ownerid;
     }
 
-
-    
-
     @Override
     public String getTableName() {
         return "Futsal";
