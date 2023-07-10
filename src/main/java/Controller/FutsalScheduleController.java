@@ -177,31 +177,35 @@ public class FutsalScheduleController implements Serializable {
             bookingInformation.setTodate(futsalSchedule.getScheduledate());
             bookingInformation.setUser(user);
 
-            // for BookingDetail Table
-            bookingDetail.setFutsalschedule(futsalSchedule);
             FutsalSchedule futsalScheduleRef = fsc.getDataById(futsalSchedule.getId());
             String status = futsalScheduleRef.getStatus();
-            if ((fsc.checkIfExits(futsalSchedule)) && status.matches("available") ){
+            if ((fsc.checkIfExits(futsalSchedule)) && status.matches("available")) {
                 try {
-                    if (bookingInformationCrud.save(bookingInformation)) {
-                        Thread.sleep(10);
-                        //bookingInformation = bookingInformationCrud.getBookingInformationByDateAndUser(user, futsalSchedule.getScheduledate());
-                        bookingDetail.setBookinginformation(bookingInformation);
-                        bookingDetail.setPaymentstatus("incomplete");
-                        if (bookingDetailCrud.save(bookingDetail)) {
-                            futsalSchedule.setStatus("booked");
-                            if (fsc.update(futsalSchedule, futsalSchedule.getId())) {
-                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
-                            }
-                        }
+                    if (fsc.saveBooking(bookingInformation, futsalSchedule)) {
+                       
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/bookingInformationTable.xhtml");
 
                     }
+//                    if (bookingInformationCrud.save(bookingInformation)) {
+//                        Thread.sleep(10);
+//                        //bookingInformation = bookingInformationCrud.getBookingInformationByDateAndUser(user, futsalSchedule.getScheduledate());
+//                        bookingDetail.setBookinginformation(bookingInformation);
+//                        bookingDetail.setPaymentstatus("incomplete");
+//                        if (bookingDetailCrud.save(bookingDetail)) {
+//                            futsalSchedule.setStatus("booked");
+//                            if (fsc.update(futsalSchedule, futsalSchedule.getId())) {
+//                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/bookingInformationTable.xhtml");
+//                            }
+//                        }
+//
+//                    }
                     FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Booking Failed", "Booking Failed");
                     context.addMessage(null, message);
                 } catch (Exception e) {
 
                 }
             } else {
+
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Slot Not Available", "Slot Not available");
                 context.addMessage(null, message);
             }

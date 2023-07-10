@@ -5,12 +5,12 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                    xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="../template.xhtml">
 
     <ui:define name="content">
         <div style="text-align: center;">
-            <p:commandButton icon="fa fa-plus" id="addDialog" oncomplete="PF('addDialog').show()" />
+            <p:commandButton title="Add Futsal Schedule" icon="fa fa-plus" id="addDialog" oncomplete="PF('addDialog').show()" />
         </div>
         <h3 style="text-align: center;">Futsal Schedule Table</h3>
         <h:form>
@@ -34,7 +34,7 @@
                     #{item.status}
                 </p:column>
                 <p:column  headerText="Edit">
-                    <p:commandButton icon="fa fa-pencil" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" process="@this" actionListener="#{futsalScheduleController.showFutsalSchedule(item)}"/>
+                    <p:commandButton icon="fa fa-pencil" rendered="#{item.status.matches('available')}" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" process="@this" actionListener="#{futsalScheduleController.showFutsalSchedule(item)}"/>
 
                 </p:column>
                 <p:column  headerText="Delete">
