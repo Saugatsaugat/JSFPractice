@@ -17,10 +17,11 @@
                 <p:column headerText="S.N." >
                     <h:outputText value="#{rowIndex + 1}" />
                 </p:column>
-                <p:column  headerText="ScheduleDate">
-                    #{item.futsalschedule.scheduledate}
+                <p:column filterBy="#{item.futsalschedule.futsal.name}" rendered="#{userBean.isAdmin}" headerText="Futsal Name">
+                    #{item.futsalschedule.futsal.name}
                 </p:column>
-                <p:column  headerText="FromDate">
+
+                <p:column headerText="FromDate">
                     #{item.bookinginformation.fromdate}
                 </p:column>
                 <p:column  headerText="ToDate">
@@ -45,11 +46,11 @@
                     #{item.paymentstatus}
                 </p:column>
                 <p:column rendered="#{userBean.isAdmin}" headerText="Edit">
-                    <p:commandButton icon="fa fa-pencil" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
+                    <p:commandButton disabled="true" icon="fa fa-pencil" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
 
                 </p:column>
                 <p:column rendered="#{userBean.isAdmin or userBean.isFutsalOwner}" headerText="Delete">
-                    <p:commandButton icon="fa fa-trash" title="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{bookingInformationController.setBookingInformationId(item.id)}" />
+                    <p:commandButton disabled="true" icon="fa fa-trash" title="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{bookingInformationController.setBookingInformationId(item.id)}" />
 
                 </p:column>
             </p:dataTable>

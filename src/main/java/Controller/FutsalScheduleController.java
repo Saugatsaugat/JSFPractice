@@ -170,7 +170,6 @@ public class FutsalScheduleController implements Serializable {
         } else {
             Long loggedInUser = (Long) session.getAttribute("userId");
             User user = userCrud.getDataById(loggedInUser);
-
             // for Booking Information Table
             bookingInformation.setEntrydate(new Date());
             bookingInformation.setAmount(futsalSchedule.getRate());
@@ -185,7 +184,8 @@ public class FutsalScheduleController implements Serializable {
             if ((fsc.checkIfExits(futsalSchedule)) && status.matches("available") ){
                 try {
                     if (bookingInformationCrud.save(bookingInformation)) {
-                        bookingInformation = bookingInformationCrud.getBookingInformationByDateAndUser(user, futsalSchedule.getScheduledate());
+                        Thread.sleep(10);
+                        //bookingInformation = bookingInformationCrud.getBookingInformationByDateAndUser(user, futsalSchedule.getScheduledate());
                         bookingDetail.setBookinginformation(bookingInformation);
                         bookingDetail.setPaymentstatus("incomplete");
                         if (bookingDetailCrud.save(bookingDetail)) {

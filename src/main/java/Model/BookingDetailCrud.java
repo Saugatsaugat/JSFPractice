@@ -2,7 +2,9 @@
 package Model;
 
 import Entities.BookingDetail;
+import Entities.Futsal;
 import Entities.User;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -27,7 +29,8 @@ public class BookingDetailCrud extends AbstractCrud<BookingDetail> {
     public List<BookingDetail> bookingDetailOfCurrentDateAndHigher(){
         List<BookingDetail> bookingDetailList = null;
         try{
-            Query query= em.createQuery("SELECT u from BookingDetail u where u.futsalschedule.scheduledate>=:currentDate",BookingDetail.class);
+            Query query= em.createQuery("SELECT u from BookingDetail u where u.bookinginformation.fromdate=:date",BookingDetail.class);
+            query.setParameter("date", new Date());
             bookingDetailList = query.getResultList();
             return bookingDetailList;
         }catch(Exception e){
@@ -47,4 +50,17 @@ public class BookingDetailCrud extends AbstractCrud<BookingDetail> {
         }
         return bookingDetailList;
     }
+     
+     public List<BookingDetail> bookingDetailByFutsalOwner(Futsal futsal){
+         List<BookingDetail> bookingDetailList = null;
+         try{
+             Query query = em.createQuery("SELECT u from BookingDetail u where u.futsalschedule.futsal=:futsal",BookingDetail.class);
+             query.setParameter("futsal", futsal);
+             bookingDetailList = query.getResultList();
+             return bookingDetailList;
+         }catch(Exception e){
+             
+         }
+         return bookingDetailList;
+     }
 }

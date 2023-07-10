@@ -5,8 +5,10 @@
 package Controller;
 
 import Entities.BookingDetail;
+import Entities.Futsal;
 import Entities.User;
 import Model.BookingDetailCrud;
+import Model.FutsalCrud;
 import Model.UserCrud;
 import com.saugat.bean.enums.UserType;
 import java.io.Serializable;
@@ -27,6 +29,8 @@ import javax.servlet.http.HttpSession;
 @ViewScoped
 public class BookingDetailController implements Serializable {
 
+    @Inject
+    private FutsalCrud futsalCrud;
     FacesContext context;
     ExternalContext externalContext;
     HttpSession session;
@@ -39,8 +43,8 @@ public class BookingDetailController implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-    
-     private List<BookingDetail> bookingDetailList;
+
+    private List<BookingDetail> bookingDetailList;
 
     public List<BookingDetail> getBookingDetailList() {
         return bookingDetailList;
@@ -54,29 +58,28 @@ public class BookingDetailController implements Serializable {
     private BookingDetailCrud bookingDetailCrud;
     @Inject
     private UserCrud userCrud;
-    
-    
+
     @PostConstruct
     public void init() {
         user = new User();
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);
-         Long sessionUserId = (Long) session.getAttribute("userId");
+        Long sessionUserId = (Long) session.getAttribute("userId");
         if (sessionUserId != null) {
             user = userCrud.getDataById(sessionUserId);
             if (user != null) {
                 if (user.getUsertype().equals(UserType.admin)) {
                     bookingDetailList = bookingDetailCrud.bookingDetailOfCurrentDateAndHigher();
 
+                } else if (user.getUsertype().equals(UserType.futsalowner)) {
+                    Futsal futsal = futsalCrud.checkIfFutsalRegistered(sessionUserId);
+                    bookingDetailList = bookingDetailCrud.bookingDetailByFutsalOwner(futsal);
                 } else {
                     bookingDetailList = bookingDetailCrud.bookingDetailOfCurrentDateAndHigherByUser(user);
+
                 }
-            } else {
-                bookingDetailList = bookingDetailCrud.bookingDetailOfCurrentDateAndHigher();
-
-            }
-
+            } 
         }
     }
 

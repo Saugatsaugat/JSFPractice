@@ -61,7 +61,6 @@ public class BookingInformationCrud extends AbstractCrud<BookingInformation> {
             Query query = em.createQuery("SELECT u from BookingInformation u where u.user=:user and u.entrydate=:date and u.fromdate=:fromdate", BookingInformation.class);
             query.setParameter("user", user);
             query.setParameter("date", new Date());
-            query.setParameter("fromdate",fromDate);
             obj = (BookingInformation)query.getSingleResult();
             return obj;
         }catch(Exception e){

@@ -4,16 +4,13 @@
  */
 package Controller;
 
-import Entities.BookingDetail;
 import Entities.BookingInformation;
 import Entities.FutsalSchedule;
 import Entities.User;
-import Model.BookingDetailCrud;
 import Model.BookingInformationCrud;
 import Model.FutsalCrud;
 import Model.UserCrud;
 import com.saugat.bean.enums.UserType;
-import com.saugat.beans.UserBean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -90,13 +87,16 @@ public class BookingInformationController implements Serializable {
                 } else {
                     bookingInformationList = bookingInformationCrud.getCurrentAndFutureBookingInformationByUser(user);
                 }
-            } else {
-                bookingInformationList = bookingInformationCrud.getCurrentAndFutureBookingInformation();
+          }
+//else {
+//                bookingInformationList = bookingInformationCrud.getCurrentAndFutureBookingInformation();
+//
+//            }
 
             }
-
         }
-    }
+
+    
 
     public void bookingInformationSchedule(BookingInformation bookingInformation) {
         this.bookingInformation = bookingInformation;
