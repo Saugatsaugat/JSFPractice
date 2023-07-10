@@ -6,6 +6,7 @@ import Entities.User;
 import Model.FutsalCrud;
 import Model.FutsalUserRelationCrud;
 import Model.UserCrud;
+import com.saugat.bean.enums.UserType;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -89,9 +90,16 @@ public class UserController implements Serializable {
     public void saveUser() {
         if (user.getId() == null) {
             user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
+            if (user.getUsertype() == null) {
+                user.setUsertype(UserType.user);
+            }
             if (userCrud.save(user)) {
                 try {
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
+                    if (session.getAttribute("userId") != null) {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
+                    } else {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Login/loginForm.xhtml");
+                    }
                 } catch (Exception e) {
                 }
             }

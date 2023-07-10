@@ -1,9 +1,15 @@
 package Controller;
 
+import Entities.BookingDetail;
+import Entities.BookingInformation;
 import Entities.Futsal;
 import Entities.FutsalSchedule;
+import Entities.User;
+import Model.BookingDetailCrud;
+import Model.BookingInformationCrud;
 import Model.FutsalCrud;
 import Model.FutsalScheduleCruds;
+import Model.UserCrud;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,12 +38,36 @@ public class FutsalScheduleController implements Serializable {
     private FutsalCrud futsalCrud;
     @Inject
     private FutsalScheduleCruds fsc;
+    @Inject
+    private BookingInformationCrud bookingInformationCrud;
+    @Inject
+    private BookingDetailCrud bookingDetailCrud;
+    @Inject
+    private UserCrud userCrud;
 
     FacesContext context;
     ExternalContext externalContext;
     HttpSession session;
     private Futsal futsal;
     private Date newDate;
+    private BookingInformation bookingInformation;
+    private BookingDetail bookingDetail;
+
+    public BookingInformation getBookingInformation() {
+        return bookingInformation;
+    }
+
+    public void setBookingInformation(BookingInformation bookingInformation) {
+        this.bookingInformation = bookingInformation;
+    }
+
+    public BookingDetail getBookigDetail() {
+        return bookingDetail;
+    }
+
+    public void setBookigDetail(BookingDetail bookingDetail) {
+        this.bookingDetail = bookingDetail;
+    }
 
     public String rowStyleClass(FutsalSchedule item) {
         if ("available".equalsIgnoreCase(item.getStatus())) {
@@ -86,6 +116,8 @@ public class FutsalScheduleController implements Serializable {
 
     @PostConstruct
     public void init() {
+        bookingInformation = new BookingInformation();
+        bookingDetail = new BookingDetail();
         futsalSchedule = new FutsalSchedule();
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
@@ -130,12 +162,49 @@ public class FutsalScheduleController implements Serializable {
 //        this.futsalSchedule = futsalSchedule;
     }
 
-    public void bookFutsalSchedule(FutsalSchedule futsalScheule) {
+    public void bookFutsalSchedule(FutsalSchedule futsalSch) {
+        this.futsalSchedule = futsalSch;
         if (session.getAttribute("userId") == null) {
-
             RequestContext contextReq = RequestContext.getCurrentInstance();
             contextReq.execute("PF('loginRequired').show();");
+        } else {
+            Long loggedInUser = (Long) session.getAttribute("userId");
+            User user = userCrud.getDataById(loggedInUser);
+            // for Booking Information Table
+            bookingInformation.setEntrydate(new Date());
+            bookingInformation.setAmount(futsalSchedule.getRate());
+            bookingInformation.setFromdate(futsalSchedule.getScheduledate());
+            bookingInformation.setTodate(futsalSchedule.getScheduledate());
+            bookingInformation.setUser(user);
 
+            // for BookingDetail Table
+            bookingDetail.setFutsalschedule(futsalSchedule);
+            FutsalSchedule futsalScheduleRef = fsc.getDataById(futsalSchedule.getId());
+            String status = futsalScheduleRef.getStatus();
+            if ((fsc.checkIfExits(futsalSchedule)) && status.matches("available") ){
+                try {
+                    if (bookingInformationCrud.save(bookingInformation)) {
+                        Thread.sleep(10);
+                        //bookingInformation = bookingInformationCrud.getBookingInformationByDateAndUser(user, futsalSchedule.getScheduledate());
+                        bookingDetail.setBookinginformation(bookingInformation);
+                        bookingDetail.setPaymentstatus("incomplete");
+                        if (bookingDetailCrud.save(bookingDetail)) {
+                            futsalSchedule.setStatus("booked");
+                            if (fsc.update(futsalSchedule, futsalSchedule.getId())) {
+                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+                            }
+                        }
+
+                    }
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Booking Failed", "Booking Failed");
+                    context.addMessage(null, message);
+                } catch (Exception e) {
+
+                }
+            } else {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Slot Not Available", "Slot Not available");
+                context.addMessage(null, message);
+            }
         }
 
     }
@@ -153,7 +222,7 @@ public class FutsalScheduleController implements Serializable {
                 if (fsc.update(futsalSchedule, futsalSchedule.getId())) {
                     try {
 
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/futsalScheduleTable.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
                     } catch (Exception e) {
 
                     }
@@ -179,7 +248,7 @@ public class FutsalScheduleController implements Serializable {
             if (fsc.save(futsalSchedule)) {
                 try {
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/futsalScheduleTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
                 } catch (Exception e) {
 
                 }
@@ -217,7 +286,7 @@ public class FutsalScheduleController implements Serializable {
 
                 try {
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalScheduleTable.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
                 } catch (Exception e) {
 
                 }
@@ -228,16 +297,6 @@ public class FutsalScheduleController implements Serializable {
 
             }
         }
-    }
-
-    public void bookFutsalSchedule() {
-        if (session.getAttribute("userId") == null) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Required", "Login Required");
-            context.addMessage(null, message);
-        } else {
-
-        }
-
     }
 
 }
