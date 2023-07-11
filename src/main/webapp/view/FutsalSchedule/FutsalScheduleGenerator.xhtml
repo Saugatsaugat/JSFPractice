@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../template.xhtml">
+
+    <ui:define name="content">
+
+        <h:form>
+            <p:tabMenu activeIndex="0">
+                <p:menuitem value="Automatic Slot" update="slotScheduleDialog" action="#{futsalScheduleController.slotType('automatic')}" oncomplete="PF('slotScheduleDialog').show()"/>
+                <p:menuitem value="Shift Slot" update="slotScheduleDialog" action="#{futsalScheduleController.slotType('shift')}" oncomplete="PF('slotScheduleDialog').show()" />
+                <p:menuitem value="Custom Slot" update="slotScheduleDialog" action="#{futsalScheduleController.slotType('custom')}" oncomplete="PF('slotScheduleDialog').show()"/>
+            </p:tabMenu>
+            
+            <p:dialog id="slotScheduleDialog" header="Schedule Generator" widgetVar="slotScheduleDialog" height="600" width="1000">
+                <ui:include src="AutomaticScheduleForm.xhtml" />
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

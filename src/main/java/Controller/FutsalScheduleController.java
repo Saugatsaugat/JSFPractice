@@ -4,13 +4,14 @@ import Entities.BookingDetail;
 import Entities.BookingInformation;
 import Entities.Futsal;
 import Entities.FutsalSchedule;
+import Entities.SlotSchedule;
 import Entities.User;
 import Model.BookingDetailCrud;
 import Model.BookingInformationCrud;
 import Model.FutsalCrud;
 import Model.FutsalScheduleCruds;
 import Model.UserCrud;
-import com.saugat.beans.SlotScheduleBean;
+import com.saugat.bean.enums.SlotType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,18 +51,18 @@ public class FutsalScheduleController implements Serializable {
     ExternalContext externalContext;
     HttpSession session;
 
-    private SlotScheduleBean slotScheduleBean;
+    private SlotSchedule slotSchedule;
     private Futsal futsal;
     private Date newDate;
     private BookingInformation bookingInformation;
     private BookingDetail bookingDetail;
 
-    public SlotScheduleBean getSlotScheduleBean() {
-        return slotScheduleBean;
+    public SlotSchedule getSlotSchedule() {
+        return slotSchedule;
     }
 
-    public void setSlotScheduleBean(SlotScheduleBean slotScheduleBean) {
-        this.slotScheduleBean = slotScheduleBean;
+    public void setSlotSchedule(SlotSchedule slotSchedule) {
+        this.slotSchedule = slotSchedule;
     }
 
     public BookingInformation getBookingInformation() {
@@ -127,7 +128,7 @@ public class FutsalScheduleController implements Serializable {
 
     @PostConstruct
     public void init() {
-        slotScheduleBean = new SlotScheduleBean();
+        slotSchedule = new SlotSchedule();
         bookingInformation = new BookingInformation();
         bookingDetail = new BookingDetail();
         futsalSchedule = new FutsalSchedule();
@@ -146,6 +147,20 @@ public class FutsalScheduleController implements Serializable {
         }
 
     }
+    
+    
+    public void slotType(String string){
+        if("automatic".equals(string)){
+            this.slotSchedule.setSlotType(SlotType.automatic);
+        }
+        else if("shift".equals(string)){
+            this.slotSchedule.setSlotType(SlotType.shift);
+        }
+        else if("custom".equals(string)){
+            this.slotSchedule.setSlotType(SlotType.custom);
+        }
+    }
+    
 
     public void updateFutsalSchedule(Long futsalId) {
         if (futsalId != null) {
