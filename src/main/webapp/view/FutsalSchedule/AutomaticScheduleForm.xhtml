@@ -9,7 +9,12 @@
     <ui:define name="content">
 
         <h:form>
-            <h:outputLabel value="Automatic Slot Generation"/>
+            <h:outputLabel value="Automatic Slot Generator"/>
+            <h:outputLabel value="Shift Slot Generator"/>
+            <h:outputLabel value="Package Schedules"/>
+            <h:outputLabel value="Custom Slot Schedules"/>
+
+
             <p:separator style="border: none;" />
 
             <p:fieldset legend="Select Date">
@@ -28,6 +33,7 @@
             </p:fieldset>
 
             <p:separator style="border: none;" />
+
 
             <p:fieldset legend="Select Time">
                 <p:panelGrid columns="2" style="width: 100%;">
@@ -65,10 +71,77 @@
                 <h:outputText value="Enter Rate" />
                 <p:separator style="border: none;" />
                 <p:inputText id="rateInput" value="#{futsalScheduleController.slotScheduleBean.futsalSchedule.rate}" />
+
             </p:panelGrid>
+            <p:separator style="border: none;" />
+
+            <p:fieldset legend="Shifts">
+
+
+
+                <p:panelGrid columns="4" style="width: 100%;">
+                    <p:column>
+                        <p:fieldset legend="Morning Shift">
+                            <p:outputLabel value="Time will be between 5:00 - 10:00 with 1 hour Gap" />
+                            <p:separator style="border: none;" />
+                            <h:outputText value="Enter Rate" />
+                            <p:separator style="border: none;" />
+                            <p:inputText id="morningRateInput" value="#{futsalScheduleController.slotScheduleBean.futsalSchedule.rate}" />
+                        </p:fieldset>
+                    </p:column>
+                    <p:column>
+                        <p:fieldset legend="Day Shift">
+                            <p:outputLabel value="Time will be between 10:00 - 5:00 with 1 hour Gap" />
+                            <p:separator style="border: none;" />
+                            <h:outputText value="Enter Rate" />
+                            <p:separator style="border: none;" />
+                            <p:inputText id="dayRateInput" value="#{futsalScheduleController.slotScheduleBean.futsalSchedule.rate}" />
+                        </p:fieldset>
+                    </p:column>
+                    <p:column>
+                        <p:fieldset legend="Evening Shift">
+                            <p:outputLabel value="Time will be between 5:00 - 8:00 with 1 hour Gap" />
+                            <p:separator style="border: none;" />
+                            <h:outputText value="Enter Rate" />
+                            <p:separator style="border: none;" />
+                            <p:inputText id="eveningRateInput" value="#{futsalScheduleController.slotScheduleBean.futsalSchedule.rate}" />
+                        </p:fieldset>
+                    </p:column>
+                    <p:column>
+                        <p:fieldset legend="Night Shift">
+                            <p:outputLabel value="Time will be between 8:00 - 5:00 with 1 hour Gap" />
+                            <p:separator style="border: none;" />
+                            <h:outputText value="Enter Rate" />
+                            <p:separator style="border: none;" />
+                            <p:inputText id="nightRateInput" value="#{futsalScheduleController.slotScheduleBean.futsalSchedule.rate}" />
+                        </p:fieldset>
+                    </p:column>
+                </p:panelGrid>
+            </p:fieldset>
 
             <p:separator style="border: none;" />
 
+            <p:fieldset legend="Packages">
+                <p:panelGrid columns="2" style="width: 100%;">
+                    <p:column>
+                        <p:outputLabel value="Time From" />
+                        <p:separator style="border: none;" />
+                        <p:calendar timeControlType="select" pattern="HH:mm" timeInput="true" id="breakFrom" timeOnly="true" value="#{futsalScheduleController.slotScheduleBean.breakTimeFrom}" />
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="Time To" />
+                        <p:separator style="border: none;" />
+                        <p:calendar timeControlType="select" pattern="HH:mm" timeInput="true" id="breakTo" timeOnly="true" value="#{futsalScheduleController.slotScheduleBean.breakTimeTo}" />
+                    </p:column>
+                </p:panelGrid>
+            </p:fieldset>
+
+
+
+
+
+
+            <p:separator style="border: none;" />
             <p:commandButton id="scheduleButton" value="Make Schedule" action="#{futsalScheduleController.save()}" />
 
         </h:form>
