@@ -10,6 +10,7 @@ import Model.BookingInformationCrud;
 import Model.FutsalCrud;
 import Model.FutsalScheduleCruds;
 import Model.UserCrud;
+import com.saugat.beans.SlotScheduleBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,10 +49,20 @@ public class FutsalScheduleController implements Serializable {
     FacesContext context;
     ExternalContext externalContext;
     HttpSession session;
+
+    private SlotScheduleBean slotScheduleBean;
     private Futsal futsal;
     private Date newDate;
     private BookingInformation bookingInformation;
     private BookingDetail bookingDetail;
+
+    public SlotScheduleBean getSlotScheduleBean() {
+        return slotScheduleBean;
+    }
+
+    public void setSlotScheduleBean(SlotScheduleBean slotScheduleBean) {
+        this.slotScheduleBean = slotScheduleBean;
+    }
 
     public BookingInformation getBookingInformation() {
         return bookingInformation;
@@ -116,6 +127,7 @@ public class FutsalScheduleController implements Serializable {
 
     @PostConstruct
     public void init() {
+        slotScheduleBean = new SlotScheduleBean();
         bookingInformation = new BookingInformation();
         bookingDetail = new BookingDetail();
         futsalSchedule = new FutsalSchedule();
@@ -182,7 +194,7 @@ public class FutsalScheduleController implements Serializable {
             if ((fsc.checkIfExits(futsalSchedule)) && status.matches("available")) {
                 try {
                     if (fsc.saveBooking(bookingInformation, futsalSchedule)) {
-                       
+
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/bookingInformationTable.xhtml");
 
                     }

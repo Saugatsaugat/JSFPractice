@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="../template.xhtml">
+    <ui:define name="content">
+        <h:form id="normalScheduleForm">
+            <p:fieldset legend="Choose Date">
+                <p:panelGrid columns="2" style="width: 100%;">
+                    <p:column>
+                        <p:outputLabel value="Date From" />
+                        <p:separator style="border: none;" />
+                        <p:calendar id="dateFrom" pattern="yyyy-MM-dd" value="#{futsalScheduleController.futsalSchedule.scheduledate}"/>
+                    </p:column>
+                    <p:column>
+                        <p:outputLabel value="Date To" />
+                        <p:separator style="border: none;" />
+                        <p:calendar id="dateTo" pattern="yyyy-MM-dd" value="#{futsalScheduleController.futsalSchedule.scheduledate}"/>
+                    </p:column>
+                </p:panelGrid>
+            </p:fieldset>
+
+            <p:separator style="border: none;" />
+
+            <p:fieldset legend="Hours and Rates"  >
+                <p:panelGrid columns="1" style="width: 100%;">
+                    <p:column>
+                        <p:dataTable  value="#{normalScheduleFormController.initialHoursRatesList.entrySet()}" var="entry">
+                            <p:column style="width: 32px;">
+                                <p:selectBooleanCheckbox />
+                            </p:column>
+                            <p:column headerText="Time Slot">
+                                <h:outputText value="#{entry.key}" />
+                            </p:column>
+                            <p:column headerText="Rate">
+                                <p:inputText value="#{entry.value}" />
+                            </p:column>
+                        </p:dataTable>
+
+                    </p:column>
+
+
+                </p:panelGrid>
+
+            </p:fieldset>
+
+
+
+        </h:form>
+
+    </ui:define>
+
+
+
+</ui:composition>

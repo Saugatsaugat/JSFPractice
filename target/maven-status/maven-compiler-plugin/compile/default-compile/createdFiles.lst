@@ -3,6 +3,7 @@ Controller/FutsalScheduleController.class
 Login/Login.class
 Entities/BookingDetail.class
 com/saugat/beans/UserBean.class
+Entities/NormalSchedule.class
 Entities/FutsalSchedule.class
 Entities/User.class
 Model/BookingInformationCrud.class
@@ -15,8 +16,10 @@ Controller/BookingInformationController.class
 Controller/UserController.class
 Controller/BookingDetailController.class
 Model/AbstractEntity.class
+Controller/NormalScheduleFormController.class
 com/saugat/converter/FutsalConverter.class
 com/saugat/converter/AbstractEntityConverter.class
+com/saugat/beans/SlotScheduleBean.class
 Model/FutsalUserRelationCrud.class
 Model/UserCrud.class
 Controller/ValidationController.class

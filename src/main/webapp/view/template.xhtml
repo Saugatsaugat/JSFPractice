@@ -58,9 +58,13 @@
             .red{
                 background-color: #ffcccc;
                 color: black;
-
             }
-
+            legend{
+                text-align: center;
+            }
+            .ui-fieldset,.ui-fieldset .ui-fieldset-legend{
+                padding: 0px;
+            }
 
 
 
@@ -84,7 +88,11 @@
                     <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout}" />
                     <p:menuitem value="Register" rendered="#{empty userBean.user}" url="/faces/view/Register/userRegisterForm.xhtml"/>
                     <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" url="/faces/view/Login/loginForm.xhtml"/>
+                  
+                    
+                    <p:menuitem value="Automatic Schedule" url="/faces/view/FutsalSchedule/AutomaticScheduleForm.xhtml"/>
 
+                    <p:menuitem value="NormalSchedule" url="/faces/view/FutsalSchedule/NormalScheduleForm.xhtml"/>
                 </p:menubar>
 
             </h:form>
