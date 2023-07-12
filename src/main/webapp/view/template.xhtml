@@ -65,7 +65,18 @@
             .ui-fieldset,.ui-fieldset .ui-fieldset-legend{
                 padding: 0px;
             }
+            .ui-growl-item{
+                font-size: 15px;
+                background: white;
+                color: red;
+            }
+            .ui-growl-icon-close{
+                display: block !important;
 
+            }
+            .ui-growl-image{
+                display:none;
+            }
 
 
         </style>
@@ -88,8 +99,7 @@
                     <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout}" />
                     <p:menuitem value="Register" rendered="#{empty userBean.user}" url="/faces/view/Register/userRegisterForm.xhtml"/>
                     <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" url="/faces/view/Login/loginForm.xhtml"/>
-                  
-                    
+
                     <p:menuitem value="Automatic Schedule" url="/faces/view/FutsalSchedule/FutsalScheduleGenerator.xhtml"/>
 
                     <p:menuitem value="NormalSchedule" url="/faces/view/FutsalSchedule/NormalScheduleForm.xhtml"/>

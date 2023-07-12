@@ -27,11 +27,11 @@ public class SlotSchedule implements Serializable {
     private Date TimeFrom;
     @Temporal(TemporalType.TIME)
     private Date TimeTo;
-    private BigDecimal morningShiftRate;
-    private BigDecimal dayShiftRate;
-    private BigDecimal eveningShiftRate;
-    private BigDecimal nightShiftRate;
-    private BigDecimal normalRate;
+    private float morningShiftRate;
+    private float dayShiftRate;
+    private float eveningShiftRate;
+    private float nightShiftRate;
+    private float normalRate;
 
     public Date getTimeFrom() {
         return TimeFrom;
@@ -50,43 +50,43 @@ public class SlotSchedule implements Serializable {
     }
 
     
-    public BigDecimal getNormalRate() {
+    public float getNormalRate() {
         return normalRate;
     }
 
-    public void setNormalRate(BigDecimal normalRate) {
+    public void setNormalRate(float normalRate) {
         this.normalRate = normalRate;
     }
     
-    public BigDecimal getMorningShiftRate() {
+    public float getMorningShiftRate() {
         return morningShiftRate;
     }
 
-    public void setMorningShiftRate(BigDecimal morningShiftRate) {
+    public void setMorningShiftRate(float morningShiftRate) {
         this.morningShiftRate = morningShiftRate;
     }
 
-    public BigDecimal getDayShiftRate() {
+    public float getDayShiftRate() {
         return dayShiftRate;
     }
 
-    public void setDayShiftRate(BigDecimal dayShiftRate) {
+    public void setDayShiftRate(float dayShiftRate) {
         this.dayShiftRate = dayShiftRate;
     }
 
-    public BigDecimal getEveningShiftRate() {
+    public float getEveningShiftRate() {
         return eveningShiftRate;
     }
 
-    public void setEveningShiftRate(BigDecimal eveningShiftRate) {
+    public void setEveningShiftRate(float eveningShiftRate) {
         this.eveningShiftRate = eveningShiftRate;
     }
 
-    public BigDecimal getNightShiftRate() {
+    public float getNightShiftRate() {
         return nightShiftRate;
     }
 
-    public void setNightShiftRate(BigDecimal nightShiftRate) {
+    public void setNightShiftRate(float nightShiftRate) {
         this.nightShiftRate = nightShiftRate;
     }
 

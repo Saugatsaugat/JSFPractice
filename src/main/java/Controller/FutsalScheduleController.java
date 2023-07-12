@@ -13,7 +13,13 @@ import Model.FutsalScheduleCruds;
 import Model.UserCrud;
 import com.saugat.bean.enums.SlotType;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -147,20 +153,16 @@ public class FutsalScheduleController implements Serializable {
         }
 
     }
-    
-    
-    public void slotType(String string){
-        if("automatic".equals(string)){
+
+    public void slotType(String string) {
+        if ("automatic".equals(string)) {
             this.slotSchedule.setSlotType(SlotType.automatic);
-        }
-        else if("shift".equals(string)){
+        } else if ("shift".equals(string)) {
             this.slotSchedule.setSlotType(SlotType.shift);
-        }
-        else if("custom".equals(string)){
+        } else if ("custom".equals(string)) {
             this.slotSchedule.setSlotType(SlotType.custom);
         }
     }
-    
 
     public void updateFutsalSchedule(Long futsalId) {
         if (futsalId != null) {
@@ -264,6 +266,189 @@ public class FutsalScheduleController implements Serializable {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Update Failed", "Update Failed");
         context.addMessage(null, message);
 
+    }
+
+    public Calendar getDateTimeFunc(int time) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, time);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar;
+    }
+
+    public void saveFutsalSchedule() {
+        if (session.getAttribute("userId") != null) {
+            try {
+                Long userId = (Long) session.getAttribute("userId");
+                Futsal futsal = futsalCrud.checkIfFutsalRegistered(userId);
+                if (slotSchedule.getSlotType() == SlotType.automatic) {
+                    List<FutsalSchedule> newScheduleList = new ArrayList<FutsalSchedule>();
+                    if ((slotSchedule.getDateFrom() != null) && (slotSchedule.getDateTo()) != null) {
+                        LocalDate startDate = slotSchedule.getDateFrom().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate endDate = slotSchedule.getDateTo().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        while (!startDate.isAfter(endDate)) {
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTime(slotSchedule.getTimeFrom());
+                            
+                            Calendar calendarBreakTimeFrom = Calendar.getInstance();
+                            calendarBreakTimeFrom.setTime(slotSchedule.getBreakTimeFrom());
+                            Date breakTimeStart = calendarBreakTimeFrom.getTime();
+                            
+                            Calendar calendarBreakTimeTo = Calendar.getInstance();
+                            calendarBreakTimeTo.setTime(slotSchedule.getBreakTimeTo());
+                            Date breakTimeEnd = calendarBreakTimeTo.getTime();
+                            
+                           
+                            while (!calendar.getTime().after(slotSchedule.getTimeTo())) {
+                                Date currentTime = calendar.getTime();
+                                calendar.add(Calendar.HOUR, 1);
+                                Date nextTime = calendar.getTime();
+                                if ((!currentTime.equals(breakTimeStart)) && (!nextTime.equals(breakTimeEnd))){
+                                    FutsalSchedule newFutsalSchedule = new FutsalSchedule();
+                                    newFutsalSchedule.setFutsal(futsal);
+                                    newFutsalSchedule.setRate(slotSchedule.getNormalRate());
+                                    newFutsalSchedule.setScheduledate(java.sql.Date.valueOf(startDate));
+                                    newFutsalSchedule.setStarthour(currentTime);
+                                    newFutsalSchedule.setEndhour(nextTime);
+                                    newFutsalSchedule.setStatus("available");
+                                    newScheduleList.add(newFutsalSchedule);
+                                }
+                            }
+                            startDate = startDate.plus(1, ChronoUnit.DAYS);
+                        }
+                        if (fsc.saveAll(newScheduleList)) {
+                            try {
+                                context = FacesContext.getCurrentInstance();
+                                externalContext = context.getExternalContext();
+
+                                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Added Successfully", "Added Successfully");
+                                context.addMessage(null, message);
+
+                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+
+                            } catch (Exception e) {
+
+                            }
+                        } else {
+                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
+                            context.addMessage(null, message);
+                        }
+
+                    }
+
+                } else if (slotSchedule.getSlotType() == SlotType.shift) {
+                    List<FutsalSchedule> newScheduleList = new ArrayList<FutsalSchedule>();
+                    if ((slotSchedule.getDateFrom() != null) && (slotSchedule.getDateTo()) != null) {
+                        LocalDate startDate = slotSchedule.getDateFrom().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate endDate = slotSchedule.getDateTo().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        while (!startDate.isAfter(endDate)) {
+                            for (int start = 5; start < 10; start++) {
+                                FutsalSchedule newFutsalSchedule = new FutsalSchedule();
+                                newFutsalSchedule.setScheduledate(java.sql.Date.valueOf(startDate));
+                                newFutsalSchedule.setFutsal(futsal);
+                                newFutsalSchedule.setRate(slotSchedule.getMorningShiftRate());
+                                newFutsalSchedule.setStarthour(getDateTimeFunc(start).getTime());
+                                newFutsalSchedule.setEndhour(getDateTimeFunc(start + 1).getTime());
+                                newFutsalSchedule.setStatus("available");
+                                newScheduleList.add(newFutsalSchedule);
+                            }
+                            for (int start = 10; start < 17; start++) {
+                                FutsalSchedule newFutsalSchedule = new FutsalSchedule();
+                                newFutsalSchedule.setScheduledate(java.sql.Date.valueOf(startDate));
+                                newFutsalSchedule.setFutsal(futsal);
+                                newFutsalSchedule.setRate(slotSchedule.getDayShiftRate());
+                                newFutsalSchedule.setStarthour(getDateTimeFunc(start).getTime());
+                                newFutsalSchedule.setEndhour(getDateTimeFunc(start + 1).getTime());
+                                newFutsalSchedule.setStatus("available");
+                                newScheduleList.add(newFutsalSchedule);
+                            }
+                            for (int start = 17; start < 20; start++) {
+                                FutsalSchedule newFutsalSchedule = new FutsalSchedule();
+                                newFutsalSchedule.setScheduledate(java.sql.Date.valueOf(startDate));
+                                newFutsalSchedule.setFutsal(futsal);
+                                newFutsalSchedule.setRate(slotSchedule.getEveningShiftRate());
+                                newFutsalSchedule.setStarthour(getDateTimeFunc(start).getTime());
+                                newFutsalSchedule.setEndhour(getDateTimeFunc(start + 1).getTime());
+                                newFutsalSchedule.setStatus("available");
+                                newScheduleList.add(newFutsalSchedule);
+                            }
+                            for (int start = 20; start < 23; start++) {
+                                FutsalSchedule newFutsalSchedule = new FutsalSchedule();
+                                newFutsalSchedule.setScheduledate(java.sql.Date.valueOf(startDate));
+                                newFutsalSchedule.setFutsal(futsal);
+                                newFutsalSchedule.setRate(slotSchedule.getNightShiftRate());
+                                newFutsalSchedule.setStarthour(getDateTimeFunc(start).getTime());
+                                newFutsalSchedule.setEndhour(getDateTimeFunc(start + 1).getTime());
+                                newFutsalSchedule.setStatus("available");
+                                newScheduleList.add(newFutsalSchedule);
+                            }
+                            for (int start = 1; start < 4; start++) {
+                                FutsalSchedule newFutsalSchedule = new FutsalSchedule();
+                                newFutsalSchedule.setScheduledate(java.sql.Date.valueOf(startDate));
+                                newFutsalSchedule.setFutsal(futsal);
+                                newFutsalSchedule.setRate(slotSchedule.getNightShiftRate());
+                                newFutsalSchedule.setStarthour(getDateTimeFunc(start).getTime());
+                                newFutsalSchedule.setEndhour(getDateTimeFunc(start + 1).getTime());
+                                newFutsalSchedule.setStatus("available");
+                                newScheduleList.add(newFutsalSchedule);
+                            }
+
+                            startDate = startDate.plus(1, ChronoUnit.DAYS);
+                        }
+                        if (fsc.saveAll(newScheduleList)) {
+                            try {
+                                context = FacesContext.getCurrentInstance();
+                                externalContext = context.getExternalContext();
+
+                                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Added Successfully", "Added Successfully");
+                                context.addMessage(null, message);
+
+                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+
+                            } catch (Exception e) {
+
+                            }
+                        } else {
+                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
+                            context.addMessage(null, message);
+                        }
+
+                    }
+
+                } else if (slotSchedule.getSlotType() == SlotType.custom) {
+                    futsalSchedule.setScheduledate(slotSchedule.getDateFrom());
+                    futsalSchedule.setFutsal(futsal);
+                    futsalSchedule.setRate(slotSchedule.getNormalRate());
+                    futsalSchedule.setStarthour(slotSchedule.getTimeFrom());
+                    futsalSchedule.setEndhour(slotSchedule.getTimeTo());
+                    futsalSchedule.setStatus("available");
+                    if (fsc.save(futsalSchedule)) {
+                        try {
+                            context = FacesContext.getCurrentInstance();
+                            externalContext = context.getExternalContext();
+
+                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Added Successfully", "Added Successfully");
+                            context.addMessage(null, message);
+
+                            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+
+                        } catch (Exception e) {
+
+                        }
+                    } else {
+                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
+                        context.addMessage(null, message);
+                    }
+
+                }
+            } catch (Exception e) {
+
+            }
+        } else {
+            context = FacesContext.getCurrentInstance();
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Required", "Login Required");
+            context.addMessage(null, message);
+        }
     }
 
     public void save() {
