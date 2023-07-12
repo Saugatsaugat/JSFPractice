@@ -9,11 +9,13 @@
                 template="../template.xhtml">
 
     <ui:define name="content">
+        <p:growl id="messages" autoUpdate="true" severity="error" showSummary="true" />
         <div style="text-align: center;">
-            <p:commandButton icon="fa fa-plus" id="addDialog" oncomplete="PF('addDialog').show()" />
+            <p:commandButton update="messages" title="Add Futsal Schedule" icon="fa fa-plus" id="addDialog" oncomplete="PF('addDialog').show()" />
         </div>
         <h3 style="text-align: center;">Futsal Schedule Table</h3>
         <h:form>
+
             <p:dataTable rowStyleClass="#{futsalScheduleController.rowStyleClass(item)}"  value="#{futsalScheduleController.futsalScheduleList}" rowIndexVar="rowIndex" var="item">
                 <p:column headerText="S.N." >
                     <h:outputText value="#{rowIndex + 1}" />
@@ -34,7 +36,7 @@
                     #{item.status}
                 </p:column>
                 <p:column  headerText="Edit">
-                    <p:commandButton icon="fa fa-pencil" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" process="@this" actionListener="#{futsalScheduleController.showFutsalSchedule(item)}"/>
+                    <p:commandButton icon="fa fa-pencil" rendered="#{item.status.matches('available')}" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" process="@this" actionListener="#{futsalScheduleController.showFutsalSchedule(item)}"/>
 
                 </p:column>
                 <p:column  headerText="Delete">

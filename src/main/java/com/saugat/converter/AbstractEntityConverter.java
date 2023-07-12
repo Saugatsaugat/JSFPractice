@@ -1,5 +1,6 @@
 package com.saugat.converter;
 
+import Model.AbstractCrud;
 import Model.AbstractEntity;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -11,13 +12,14 @@ import javax.faces.convert.Converter;
  * @param <T>
  */
 
-public class AbstractEntityConverter<T extends AbstractEntity> implements Converter {
+public abstract class AbstractEntityConverter<T extends AbstractEntity> implements Converter {
 
     private final Class<T> entityClass;
 
     public AbstractEntityConverter(Class<T> entityClass) {
         this.entityClass = entityClass;
     }
+    protected abstract AbstractCrud getRepo();
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {

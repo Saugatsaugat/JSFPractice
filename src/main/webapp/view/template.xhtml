@@ -52,16 +52,31 @@
                 margin-right: 2px;
             }
             .green{
-                background-color: green;
-                color: white;
+                background-color: #ccffcc;
+                color: black;
             }
             .red{
-                background-color: red;
-                color: white;
+                background-color: #ffcccc;
+                color: black;
+            }
+            legend{
+                text-align: center;
+            }
+            .ui-fieldset,.ui-fieldset .ui-fieldset-legend{
+                padding: 0px;
+            }
+            .ui-growl-item{
+                font-size: 15px;
+                background: white;
+                color: red;
+            }
+            .ui-growl-icon-close{
+                display: block !important;
 
             }
-
-
+            .ui-growl-image{
+                display:none;
+            }
 
 
         </style>
@@ -85,6 +100,9 @@
                     <p:menuitem value="Register" rendered="#{empty userBean.user}" url="/faces/view/Register/userRegisterForm.xhtml"/>
                     <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" url="/faces/view/Login/loginForm.xhtml"/>
 
+                    <p:menuitem value="Automatic Schedule" url="/faces/view/FutsalSchedule/FutsalScheduleGenerator.xhtml"/>
+
+                    <p:menuitem value="NormalSchedule" url="/faces/view/FutsalSchedule/NormalScheduleForm.xhtml"/>
                 </p:menubar>
 
             </h:form>

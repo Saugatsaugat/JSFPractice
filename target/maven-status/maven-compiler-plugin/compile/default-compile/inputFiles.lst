@@ -1,4 +1,6 @@
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/NormalSchedule.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/beans/UserBean.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/bean/enums/SlotType.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/User.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/IAbstractEntity.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/UserCrud.java
@@ -9,13 +11,16 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/TimeConvertor.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/BookingInformationController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/LoginController.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/beans/SlotScheduleBean.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/PasswordHashController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/FutsalDetail.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Login/Login.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalScheduleController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/AbstractEntityConverter.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/SlotSchedule.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalUserRelationCrud.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/NormalScheduleFormController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/DateEntity.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/UserModel.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/LogoutController.java

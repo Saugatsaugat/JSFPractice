@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -50,63 +51,63 @@ public abstract class AbstractCrud<T extends IAbstractEntity> {
         }
         return t;
     }
-    
-    public boolean save(T obj){
-        try{
+
+    public boolean save(T obj) {
+        try {
             getEntityManager().persist(obj);
             return true;
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return false;
     }
-    
-    public boolean saveAll(List<T> obj){
-        try{
-            for(T item:obj){
+
+    public boolean saveAll(List<T> obj) {
+
+        try {
+            for (T item : obj) {
                 getEntityManager().persist(item);
             }
             return true;
-            
-        }catch(Exception e){
-            
+
+        } catch (Exception e) {
         }
         return false;
     }
-    
-    public boolean deleteById(Long id){
-        try{
+
+    public boolean deleteById(Long id) {
+        try {
             T obj = getDataById(id);
             getEntityManager().remove(obj);
             return true;
-            
-        }catch(Exception e){
-            
+
+        } catch (Exception e) {
+
         }
         return false;
     }
-    
-    public boolean update(T obj, Long id){
-        try{
-            T existingObj = getEntityManager().find(getEntityClass(),id);
-            if(existingObj!=null){
+
+    public boolean update(T obj, Long id) {
+        try {
+            T existingObj = getEntityManager().find(getEntityClass(), id);
+            if (existingObj != null) {
                 getEntityManager().merge(obj);
                 return true;
             }
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return false;
     }
-    
-    public boolean checkIfExits(T obj){
-        try{
+
+    public boolean checkIfExits(T obj) {
+        try {
             T existingObj = getEntityManager().find(getEntityClass(), obj.getId());
-            if(existingObj.equals(obj)){
+            if (existingObj.equals(obj)) {
                 return true;
             }
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
         return false;
     }

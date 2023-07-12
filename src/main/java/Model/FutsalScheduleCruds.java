@@ -1,23 +1,32 @@
 package Model;
 
+import Entities.BookingDetail;
+import Entities.BookingInformation;
 import Entities.Futsal;
 import Entities.FutsalSchedule;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
+import javax.transaction.Transactional;
 
 /**
  *
  * @author saugat
  */
 @Stateless
+@Transactional
 public class FutsalScheduleCruds extends AbstractCrud<FutsalSchedule> {
-
+    
+    @Inject
+    private BookingInformationCrud bookingInformationCrud;
+    @Inject
+    private BookingDetailCrud bookingDetailCrud;
+        
     @PersistenceContext(name = "futsal")
     EntityManager em;
 
@@ -25,9 +34,7 @@ public class FutsalScheduleCruds extends AbstractCrud<FutsalSchedule> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-
-
+   
     public List<FutsalSchedule> getCurrentDateDataByFutsal(Futsal futsal) {
         List<FutsalSchedule> futsalSchedule = null;
         try {
@@ -70,5 +77,46 @@ public class FutsalScheduleCruds extends AbstractCrud<FutsalSchedule> {
         }
         return futsalSchedule;
     }
+    
+    public boolean saveBooking(BookingInformation bookingInformation, FutsalSchedule futsalSchedule){
+        try{
+            if(bookingInformationCrud.save(bookingInformation)){
+                BookingDetail bookingDetail = new BookingDetail();
+                bookingDetail.setBookinginformation(bookingInformation);
+                bookingDetail.setFutsalschedule(futsalSchedule);
+                bookingDetail.setPaymentstatus("incomplete");
+                if(bookingDetailCrud.save(bookingDetail)){
+                    futsalSchedule.setStatus("booked");
+                    if(this.update(futsalSchedule, futsalSchedule.getId())){
+                        return true;
+                    }
+                }
+            }
+            
+        }catch(Exception e){
+            
+        }
+        return false;
+        
+    }
+    
+    public boolean checkIfRecordExistsByDateAndTime(Date scheduleDate, Date startHour, Date endHour, Futsal futsal){
+        try{
+            Query query = em.createQuery("SELECT u from FutsalSchedule u where u.scheduledate=:scheduledate and u.starthour=:starthour and u.endhour=:endhour and u.futsal=:futsal");
+            query.setParameter("scheduledate", scheduleDate);
+            query.setParameter("starthour",startHour);
+            query.setParameter("endhour",endHour);
+            query.setParameter("futsal",futsal);
+            FutsalSchedule futsalSchedule = (FutsalSchedule) query.getSingleResult();
+            if(futsalSchedule!=null){
+                return true;
+            }
+        }catch(Exception e){
+            
+        }
+        return false;
+    }
+    
+    
 
 }
