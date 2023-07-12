@@ -3,7 +3,7 @@ package com.saugat.beans;
 import Entities.SlotSchedule;
 import com.saugat.bean.enums.SlotType;
 import java.io.Serializable;
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
@@ -11,7 +11,7 @@ import javax.inject.Named;
  * @author saugat
  */
 @Named
-@ViewScoped
+@SessionScoped
 public class SlotScheduleBean implements Serializable {
 
     private SlotSchedule slotSchedule;
