@@ -14,8 +14,6 @@ import Model.UserCrud;
 import com.saugat.bean.enums.SlotType;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -57,12 +55,22 @@ public class FutsalScheduleController implements Serializable {
     ExternalContext externalContext;
     HttpSession session;
 
+    private List<FutsalSchedule> newScheduleList;
     private SlotSchedule slotSchedule;
     private Futsal futsal;
     private Date newDate;
     private BookingInformation bookingInformation;
     private BookingDetail bookingDetail;
 
+    public List<FutsalSchedule> getNewScheduleList() {
+        return newScheduleList;
+    }
+
+    public void setNewScheduleList(List<FutsalSchedule> newScheduleList) {
+        this.newScheduleList = newScheduleList;
+    }
+
+    
     public SlotSchedule getSlotSchedule() {
         return slotSchedule;
     }
@@ -134,6 +142,7 @@ public class FutsalScheduleController implements Serializable {
 
     @PostConstruct
     public void init() {
+        newScheduleList= new ArrayList<>();
         slotSchedule = new SlotSchedule();
         bookingInformation = new BookingInformation();
         bookingDetail = new BookingDetail();
@@ -151,7 +160,6 @@ public class FutsalScheduleController implements Serializable {
             futsalScheduleList = fsc.getCurrentDateFutsalSchedule();
             System.out.println("");
         }
-
     }
 
     public boolean checkIfSlotExists(Date scheduleDate, Date startHour, Date endHour, Futsal futsal) {
@@ -272,7 +280,7 @@ public class FutsalScheduleController implements Serializable {
         calendar.set(Calendar.HOUR_OF_DAY, time);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0); 
+        calendar.set(Calendar.MILLISECOND, 0);
         return calendar;
     }
 
@@ -282,7 +290,8 @@ public class FutsalScheduleController implements Serializable {
                 Long userId = (Long) session.getAttribute("userId");
                 Futsal futsal = futsalCrud.checkIfFutsalRegistered(userId);
                 if (slotSchedule.getSlotType() == SlotType.automatic) {
-                    List<FutsalSchedule> newScheduleList = new ArrayList<FutsalSchedule>();
+                   newScheduleList = new ArrayList<>();
+                    List<FutsalSchedule> bookedScheduleList = new ArrayList<>();
                     if ((slotSchedule.getDateFrom() != null) && (slotSchedule.getDateTo()) != null) {
                         LocalDate startDate = slotSchedule.getDateFrom().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         LocalDate endDate = slotSchedule.getDateTo().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -313,6 +322,7 @@ public class FutsalScheduleController implements Serializable {
 
                                     boolean status = checkIfSlotExists(java.sql.Date.valueOf(startDate), currentTime, nextTime, futsal);
                                     if (status) {
+                                        bookedScheduleList.add(newFutsalSchedule);
                                     } else {
                                         newScheduleList.add(newFutsalSchedule);
                                     }
@@ -320,28 +330,28 @@ public class FutsalScheduleController implements Serializable {
                             }
                             startDate = startDate.plus(1, ChronoUnit.DAYS);
                         }
-                        if (fsc.saveAll(newScheduleList)) {
-                            try {
-                                context = FacesContext.getCurrentInstance();
-                                externalContext = context.getExternalContext();
-
-                                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Added Successfully", "Added Successfully");
-                                context.addMessage(null, message);
-
-                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
-
-                            } catch (Exception e) {
-
-                            }
-                        } else {
-                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
-                            context.addMessage(null, message);
-                        }
+//                        if (fsc.saveAll(newScheduleList)) {
+//                            try {
+//                                RequestContext contextReq = RequestContext.getCurrentInstance();
+//                                contextReq.execute("PF('confirmSlot').show();");
+////                                context = FacesContext.getCurrentInstance();
+////                                externalContext = context.getExternalContext();
+////                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+//
+//                            } catch (Exception e) {
+//
+//                            }
+//                        } else {
+//                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
+//                            context.addMessage(null, message);
+//                        }
 
                     }
 
                 } else if (slotSchedule.getSlotType() == SlotType.shift) {
-                    List<FutsalSchedule> newScheduleList = new ArrayList<FutsalSchedule>();
+                    newScheduleList = new ArrayList<>();
+                    List<FutsalSchedule> bookedScheduleList = new ArrayList<>();
+
                     if ((slotSchedule.getDateFrom() != null) && (slotSchedule.getDateTo()) != null) {
                         LocalDate startDate = slotSchedule.getDateFrom().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         LocalDate endDate = slotSchedule.getDateTo().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -356,6 +366,8 @@ public class FutsalScheduleController implements Serializable {
                                 newFutsalSchedule.setStatus("available");
                                 boolean status = checkIfSlotExists(java.sql.Date.valueOf(startDate), getDateTimeFunc(start).getTime(), getDateTimeFunc(start + 1).getTime(), futsal);
                                 if (status) {
+                                    bookedScheduleList.add(newFutsalSchedule);
+
                                 } else {
                                     newScheduleList.add(newFutsalSchedule);
                                 }
@@ -371,6 +383,8 @@ public class FutsalScheduleController implements Serializable {
                                 newFutsalSchedule.setStatus("available");
                                 boolean status = checkIfSlotExists(java.sql.Date.valueOf(startDate), getDateTimeFunc(start).getTime(), getDateTimeFunc(start + 1).getTime(), futsal);
                                 if (status) {
+                                    bookedScheduleList.add(newFutsalSchedule);
+
                                 } else {
                                     newScheduleList.add(newFutsalSchedule);
                                 }
@@ -385,6 +399,8 @@ public class FutsalScheduleController implements Serializable {
                                 newFutsalSchedule.setStatus("available");
                                 boolean status = checkIfSlotExists(java.sql.Date.valueOf(startDate), getDateTimeFunc(start).getTime(), getDateTimeFunc(start + 1).getTime(), futsal);
                                 if (status) {
+                                    bookedScheduleList.add(newFutsalSchedule);
+
                                 } else {
                                     newScheduleList.add(newFutsalSchedule);
                                 }
@@ -399,6 +415,8 @@ public class FutsalScheduleController implements Serializable {
                                 newFutsalSchedule.setStatus("available");
                                 boolean status = checkIfSlotExists(java.sql.Date.valueOf(startDate), getDateTimeFunc(start).getTime(), getDateTimeFunc(start + 1).getTime(), futsal);
                                 if (status) {
+                                    bookedScheduleList.add(newFutsalSchedule);
+
                                 } else {
                                     newScheduleList.add(newFutsalSchedule);
                                 }
@@ -420,27 +438,27 @@ public class FutsalScheduleController implements Serializable {
 
                             startDate = startDate.plus(1, ChronoUnit.DAYS);
                         }
-                        if (fsc.saveAll(newScheduleList)) {
-                            try {
-                                context = FacesContext.getCurrentInstance();
-                                externalContext = context.getExternalContext();
+                        
 
-                                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Added Successfully", "Added Successfully");
-                                context.addMessage(null, message);
+                       
 
-                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
-
-                            } catch (Exception e) {
-
-                            }
-                        } else {
-                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
-                            context.addMessage(null, message);
-                        }
-
+//                        if (fsc.saveAll(newScheduleList)) {
+//                            try {
+//                                RequestContext contextReq = RequestContext.getCurrentInstance();
+//                                contextReq.execute("PF('confirmSlot').show();");
+//
+//                            } catch (Exception e) {
+//
+//                            }
+//                        } else {
+//                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
+//                            context.addMessage(null, message);
+//                        }
                     }
 
                 } else if (slotSchedule.getSlotType() == SlotType.custom) {
+                    List<FutsalSchedule> bookedScheduleList = new ArrayList<>();
+                    newScheduleList = new ArrayList<>();
                     FutsalSchedule newSchedule = new FutsalSchedule();
                     newSchedule.setScheduledate(slotSchedule.getDateFrom());
                     newSchedule.setFutsal(futsal);
@@ -450,26 +468,23 @@ public class FutsalScheduleController implements Serializable {
                     newSchedule.setStatus("available");
                     boolean status = checkIfSlotExists(slotSchedule.getDateFrom(), slotSchedule.getTimeFrom(), slotSchedule.getTimeTo(), futsal);
                     if (status) {
-                        System.out.println("");
+                        bookedScheduleList.add(newSchedule);
                     } else {
 
-                        if (fsc.save(newSchedule)) {
-                            try {
-                                context = FacesContext.getCurrentInstance();
-                                externalContext = context.getExternalContext();
-
-                                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Added Successfully", "Added Successfully");
-                                context.addMessage(null, message);
-
-                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
-
-                            } catch (Exception e) {
-
-                            }
-                        } else {
-                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
-                            context.addMessage(null, message);
-                        }
+                        newScheduleList.add(newSchedule);
+                        System.out.println("");
+//                        if (fsc.save(newSchedule)) {
+//                            try {
+//                                RequestContext contextReq = RequestContext.getCurrentInstance();
+//                                contextReq.execute("PF('confirmSlot').show();");
+//
+//                            } catch (Exception e) {
+//
+//                            }
+//                        } else {
+//                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
+//                            context.addMessage(null, message);
+//                        }
                     }
                 }
             } catch (Exception e) {

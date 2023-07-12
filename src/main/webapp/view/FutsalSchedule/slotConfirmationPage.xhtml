@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+    <h:outputText value="The slots generated are"/>
+    <p:separator style="border:none;" />
+    <p:dataTable paginator="true" rows="10" var="schedule" value="#{futsalScheduleController.newScheduleList}" rowIndexVar="i">
+            <p:column  headerText="S.N.">
+                <h:outputText value="#{i + 1}" />
+            </p:column>
+            <p:column headerText="ScheduleDate">
+                #{schedule.scheduledate}
+            </p:column>
+            <p:column headerText="StartHour">
+                #{schedule.starthour}
+            </p:column>
+            <p:column headerText="EndHour">
+                #{schedule.endhour}
+            </p:column>
+            <p:column headerText="Rate">
+                #{schedule.rate}
+            </p:column>
+        </p:dataTable>
+</ui:composition>

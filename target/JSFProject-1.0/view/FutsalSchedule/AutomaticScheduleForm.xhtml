@@ -6,9 +6,9 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
-    
-    
-    <h:form id="scheduleForm">
+
+
+    <h:form id="scheduleForm" rendered="#{empty futsalScheduleController.newScheduleList}">
         <p:messages autoUpdate="true" showSummary="true" severity="error" closable="true" />
 
         <h:outputLabel rendered="#{futsalScheduleController.slotSchedule.slotType=='automatic'}" value="Automatic Slot Generator"/>
@@ -119,9 +119,32 @@
         </p:fieldset>
 
         <p:separator style="border: none;" />
-        <p:commandButton id="scheduleButton" value="Make Schedule" action="#{futsalScheduleController.saveFutsalSchedule()}" />
-
+        <p:commandButton update="confirmSlot"  id="scheduleButton" value="Generate Schedule" action="#{futsalScheduleController.saveFutsalSchedule()}" />
     </h:form>
+
+    <h:form id="confirmSlot" >
+        <p:dataTable paginator="true" rows="10" var="schedule" value="#{futsalScheduleController.newScheduleList}" rowIndexVar="i">
+            <p:column  headerText="S.N.">
+                <h:outputText value="#{i + 1}" />
+            </p:column>
+            <p:column headerText="ScheduleDate">
+                #{schedule.scheduledate}
+            </p:column>
+            <p:column headerText="StartHour">
+                #{schedule.starthour}
+            </p:column>
+            <p:column headerText="EndHour">
+                #{schedule.endhour}
+            </p:column>
+            <p:column headerText="Rate">
+                #{schedule.rate}
+            </p:column>
+        </p:dataTable>
+        <p:separator style="border: none;" />
+        <p:commandButton value="Confirm" rendered="#{not empty futsalScheduleController.newScheduleList}" action="#{futsalScheduleController.saveFutsalSchedule()}"/>
+        
+      </h:form>
+
 
 
 </ui:composition>
