@@ -100,6 +100,23 @@ public class FutsalScheduleCruds extends AbstractCrud<FutsalSchedule> {
         
     }
     
+    public boolean checkIfRecordExistsByDateAndTime(Date scheduleDate, Date startHour, Date endHour, Futsal futsal){
+        try{
+            Query query = em.createQuery("SELECT u from FutsalSchedule u where u.scheduledate=:scheduledate and u.starthour=:starthour and u.endhour=:endhour and u.futsal=:futsal");
+            query.setParameter("scheduledate", scheduleDate);
+            query.setParameter("starthour",startHour);
+            query.setParameter("endhour",endHour);
+            query.setParameter("futsal",futsal);
+            FutsalSchedule futsalSchedule = (FutsalSchedule) query.getSingleResult();
+            if(futsalSchedule!=null){
+                return true;
+            }
+        }catch(Exception e){
+            
+        }
+        return false;
+    }
+    
     
 
 }
