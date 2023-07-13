@@ -34,6 +34,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/BookingInformationCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/FutsalSchedule.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/BookingDetailCrud.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/dataModel/CustomDataModel.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/DateController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/bean/enums/UserType.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalDetailCrud.java

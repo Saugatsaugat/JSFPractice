@@ -12,6 +12,7 @@ import Model.FutsalCrud;
 import Model.FutsalScheduleCruds;
 import Model.UserCrud;
 import com.saugat.bean.enums.SlotType;
+import com.saugat.dataModel.CustomDataModel;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -31,6 +32,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.SelectableDataModel;
 
 /**
  *
@@ -38,7 +40,7 @@ import org.primefaces.event.SelectEvent;
  */
 @Named
 @ViewScoped
-public class FutsalScheduleController implements Serializable {
+public class FutsalScheduleController extends CustomDataModel implements Serializable {
 
     @Inject
     private FutsalCrud futsalCrud;
@@ -51,16 +53,40 @@ public class FutsalScheduleController implements Serializable {
     @Inject
     private UserCrud userCrud;
 
+    private String[] listData;
+
+    public String[] getListData() {
+        return listData;
+    }
+
+    public void setListData(String[] listData) {
+        this.listData = listData;
+    }
+
     FacesContext context;
     ExternalContext externalContext;
     HttpSession session;
 
+    private CustomDataModel<FutsalSchedule> scheduleDataModel;
+
+    private List<FutsalSchedule> selectedSchedueList;
     private List<FutsalSchedule> newScheduleList;
     private SlotSchedule slotSchedule;
     private Futsal futsal;
     private Date newDate;
     private BookingInformation bookingInformation;
     private BookingDetail bookingDetail;
+
+    public CustomDataModel<FutsalSchedule> getScheduleDataModel() {
+            List<FutsalSchedule> scheduleList = getNewScheduleList();
+            scheduleDataModel = new CustomDataModel<>(scheduleList);
+        
+        return scheduleDataModel;
+    }
+
+    public void setScheduleDataModel(CustomDataModel<FutsalSchedule> scheduleDataModel) {
+        this.scheduleDataModel = scheduleDataModel;
+    }
 
     public List<FutsalSchedule> getNewScheduleList() {
         return newScheduleList;
@@ -70,7 +96,14 @@ public class FutsalScheduleController implements Serializable {
         this.newScheduleList = newScheduleList;
     }
 
-    
+    public List<FutsalSchedule> getSelectedSchedueList() {
+        return selectedSchedueList;
+    }
+
+    public void setSelectedSchedueList(List<FutsalSchedule> selectedSchedueList) {
+        this.selectedSchedueList = selectedSchedueList;
+    }
+
     public SlotSchedule getSlotSchedule() {
         return slotSchedule;
     }
@@ -142,7 +175,9 @@ public class FutsalScheduleController implements Serializable {
 
     @PostConstruct
     public void init() {
-        newScheduleList= new ArrayList<>();
+        scheduleDataModel = new CustomDataModel<>();
+        selectedSchedueList = new ArrayList<>();
+        newScheduleList = new ArrayList<>();
         slotSchedule = new SlotSchedule();
         bookingInformation = new BookingInformation();
         bookingDetail = new BookingDetail();
@@ -160,6 +195,10 @@ public class FutsalScheduleController implements Serializable {
             futsalScheduleList = fsc.getCurrentDateFutsalSchedule();
             System.out.println("");
         }
+    }
+
+    public void updateNewScheduleList() {
+        this.newScheduleList = new ArrayList<>();
     }
 
     public boolean checkIfSlotExists(Date scheduleDate, Date startHour, Date endHour, Futsal futsal) {
@@ -290,7 +329,7 @@ public class FutsalScheduleController implements Serializable {
                 Long userId = (Long) session.getAttribute("userId");
                 Futsal futsal = futsalCrud.checkIfFutsalRegistered(userId);
                 if (slotSchedule.getSlotType() == SlotType.automatic) {
-                   newScheduleList = new ArrayList<>();
+                    newScheduleList = new ArrayList<>();
                     List<FutsalSchedule> bookedScheduleList = new ArrayList<>();
                     if ((slotSchedule.getDateFrom() != null) && (slotSchedule.getDateTo()) != null) {
                         LocalDate startDate = slotSchedule.getDateFrom().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -438,9 +477,6 @@ public class FutsalScheduleController implements Serializable {
 
                             startDate = startDate.plus(1, ChronoUnit.DAYS);
                         }
-                        
-
-                       
 
 //                        if (fsc.saveAll(newScheduleList)) {
 //                            try {

@@ -9,6 +9,7 @@ Entities/User.class
 Model/BookingInformationCrud.class
 Entities/FutsalUserRelation.class
 com/saugat/converter/TimeConvertor.class
+com/saugat/dataModel/CustomDataModel.class
 com/saugat/converter/UserConverter.class
 Model/BookingDetailCrud.class
 Model/FutsalScheduleCruds.class
