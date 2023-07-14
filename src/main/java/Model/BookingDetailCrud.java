@@ -29,7 +29,7 @@ public class BookingDetailCrud extends AbstractCrud<BookingDetail> {
     public List<BookingDetail> bookingDetailOfCurrentDateAndHigher(){
         List<BookingDetail> bookingDetailList = null;
         try{
-            Query query= em.createQuery("SELECT u from BookingDetail u where u.bookinginformation.fromdate=:date",BookingDetail.class);
+            Query query= em.createQuery("SELECT u from BookingDetail u where u.futsalschedule.scheduledate>=:date",BookingDetail.class);
             query.setParameter("date", new Date());
             bookingDetailList = query.getResultList();
             return bookingDetailList;
@@ -41,8 +41,9 @@ public class BookingDetailCrud extends AbstractCrud<BookingDetail> {
      public List<BookingDetail> bookingDetailOfCurrentDateAndHigherByUser(User user){
         List<BookingDetail> bookingDetailList = null;
         try{
-            Query query= em.createQuery("SELECT u from BookingDetail u where u.bookinginformation.user=:user",BookingDetail.class);
+            Query query= em.createQuery("SELECT u from BookingDetail u where u.bookinginformation.user=:user and u.futsalschedule.scheduledate>=:date",BookingDetail.class);
             query.setParameter("user", user);
+            query.setParameter("date",new Date());
             bookingDetailList = query.getResultList();
             return bookingDetailList;
         }catch(Exception e){
@@ -54,7 +55,8 @@ public class BookingDetailCrud extends AbstractCrud<BookingDetail> {
      public List<BookingDetail> bookingDetailByFutsalOwner(Futsal futsal){
          List<BookingDetail> bookingDetailList = null;
          try{
-             Query query = em.createQuery("SELECT u from BookingDetail u where u.futsalschedule.futsal=:futsal",BookingDetail.class);
+             Query query = em.createQuery("SELECT u from BookingDetail u where u.futsalschedule.futsal=:futsal and u.futsalschedule.scheduledate>=:date",BookingDetail.class);
+             query.setParameter("date", new Date());
              query.setParameter("futsal", futsal);
              bookingDetailList = query.getResultList();
              return bookingDetailList;

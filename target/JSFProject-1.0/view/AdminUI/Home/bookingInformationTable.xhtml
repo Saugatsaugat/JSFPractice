@@ -8,41 +8,48 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="../../template.xhtml">
     <ui:define name="content">
-        <div style="text-align: center;">
-            <p:commandButton icon="fa fa-plus" disabled="true" id="addDialog" title="ADD New Booking Information" oncomplete="PF('addDialog').show()" />
-        </div>
-        <h3 style="text-align: center;">Booking Information Table</h3>
+
+        <p:panelGrid style="width: 100%;" columns="2">
+            <p:column>
+                <p:outputLabel style="font-weight: bold;" value="Booking Information Table"/>
+            </p:column>
+            <p:column>
+                <p:commandButton style="float:right;" icon="fa fa-plus" disabled="true" id="addDialog" title="ADD New Booking Information" oncomplete="PF('addDialog').show()" />
+            </p:column>
+        </p:panelGrid>
+        
+
         <h:form>
-            <p:dataTable value="#{bookingDetailController.bookingDetailList}" rowIndexVar="rowIndex" var="item">
+            <p:dataTable  value="#{bookingDetailController.bookingDetailList}" rowIndexVar="rowIndex" var="item">
                 <p:column headerText="S.N." >
                     <h:outputText value="#{rowIndex + 1}" />
                 </p:column>
-                <p:column filterBy="#{item.futsalschedule.futsal.name}" rendered="#{userBean.isAdmin}" headerText="Futsal Name">
+                <p:column filterBy="#{item.futsalschedule.futsal.name}" sortBy="#{item.futsalschedule.futsal.name}" rendered="#{userBean.isAdmin}" headerText="Futsal Name">
                     #{item.futsalschedule.futsal.name}
                 </p:column>
 
-                <p:column headerText="FromDate">
+                <p:column filterBy=" #{item.bookinginformation.fromdate}" sortBy=" #{item.bookinginformation.fromdate}" headerText="FromDate">
                     #{item.bookinginformation.fromdate}
                 </p:column>
-                <p:column  headerText="ToDate">
+                <p:column filterBy="#{item.bookinginformation.todate}" sortBy="#{item.bookinginformation.todate}" headerText="ToDate">
                     #{item.bookinginformation.todate}
                 </p:column>
-                <p:column  headerText="StartHour">
+                <p:column filterBy="#{item.futsalschedule.starthour}" sortBy="#{item.futsalschedule.starthour}" headerText="StartHour">
                     #{item.futsalschedule.starthour}
                 </p:column>
-                <p:column  headerText="EndHour">
+                <p:column filterBy="#{item.futsalschedule.endhour}" sortBy="#{item.futsalschedule.endhour}" headerText="EndHour">
                     #{item.futsalschedule.endhour}
                 </p:column>
-                <p:column  headerText="Amount">
+                <p:column filterBy=" #{item.futsalschedule.rate}" sortBy=" #{item.futsalschedule.rate}" headerText="Amount">
                     #{item.futsalschedule.rate}
                 </p:column>
-                <p:column rendered="#{userBean.isAdmin or userBean.isFutsalOwner}"  headerText="UserName">
+                <p:column filterBy="#{item.bookinginformation.user.firstname}" sortBy="#{item.bookinginformation.user.firstname}" rendered="#{userBean.isAdmin or userBean.isFutsalOwner}"  headerText="UserName">
                     #{item.bookinginformation.user.firstname}
                 </p:column>
-                <p:column  headerText="Mobile">
+                <p:column filterBy="#{item.bookinginformation.user.mobile}" sortBy="#{item.bookinginformation.user.mobile}"  headerText="Mobile">
                     #{item.bookinginformation.user.mobile}
                 </p:column>
-                <p:column headerText="PaymentStatus">
+                <p:column filterBy="#{item.paymentstatus}" sortBy="#{item.paymentstatus}" headerText="PaymentStatus">
                     #{item.paymentstatus}
                 </p:column>
                 <p:column rendered="#{userBean.isAdmin}" headerText="Edit">

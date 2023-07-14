@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -77,7 +78,13 @@ public class UserController implements Serializable {
             user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
             if (userCrud.update(user, user.getId())) {
                 try {
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data Updated Successfully", "Data Updated Successfully");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                    Flash flash = externalContext.getFlash();
+                    flash.setKeepMessages(true);
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
+
                 } catch (Exception e) {
                 }
             }
@@ -96,8 +103,18 @@ public class UserController implements Serializable {
             if (userCrud.save(user)) {
                 try {
                     if (session.getAttribute("userId") != null) {
+                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Added Successfully", "Added Successfully");
+                        FacesContext.getCurrentInstance().addMessage(null, message);
+                        externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                        Flash flash = externalContext.getFlash();
+                        flash.setKeepMessages(true);
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
                     } else {
+                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Account Created Successfully", "Account Created Successfully");
+                        FacesContext.getCurrentInstance().addMessage(null, message);
+                        externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                        Flash flash = externalContext.getFlash();
+                        flash.setKeepMessages(true);
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Login/loginForm.xhtml");
                     }
                 } catch (Exception e) {
@@ -109,20 +126,30 @@ public class UserController implements Serializable {
 
     }
 
-//delete user, futsal detail if present, and Futsaluserrelation table data if present
     public void deleteUser() {
+<<<<<<< HEAD
         Long checkId = user.getId();
         if (checkId != null) {
             
+=======
+        if (user.getId() != null) {
+>>>>>>> workingbranch
 
-            if (((futsalUserRelationCrud.getFutsalUserRelationByUserId(checkId)) == null) && (futsalCrud.checkIfFutsalRegistered(checkId)) == null) {
-                boolean status = userCrud.deleteById(checkId);
-                if (status) {
-                    try {
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
-                    } catch (Exception e) {
-                    }
+            if (userCrud.deleteById(user.getId())) {
+                try {
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data Deleted Successfully", "Data Deleted Successfully");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                    Flash flash = externalContext.getFlash();
+                    flash.setKeepMessages(true);
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
+
+                } catch (Exception e) {
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            e.getMessage(), e.getMessage());
+                    context.addMessage(null, message);
                 }
+<<<<<<< HEAD
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
                 context.addMessage(null, message);
 
@@ -144,8 +171,14 @@ public class UserController implements Serializable {
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
                 context.addMessage(null, message);
 
+=======
+>>>>>>> workingbranch
             }
         }
+
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                "Deletion Failed", "Deletion Failed");
+        context.addMessage(null, message);
     }
 
 }
