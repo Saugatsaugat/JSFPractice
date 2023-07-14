@@ -127,14 +127,7 @@ public class UserController implements Serializable {
     }
 
     public void deleteUser() {
-<<<<<<< HEAD
-        Long checkId = user.getId();
-        if (checkId != null) {
-            
-=======
         if (user.getId() != null) {
->>>>>>> workingbranch
-
             if (userCrud.deleteById(user.getId())) {
                 try {
                     FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data Deleted Successfully", "Data Deleted Successfully");
@@ -149,36 +142,14 @@ public class UserController implements Serializable {
                             e.getMessage(), e.getMessage());
                     context.addMessage(null, message);
                 }
-<<<<<<< HEAD
                 FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
                 context.addMessage(null, message);
 
-            } else if ((futsalUserRelationCrud.getFutsalUserRelationByUserId(user.getId()) != null) && futsalCrud.checkIfFutsalRegistered(user.getId()) != null) {
+            }
 
-                if (futsalUserRelationCrud.deleteById(futsalUserRelation.getId())) {
-                    futsal = futsalCrud.checkIfFutsalRegistered(checkId);
-                    if (futsalCrud.deleteById(futsal.getId())) {
-                        boolean status = userCrud.deleteById(checkId);
-                        if (status) {
-                            try {
-                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
-                            } catch (Exception e) {
-                            }
-                        }
-                    }
-
-                }
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
-                context.addMessage(null, message);
-
-=======
->>>>>>> workingbranch
             }
         }
 
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                "Deletion Failed", "Deletion Failed");
-        context.addMessage(null, message);
-    }
+
 
 }
