@@ -5,11 +5,10 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                template="../template.xhtml">
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:define name="content" >
-
+        <p:growl redisplay="false" showSummary="true" showDetail="false" autoUpdate="true" severity="error" />
+        <p:outputLabel value="Available Futsal Grounds" />
         <p:dataGrid value="#{futsalController.futsalList}" var="item" columns="3" rows="#{futsalController.futsalList.size()}">
             <p:column>
                 <p:panel>
@@ -24,6 +23,7 @@
             </p:column>
         </p:dataGrid>
 
+        
         <p:dialog class="viewSchedules"  header="Schedules" fitViewport="true" appendTo="@(body)" widgetVar="viewSchedules" modal="true" height="600px" width="1000px">
             <div  class="center-layout">
                 <h:form id="scheduleList">
@@ -31,6 +31,6 @@
                 </h:form>
             </div>
         </p:dialog>
-    </ui:define>
+    
 
 </ui:composition>

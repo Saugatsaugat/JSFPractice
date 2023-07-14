@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Controller;
 
 import Entities.Futsal;
@@ -16,6 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -76,6 +73,11 @@ public class FutsalController implements Serializable {
         if (futsal.getId() != null) {
             if (futsalCrud.update(futsal, futsal.getId())) {
                 try {
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Futsal Updated Successfully", "Futsal Updated Successfully");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                    Flash flash = externalContext.getFlash();
+                    flash.setKeepMessages(true);
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
                 } catch (Exception e) {
                 }
@@ -88,22 +90,26 @@ public class FutsalController implements Serializable {
 
     public void saveFutsal() {
         if (futsal.getId() == null) {
-            if(futsal.getOwnerid()!=null){
+            if (futsal.getOwnerid() != null) {
                 User userData = userCrud.getDataById(futsal.getOwnerid());
                 futsal.setMobile(userData.getMobile());
                 futsal.setOwnerid(userData.getId());
+            } else {
+                if (session.getAttribute("userId") != null) {
+                    Long userId = (Long) session.getAttribute("userId");
+                    User userData = userCrud.getDataById(userId);
+                    futsal.setMobile(userData.getMobile());
+                    futsal.setOwnerid(userId);
+                }
             }
-            else{
-            if(session.getAttribute("userId")!=null){
-                Long userId =(Long) session.getAttribute("userId");
-                User userData = userCrud.getDataById(userId);
-                futsal.setMobile(userData.getMobile());
-                futsal.setOwnerid(userId);
-            }
-            }
-            
+
             if (futsalCrud.save(futsal)) {
                 try {
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Futsal Created Successfully", "Futsal Created Successfully");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                    Flash flash = externalContext.getFlash();
+                    flash.setKeepMessages(true);
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
                 } catch (Exception e) {
                 }
@@ -123,6 +129,11 @@ public class FutsalController implements Serializable {
                 boolean status = futsalCrud.deleteById(futsal.getId());
                 if (status) {
                     try {
+                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Futsal Deleted Successfully", "Futsal Deleted Successfully");
+                        FacesContext.getCurrentInstance().addMessage(null, message);
+                        externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                        Flash flash = externalContext.getFlash();
+                        flash.setKeepMessages(true);
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
                     } catch (Exception e) {
                     }
@@ -133,11 +144,10 @@ public class FutsalController implements Serializable {
 
             }
 
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No futsal Record ", "No Futsal Record");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
             context.addMessage(null, message);
 
         }
     }
 
-   
 }

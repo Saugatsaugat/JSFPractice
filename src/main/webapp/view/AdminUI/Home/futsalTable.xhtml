@@ -9,28 +9,38 @@
                 template="../../template.xhtml">
 
     <ui:define name="title">Home</ui:define>
+
+
     <ui:define name="content" >
-        <div style="text-align: center;">
-            <p:commandButton icon="fa fa-plus" id="addDialog" title="Add New Futsal" oncomplete="PF('addDialog').show()" />
-        </div>
+        <p:growl redisplay="false" showSummary="true" showDetail="false" autoUpdate="true" severity="error" />
+        <p:panelGrid style="width: 100%;" columns="2">
+            <p:column>
+            <p:outputLabel style="font-weight: bold;" value="Futsal's List"/>
+            </p:column>
+            <p:column>
+            <p:commandButton style="float: right;" icon="fa fa-plus" id="addDialog" title="Add New Futsal" oncomplete="PF('addDialog').show()" />
+            </p:column>
+        </p:panelGrid>
+        
+
         <p:dataTable value="#{futsalController.futsalList}" rowIndexVar="rowIndex" var="item">
             <p:column headerText="S.N." >
                 <h:outputText value="#{rowIndex + 1}" />
             </p:column>
 
-            <p:column  headerText="Pan">
+            <p:column filterBy="#{item.pan}" sortBy="#{item.pan}"  headerText="Pan">
                 #{item.pan}
             </p:column>
-            <p:column  headerText="FutsalName">
+            <p:column filterBy="#{item.name}" sortBy="#{item.name}"  headerText="FutsalName">
                 #{item.name}
             </p:column>
-            <p:column  headerText="Mobile">
+            <p:column filterBy="#{item.mobile}" sortBy="#{item.mobile}" headerText="Mobile">
                 #{item.mobile}
             </p:column>
-            <p:column  headerText="Rate">
+            <p:column filterBy="#{item.rate}" sortBy="#{item.rate}" headerText="Rate">
                 #{item.rate}
             </p:column>
-            <p:column  headerText="Address">
+            <p:column filterBy="#{item.address}" sortBy="#{item.address}" headerText="Address">
                 #{item.address}
             </p:column>
 

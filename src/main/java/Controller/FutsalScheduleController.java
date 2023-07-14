@@ -26,6 +26,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -66,12 +67,13 @@ public class FutsalScheduleController implements Serializable {
     private BookingInformation bookingInformation;
     private BookingDetail bookingDetail;
     private String uniqueId;
-    
+
     private Date todayDate;
-    public Date getTodayDate(){
+
+    public Date getTodayDate() {
         return new Date();
     }
- 
+
     public String getUniqueId(FutsalSchedule obj) {
         if (obj != null) {
             uniqueId = obj.getScheduledate() + "-" + obj.getStarthour() + "-" + obj.getEndhour();
@@ -277,8 +279,11 @@ public class FutsalScheduleController implements Serializable {
     public void bookFutsalSchedule(FutsalSchedule futsalSch) {
         this.futsalSchedule = futsalSch;
         if (session.getAttribute("userId") == null) {
-            RequestContext contextReq = RequestContext.getCurrentInstance();
-            contextReq.execute("PF('loginRequired').show();");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Required", "Login Required");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            Flash flash = externalContext.getFlash();
+            flash.setKeepMessages(true);
         } else {
             Long loggedInUser = (Long) session.getAttribute("userId");
             User user = userCrud.getDataById(loggedInUser);
@@ -294,7 +299,11 @@ public class FutsalScheduleController implements Serializable {
             if ((fsc.checkIfExits(futsalSchedule)) && status.matches("available")) {
                 try {
                     if (fsc.saveBooking(bookingInformation, futsalSchedule)) {
-
+                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Booked Successfully", "Booked Successfully");
+                        FacesContext.getCurrentInstance().addMessage(null, message);
+                        externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                        Flash flash = externalContext.getFlash();
+                        flash.setKeepMessages(true);
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/bookingInformationTable.xhtml");
 
                     }
@@ -324,7 +333,11 @@ public class FutsalScheduleController implements Serializable {
                 }
                 if (fsc.update(futsalSchedule, futsalSchedule.getId())) {
                     try {
-
+                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Updated Successfully", "Updated Successfully");
+                        FacesContext.getCurrentInstance().addMessage(null, message);
+                        externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                        Flash flash = externalContext.getFlash();
+                        flash.setKeepMessages(true);
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
                     } catch (Exception e) {
 
@@ -401,21 +414,6 @@ public class FutsalScheduleController implements Serializable {
                             }
                             startDate = startDate.plus(1, ChronoUnit.DAYS);
                         }
-//                        if (fsc.saveAll(newScheduleList)) {
-//                            try {
-//                                RequestContext contextReq = RequestContext.getCurrentInstance();
-//                                contextReq.execute("PF('confirmSlot').show();");
-////                                context = FacesContext.getCurrentInstance();
-////                                externalContext = context.getExternalContext();
-////                                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
-//
-//                            } catch (Exception e) {
-//
-//                            }
-//                        } else {
-//                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
-//                            context.addMessage(null, message);
-//                        }
 
                     }
 
@@ -510,18 +508,6 @@ public class FutsalScheduleController implements Serializable {
                             startDate = startDate.plus(1, ChronoUnit.DAYS);
                         }
 
-//                        if (fsc.saveAll(newScheduleList)) {
-//                            try {
-//                                RequestContext contextReq = RequestContext.getCurrentInstance();
-//                                contextReq.execute("PF('confirmSlot').show();");
-//
-//                            } catch (Exception e) {
-//
-//                            }
-//                        } else {
-//                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
-//                            context.addMessage(null, message);
-//                        }
                     }
 
                 } else if (slotSchedule.getSlotType() == SlotType.custom) {
@@ -540,19 +526,7 @@ public class FutsalScheduleController implements Serializable {
                     } else {
 
                         newScheduleList.add(newSchedule);
-                        System.out.println("ppp");
-//                        if (fsc.save(newSchedule)) {
-//                            try {
-//                                RequestContext contextReq = RequestContext.getCurrentInstance();
-//                                contextReq.execute("PF('confirmSlot').show();");
-//
-//                            } catch (Exception e) {
-//
-//                            }
-//                        } else {
-//                            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
-//                            context.addMessage(null, message);
-//                        }
+
                     }
                 }
             } catch (Exception e) {
@@ -565,30 +539,6 @@ public class FutsalScheduleController implements Serializable {
         }
     }
 
-//    public void save() {
-//        if (session.getAttribute("userId") != null) {
-//            Long userId = (Long) session.getAttribute("userId");
-//            futsal = futsalCrud.checkIfFutsalRegistered(userId);
-//            Long futsalId = futsal.getId();
-//            futsalSchedule.setFutsal(futsalCrud.getDataById(futsalId));
-//            if (futsalSchedule.getStatus() == null) {
-//                futsalSchedule.setStatus("available");
-//            }
-//
-//            if (fsc.save(futsalSchedule)) {
-//                try {
-//
-//                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
-//                } catch (Exception e) {
-//
-//                }
-//            }
-//
-//        }
-//        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Add Failed", "Add Failed");
-//        context.addMessage(null, message);
-//
-//    }
     // saving Futsal Data
     public boolean saveFutsal(Futsal futsal) {
         if (session.getAttribute("userId") == null) {
@@ -616,7 +566,11 @@ public class FutsalScheduleController implements Serializable {
                 futsalSchedule = fsc.getDataById(futsalSchedule.getId());
 
                 try {
-
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deleted Successfully", "Deleted Successfully");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                    Flash flash = externalContext.getFlash();
+                    flash.setKeepMessages(true);
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
                 } catch (Exception e) {
 
@@ -635,6 +589,11 @@ public class FutsalScheduleController implements Serializable {
         if (selectedSchedueList != null) {
             try {
                 if (fsc.saveAll(selectedSchedueList)) {
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Schedules Saved Successfully", "Schedules Saved Successfully");
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                    Flash flash = externalContext.getFlash();
+                    flash.setKeepMessages(true);
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
 
                 } else {

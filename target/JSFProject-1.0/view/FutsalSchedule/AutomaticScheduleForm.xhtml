@@ -6,7 +6,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:growl severity="error" showSummary="true" />
+    <p:growl redisplay="false" showSummary="true" showDetail="false" autoUpdate="true" severity="error" />
     <h:form id="slotScheduleForm">
         <p:panel rendered="#{empty futsalScheduleController.getNewScheduleList()}">
 
@@ -58,13 +58,13 @@
                     </p:column>
                 </p:panelGrid>
             </p:fieldset>
-
-            <p:panelGrid rendered="#{futsalScheduleController.slotSchedule.slotType!='shift'}">
-                <h:outputText  value="Enter Rate" />
-                <p:separator style="border: none;" />
-                <p:inputText id="rate" value="#{futsalScheduleController.slotSchedule.normalRate}" required="true" />
-
-            </p:panelGrid>
+            <p:fieldset legend="Rate" rendered="#{futsalScheduleController.slotSchedule.slotType!='shift'}">
+                <p:panelGrid rendered="#{futsalScheduleController.slotSchedule.slotType!='shift'}">
+                    <h:outputText  value="Enter Rate" />
+                    <p:separator style="border: none;" />
+                    <p:inputText id="rate" value="#{futsalScheduleController.slotSchedule.normalRate}" required="true" />
+                </p:panelGrid>
+            </p:fieldset>
 
             <p:fieldset  rendered="#{futsalScheduleController.slotSchedule.slotType=='shift'}" legend="Shifts">
 

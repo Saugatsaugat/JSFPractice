@@ -49,7 +49,7 @@ public class LogoutController implements Serializable {
             try {
                 new UserBean().setUser(null);
                 session.invalidate();
-                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalCart/futsalCartBox.xhtml");
+                externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
             } catch (Exception e) {
 
             }

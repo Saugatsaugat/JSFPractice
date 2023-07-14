@@ -4,9 +4,11 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
     <p:outputLabel value="Available Slots" />
-    <p:messages styleClass="errorMessage" showSummary="true" closable="true" severity="error" autoUpdate="true" />
+    <p:growl redisplay="false" showSummary="true" showDetail="false" autoUpdate="true" severity="error" />
     <p:dataTable rowStyleClass="#{futsalScheduleController.rowStyleClass(item)}" rowIndexVar="rowIndex" value="#{futsalScheduleController.futsalScheduleList}" var="item">
 
         <p:column headerText="S.N." >
@@ -30,8 +32,6 @@
             </p:commandButton>
         </p:column>
     </p:dataTable>
-    
-    <p:dialog style="font-size: 10px;" id="loginRequired" fitViewport="true" appendTo="@(body)" widgetVar="loginRequired" modal="true" header="" height="50px" width="300px">
-        <p>Login to continue</p><br/>
-    </p:dialog>
+
+
 </ui:composition>

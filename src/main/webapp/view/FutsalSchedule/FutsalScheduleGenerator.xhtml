@@ -4,8 +4,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-
 
     <h:form>
         <h:outputText value="Choose Schedule Type" />
@@ -21,13 +21,12 @@
                 <p:commandButton update="slotScheduleDialog" value="Custom Slot"  action="#{futsalScheduleController.slotType('custom')}" oncomplete="PF('slotScheduleDialog').show();" />
             </p:column>
         </p:panelGrid>
-
     </h:form>
-    <p:separator style="border:none;"/>
+
+    <p:dialog id="slotScheduleDialog" header="Schedule Generator" appendTo="@(body)" widgetVar="slotScheduleDialog" height="600" width="1000">
+        <ui:include src="AutomaticScheduleForm.xhtml" />
+    </p:dialog>
 
 
-        <p:dialog id="slotScheduleDialog" header="Schedule Generator" widgetVar="slotScheduleDialog" height="600" width="1000">
-            <ui:include src="AutomaticScheduleForm.xhtml" />
-        </p:dialog>
 </ui:composition>
 
