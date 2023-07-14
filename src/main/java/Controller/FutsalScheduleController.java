@@ -32,7 +32,8 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.SelectableDataModel;
+import org.primefaces.event.ToggleSelectEvent;
+import org.primefaces.event.UnselectEvent;
 
 /**
  *
@@ -53,21 +54,9 @@ public class FutsalScheduleController extends CustomDataModel implements Seriali
     @Inject
     private UserCrud userCrud;
 
-    private String[] listData;
-
-    public String[] getListData() {
-        return listData;
-    }
-
-    public void setListData(String[] listData) {
-        this.listData = listData;
-    }
-
     FacesContext context;
     ExternalContext externalContext;
     HttpSession session;
-
-    private CustomDataModel<FutsalSchedule> scheduleDataModel;
 
     private List<FutsalSchedule> selectedSchedueList;
     private List<FutsalSchedule> newScheduleList;
@@ -76,16 +65,13 @@ public class FutsalScheduleController extends CustomDataModel implements Seriali
     private Date newDate;
     private BookingInformation bookingInformation;
     private BookingDetail bookingDetail;
+    private String uniqueId;
 
-    public CustomDataModel<FutsalSchedule> getScheduleDataModel() {
-            List<FutsalSchedule> scheduleList = getNewScheduleList();
-            scheduleDataModel = new CustomDataModel<>(scheduleList);
-        
-        return scheduleDataModel;
-    }
-
-    public void setScheduleDataModel(CustomDataModel<FutsalSchedule> scheduleDataModel) {
-        this.scheduleDataModel = scheduleDataModel;
+    public String getUniqueId(FutsalSchedule obj) {
+        if (obj != null) {
+            uniqueId = obj.getScheduledate() + "-" + obj.getStarthour() + "-" + obj.getEndhour();
+        }
+        return uniqueId;
     }
 
     public List<FutsalSchedule> getNewScheduleList() {
@@ -102,6 +88,40 @@ public class FutsalScheduleController extends CustomDataModel implements Seriali
 
     public void setSelectedSchedueList(List<FutsalSchedule> selectedSchedueList) {
         this.selectedSchedueList = selectedSchedueList;
+    }
+
+    public void onRowSelect(SelectEvent event) {
+        FutsalSchedule data = (FutsalSchedule) event.getObject();
+        selectedSchedueList.add(data);
+        System.out.println("");
+    }
+
+    public void onRowUnselect(UnselectEvent event) {
+        if (selectedSchedueList != null) {
+            selectedSchedueList.remove((FutsalSchedule) event.getObject());
+        }
+    }
+
+    public void onRowSelectCheckbox(SelectEvent event) {
+        FutsalSchedule data = (FutsalSchedule) event.getObject();
+        selectedSchedueList.add(data);
+        System.out.println("");
+    }
+
+    public void onRowUnselectCheckbox(UnselectEvent event) {
+        if (selectedSchedueList != null) {
+            FutsalSchedule data = (FutsalSchedule) event.getObject();
+            selectedSchedueList.remove(data);
+        }
+    }
+
+    public void onToggleSelect(ToggleSelectEvent event) {
+        boolean selected = event.isSelected();
+        if (selected) {
+            selectedSchedueList = new ArrayList<>(newScheduleList);
+        } else {
+            selectedSchedueList = new ArrayList<>();
+        }
     }
 
     public SlotSchedule getSlotSchedule() {
@@ -175,7 +195,6 @@ public class FutsalScheduleController extends CustomDataModel implements Seriali
 
     @PostConstruct
     public void init() {
-        scheduleDataModel = new CustomDataModel<>();
         selectedSchedueList = new ArrayList<>();
         newScheduleList = new ArrayList<>();
         slotSchedule = new SlotSchedule();
@@ -323,14 +342,22 @@ public class FutsalScheduleController extends CustomDataModel implements Seriali
         return calendar;
     }
 
-    public void saveFutsalSchedule() {
+    //Futsal Schedule Generator Function
+    public void futsalScheduleGenerator() {
         if (session.getAttribute("userId") != null) {
             try {
-                Long userId = (Long) session.getAttribute("userId");
-                Futsal futsal = futsalCrud.checkIfFutsalRegistered(userId);
+                Futsal futsal = futsalCrud.checkIfFutsalRegistered((Long) session.getAttribute("userId"));
+
+                // schedule generator for automatic slot type
                 if (slotSchedule.getSlotType() == SlotType.automatic) {
+
+                    // created new instance of ArrayList of FutsalSchedule
                     newScheduleList = new ArrayList<>();
+                    /* creating if FutsalSchedule instance list for storing booked schedules from generated
+                    * schedules
+                     */
                     List<FutsalSchedule> bookedScheduleList = new ArrayList<>();
+
                     if ((slotSchedule.getDateFrom() != null) && (slotSchedule.getDateTo()) != null) {
                         LocalDate startDate = slotSchedule.getDateFrom().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         LocalDate endDate = slotSchedule.getDateTo().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -508,7 +535,7 @@ public class FutsalScheduleController extends CustomDataModel implements Seriali
                     } else {
 
                         newScheduleList.add(newSchedule);
-                        System.out.println("");
+                        System.out.println("ppp");
 //                        if (fsc.save(newSchedule)) {
 //                            try {
 //                                RequestContext contextReq = RequestContext.getCurrentInstance();
@@ -595,6 +622,24 @@ public class FutsalScheduleController extends CustomDataModel implements Seriali
                 context.addMessage(null, message);
 
             }
+        }
+    }
+
+    // save generated Scheduled List
+    public void saveGeneratedSchedules() {
+        if (selectedSchedueList != null) {
+            try {
+                if (fsc.saveAll(selectedSchedueList)) {
+                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalSchedule/futsalScheduleTable.xhtml");
+
+                } else {
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Addition Failed", "Addition Failed");
+                    context.addMessage(null, message);
+                }
+            } catch (Exception e) {
+
+            }
+
         }
     }
 
