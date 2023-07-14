@@ -12,9 +12,9 @@ import Model.FutsalCrud;
 import Model.FutsalScheduleCruds;
 import Model.UserCrud;
 import com.saugat.bean.enums.SlotType;
-import com.saugat.dataModel.CustomDataModel;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ import org.primefaces.event.UnselectEvent;
  */
 @Named
 @ViewScoped
-public class FutsalScheduleController extends CustomDataModel implements Serializable {
+public class FutsalScheduleController implements Serializable {
 
     @Inject
     private FutsalCrud futsalCrud;
@@ -66,7 +66,12 @@ public class FutsalScheduleController extends CustomDataModel implements Seriali
     private BookingInformation bookingInformation;
     private BookingDetail bookingDetail;
     private String uniqueId;
-
+    
+    private Date todayDate;
+    public Date getTodayDate(){
+        return new Date();
+    }
+ 
     public String getUniqueId(FutsalSchedule obj) {
         if (obj != null) {
             uniqueId = obj.getScheduledate() + "-" + obj.getStarthour() + "-" + obj.getEndhour();
