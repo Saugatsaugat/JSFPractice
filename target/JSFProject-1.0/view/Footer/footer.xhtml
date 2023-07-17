@@ -4,32 +4,31 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets" >
 
-    <p:layout fullPage="false">
-        <p:layoutUnit position="west" size="33%">
-            <div>
-                <h3 style="text-align: center">Lets Foot-Sal</h3>
-            </div>
+    <p:panelGrid style="text-align: center; width: 100%; background-color: #006666; color: white; ">
+        <p:column>
+            <p:outputLabel value="Lets Foot-Shal" />
+            <p:separator style="border: none;" />
+        </p:column>
 
-        </p:layoutUnit>
-        <p:layoutUnit position="center" size="33%">
-            <div>
-                <h3 style="text-align: center">Quick Services</h3>
-                <p:link outcome="/faces/view/Login/loginForm.xhtml" value="Login Page" />
-                <p:link outcome="/faces/view/Home/home.xhtml" value="Home Page" />
+        <p:column>
+            <p:outputLabel value="Quick Services" />
+            <p:separator style="border: none;" />
 
-            </div>
-        </p:layoutUnit>
-        <p:layoutUnit position="east" size="33%">
-            <div>
-                <h3 style="text-align: center">Have an Inquiry?</h3>
-                <p>Contact: 01-5790123</p>
-                <p>Location: Sankhamul-10, Kathmandu</p>
-                <p>Email: info@futsal.com</p> 
-            </div>
-        </p:layoutUnit>
+            <p:link style="text-decoration: none; color: white;" outcome="/faces/view/UserUI/Home/home.xhtml" value="Home Page" />
+        </p:column>
+        <p:column>
+            <p:outputLabel value="Have an Inquiry?" />
+            <p:separator style="border: none;" />
 
-    </p:layout>
+            <i class="fa fa-phone"/><p:outputLabel value=" 01-5790123"/>
+            <p:separator style="border: none;" />
 
+            <i class="fa fa-map-marker"/><p:outputLabel value=" Sankhamul-10, Kathmandu"/>
+            <p:separator style="border: none;" />
 
+            <i class="fa fa-envelope"/><p:outputLabel value=" info@futsal.com"/>
+            <p:separator style="border: none;" />
+        </p:column>
+    </p:panelGrid>
 </ui:composition>
 

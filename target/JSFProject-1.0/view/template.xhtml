@@ -80,6 +80,16 @@
             .ui-datatable table {
                 table-layout: auto;
             }
+            .cart-css{
+                height: auto;
+                width: auto;
+                border: none;
+                display: flex;
+                justify-content: center;
+                box-shadow: 0px 25px 40px #dce2da;
+
+            }
+
 
 
 
@@ -87,10 +97,11 @@
 
     </h:head>
     <p:layout fullPage="true">
-        <p:layoutUnit position="north" size="200">
+ 
 
+        <p:layoutUnit position="center">
             <h:form>
-                <p:menubar>
+                <p:menubar style="background: none; background-color: lightgrey;">
                     <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" icon="fa fa-lg fa-home" url="/faces/view/UserUI/Home/home.xhtml"/>
                     <p:menuitem rendered="#{userBean.isFutsalOwner}" value="Home" url="/faces/view/FutsalOwnerUI/Home/home.xhtml"/>
                     <p:menuitem value="UserList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/userTable.xhtml"/>
@@ -102,29 +113,29 @@
 
                     <p:menuitem />
                     <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}" />
-                    <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" url="/faces/view/Login/loginForm.xhtml"/>
+                    <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" onclick="PF('loginDialog').show();"/>
 
-                    <p:submenu  label="Register" rendered="#{empty userBean.user}">
-                        <p:menuitem title="User Registration" value="User" onclick="PF('registerDialog').show();"/>
+                    <p:submenu label="Register" rendered="#{empty userBean.user}">
+                        <p:menuitem  title="User Registration" value="User" onclick="PF('registerDialog').show();"/>
                         <p:menuitem title="Futsal Registration" value="Futsal" action="#{userController.user.setUsertype('futsalowner')}" oncomplete="PF('registerDialog').show();" />
                     </p:submenu>
 
                 </p:menubar>
-
-
             </h:form>
             <p:dialog style="font-size: 10px;" id="registerDialog" fitViewport="true" appendTo="@(body)" widgetVar="registerDialog" modal="true" header="Registration" height="500px" width="300px">
                 <ui:include src="../view/Register/registerForm.xhtml" />
             </p:dialog>
-
-        </p:layoutUnit>
-
-        <p:layoutUnit position="center">
+             <p:dialog style="font-size: 10px;" id="loginDialog" fitViewport="true" appendTo="@(body)" widgetVar="loginDialog" modal="true" header="Login" height="250px" width="300px">
+                <ui:include src="../view/Login/loginForm.xhtml" />
+            </p:dialog>
+            
             <ui:insert name="content" >
-
             </ui:insert>
+            <ui:include rendered="#{not userBean.isAdmin and not userBean.isFutsalOwner}"  src="Footer/footer.xhtml" />  
+            <p:outputPanel style="padding: 5px; background-color: #006666; width: 100%; text-align: center; color: white;">
+                <i class="fa fa-copyright" />2023. All rights reserved.
+            </p:outputPanel>
         </p:layoutUnit>
-
 
 
 

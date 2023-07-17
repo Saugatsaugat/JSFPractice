@@ -8,18 +8,30 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <p:growl redisplay="false" showSummary="true" showDetail="false" autoUpdate="true" severity="error" />
-    <p:panelGrid style="text-align: center;">
-        <p:outputLabel value="Available Futsal Grounds" />
-    </p:panelGrid>
+
+    <p:outputPanel style="text-align: center; font-size: 20px; font-weight: bold;"  >
+        <p:outputLabel value="Futsal Grounds"/>
+    </p:outputPanel>
+
     <p:dataGrid value="#{futsalController.futsalList}" var="item" columns="4" rows="#{futsalController.futsalList.size()}">
         <p:column>
             <p:panel>
-                <h:panelGrid styleClass="cart" columns="1">
-                    <p:graphicImage height="100px" library="images" name="starting_futsal.jpg" alt="#{item.name}"/>                        
-                    <h:outputText value="#{item.name}" />
-                    <h:outputText value="Rs. #{item.rate}" />
-                    <h:outputText value="#{item.address}"/>
-                    <p:commandButton id="viewSchedules" action="#{futsalScheduleController.futsalScheduleByFutsalId(item.id)}" value="View Schedules" oncomplete="PF('viewSchedules').show();" process="@this" update="scheduleList" />
+                <h:panelGrid styleClass="cart-css" columns="1">
+                    <p:graphicImage height="150px" width="100%" library="images" name="starting_futsal.jpg" alt="#{item.name}"/>                        
+
+                    <p:outputPanel style="font-size: 17px;">
+                        <h:outputText  value="#{item.name}" />
+                    </p:outputPanel>
+
+                    <p:outputPanel style="font-size: 14px;">
+                        <h:outputText  value="Rs. #{item.rate}" />
+                    </p:outputPanel>
+                    
+                    <p:outputPanel style="font-size: 12px;">
+                    <h:outputText  value="#{item.address}"/>
+                    </p:outputPanel>
+                    
+                    <p:commandButton style="background: none; color: white; background-color: #0000ff;" id="viewSchedules" action="#{futsalScheduleController.futsalScheduleByFutsalId(item.id)}" value="View Schedules" oncomplete="PF('viewSchedules').show();" process="@this" update="scheduleList" />
                 </h:panelGrid>
             </p:panel>
         </p:column>
