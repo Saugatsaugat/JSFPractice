@@ -6,6 +6,7 @@ import Entities.User;
 import Model.FutsalCrud;
 import Model.FutsalUserRelationCrud;
 import Model.UserCrud;
+import com.saugat.bean.enums.UserType;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -110,7 +111,13 @@ public class FutsalController implements Serializable {
                     externalContext = FacesContext.getCurrentInstance().getExternalContext();
                     Flash flash = externalContext.getFlash();
                     flash.setKeepMessages(true);
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
+                    if ((userCrud.getDataById(futsal.getOwnerid()).getUsertype() == UserType.admin)) {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
+                    }
+                   else if ((userCrud.getDataById(futsal.getOwnerid()).getUsertype() == UserType.futsalowner)) {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/home.xhtml");
+                    }
+
                 } catch (Exception e) {
                 }
             }
