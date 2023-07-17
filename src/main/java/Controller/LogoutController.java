@@ -1,5 +1,6 @@
 package Controller;
 
+import Entities.User;
 import com.saugat.beans.UserBean;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -36,12 +37,14 @@ public class LogoutController implements Serializable {
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);
+        System.out.println("");
 
     }
 
     public boolean checkIfSessionExists() {
         session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-        return session != null && session.getAttribute("userId") != null;
+        return session!=null && session.getAttribute("userId") != null;
+          
     }
 
     public void logout() {
