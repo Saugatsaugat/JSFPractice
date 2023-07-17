@@ -9,8 +9,8 @@
 
     <p:dataGrid value="#{futsalScheduleController.futsalScheduleList}" var="item" columns="6" rows="#{futsalScheduleController.futsalScheduleList.size()}">
             <p:column>
-                <p:panel>
-                    <h:panelGrid columns="1">
+                <p:panel styleClass="#{futsalScheduleController.rowStyleClass(item)}">
+                    <h:panelGrid  columns="1">
                         <p:graphicImage height="100px" library="images" name="starting_futsal.jpg" alt="picture"/>                        
                         <h:outputText value="#{item.scheduledate}" />
                         <h:outputText value="#{item.starthour} - #{item.endhour}" />

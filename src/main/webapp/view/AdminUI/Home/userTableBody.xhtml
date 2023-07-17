@@ -23,7 +23,7 @@
         <p:column headerText="S.N." >
             <h:outputText value="#{rowIndex + 1}" />
         </p:column>
-        <p:column filterBy="#{item.firstname}" sortBy="#{item.firstname}"  headerText="Firstname">
+        <p:column filterBy="#{item.firstname}" filterable="true" sortBy="#{item.firstname}"  headerText="Firstname">
             #{item.firstname}
         </p:column>
         <p:column filterBy="#{item.midname}" sortBy="#{item.midname}" headerText="Midname">
