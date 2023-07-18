@@ -4,7 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets" >
 
-    <p:panelGrid style="text-align: center; width: 100%; background-color: #006666; color: white; ">
+    <p:panelGrid rendered="#{(not userBean.isAdmin) and (not userBean.isFutsalOwner)}"  style="text-align: center; width: 100%; background-color: #006666; color: white; margin-top: 20px;">
         <p:column>
             <p:outputLabel value="Lets Foot-Shal" />
             <p:separator style="border: none;" />

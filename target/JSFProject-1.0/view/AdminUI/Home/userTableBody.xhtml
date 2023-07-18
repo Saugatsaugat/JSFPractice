@@ -19,7 +19,7 @@
     </p:panelGrid>
 
 
-    <p:dataTable value="#{userController.userList}" rowIndexVar="rowIndex" var="item">
+    <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false" value="#{userController.userList}" rowIndexVar="rowIndex" var="item">
         <p:column headerText="S.N." >
             <h:outputText value="#{rowIndex + 1}" />
         </p:column>

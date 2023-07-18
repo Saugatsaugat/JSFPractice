@@ -17,6 +17,7 @@ import javax.faces.application.FacesMessage;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -39,7 +40,6 @@ public class LoginController implements Serializable {
     private Login login;
     private Futsal futsal;
 
-
     @Inject
     private UserCrud userCrud;
 
@@ -51,8 +51,6 @@ public class LoginController implements Serializable {
 
     @Inject
     private FutsalScheduleCruds fsc;
-    
- 
 
     public Login getLogin() {
         return login;
@@ -91,6 +89,13 @@ public class LoginController implements Serializable {
 
                 if (("admin".equals(userType))) {
                     session.setAttribute("userId", userid);
+                    
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Welcome "+userBean.getUser().getFirstname()+" "+userBean.getUser().getLastname(),"Welcome "+userBean.getUser().getFirstname()+" "+userBean.getUser().getLastname());
+                    
+                    FacesContext.getCurrentInstance().addMessage(null, message);
+                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
+                    Flash flash = externalContext.getFlash();
+                    flash.setKeepMessages(true);
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/home.xhtml");
 
                 } else if (("user".equals(userType))) {
@@ -107,9 +112,8 @@ public class LoginController implements Serializable {
                         Futsal futsalData = futsalCrud.checkIfFutsalRegistered(userid);
                         session.setAttribute("userId", userid);
                         session.setAttribute("futsalId", futsalData.getId());
-                        
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/home.xhtml");
 
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/home.xhtml");
                     }
 
                 }
@@ -124,6 +128,5 @@ public class LoginController implements Serializable {
         }
 
     }
-    
 
 }
