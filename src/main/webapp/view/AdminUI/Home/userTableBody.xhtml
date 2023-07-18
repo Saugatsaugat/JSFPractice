@@ -9,9 +9,14 @@
 
     <p:growl redisplay="false" showSummary="true" showDetail="false" id="messages" autoUpdate="true" severity="error" />
 
-    <p:panelGrid style="width: 100%;" columns="2">
+    <p:panelGrid style="width: 100%;" columns="3">
         <p:column>
             <p:outputLabel style="font-weight: bold;" value="User's List"/>
+        </p:column>
+        <p:column>
+            <p:outputLabel style="font-weight: bold;" value="Active Users"/>
+            <p:outputLabel style="font-weight: bold;" value="#{activeUsersBean.getCount()}" />
+
         </p:column>
         <p:column>
             <p:commandButton style="float:right;" id="addDialog" icon="fa fa-plus" update=":addDialogForm"  title="Add New User" oncomplete="PF('addDialog').show()"/>
@@ -19,7 +24,7 @@
     </p:panelGrid>
 
 
-    <p:dataTable value="#{userController.userList}" rowIndexVar="rowIndex" var="item">
+    <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false" value="#{userController.userList}" rowIndexVar="rowIndex" var="item">
         <p:column headerText="S.N." >
             <h:outputText value="#{rowIndex + 1}" />
         </p:column>

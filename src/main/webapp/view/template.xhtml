@@ -116,7 +116,7 @@
                     <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" onclick="PF('loginDialog').show();"/>
 
                     <p:submenu label="Register" rendered="#{empty userBean.user}">
-                        <p:menuitem  title="User Registration" value="User" onclick="PF('registerDialog').show();"/>
+                        <p:menuitem  title="User Registration" value="User" action="#{userController.resetUser()}" oncomplete=""  onclick="PF('registerDialog').show();"/>
                         <p:menuitem title="Futsal Registration" value="Futsal" action="#{userController.user.setUsertype('futsalowner')}" oncomplete="PF('registerDialog').show();" />
                     </p:submenu>
 
@@ -131,8 +131,8 @@
             
             <ui:insert name="content" >
             </ui:insert>
-            <ui:include rendered="#{not userBean.isAdmin and not userBean.isFutsalOwner}"  src="Footer/footer.xhtml" />  
-            <p:outputPanel style="padding: 5px; background-color: #006666; width: 100%; text-align: center; color: white;">
+            <ui:include  src="Footer/footer.xhtml" />  
+            <p:outputPanel rendered="#{(not userBean.isAdmin) and (not userBean.isFutsalOwner)}" style="padding: 5px; background-color: #006666; width: 100%; text-align: center; color: white;">
                 <i class="fa fa-copyright" />2023. All rights reserved.
             </p:outputPanel>
         </p:layoutUnit>

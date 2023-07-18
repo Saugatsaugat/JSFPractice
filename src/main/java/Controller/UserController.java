@@ -19,6 +19,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -73,6 +74,10 @@ public class UserController implements Serializable {
         session = (HttpSession) externalContext.getSession(true);
     }
 
+    public void resetUser() {
+        this.user = new User();
+    }
+
     public void updateUser() {
         if (user.getId() != null) {
             user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
@@ -108,14 +113,20 @@ public class UserController implements Serializable {
                         externalContext = FacesContext.getCurrentInstance().getExternalContext();
                         Flash flash = externalContext.getFlash();
                         flash.setKeepMessages(true);
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
+                        User sessionUser = userCrud.getDataById((Long) session.getAttribute("userId"));
+                        if (sessionUser.getUsertype() == UserType.admin) {
+                            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
+                        } else {
+                            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
+                        }
                     } else {
-                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Account Created Successfully", "Account Created Successfully");
+                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "User Created Successfully", "User Created Successfully");
                         FacesContext.getCurrentInstance().addMessage(null, message);
                         externalContext = FacesContext.getCurrentInstance().getExternalContext();
                         Flash flash = externalContext.getFlash();
                         flash.setKeepMessages(true);
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/Login/loginForm.xhtml");
+
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
                     }
                 } catch (Exception e) {
                 }

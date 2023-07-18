@@ -8,6 +8,7 @@ import Model.FutsalUserRelationCrud;
 import Model.UserCrud;
 import com.saugat.bean.enums.UserType;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -113,8 +114,8 @@ public class FutsalController implements Serializable {
                     flash.setKeepMessages(true);
                     if ((userCrud.getDataById(futsal.getOwnerid()).getUsertype() == UserType.admin)) {
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
-                    }
-                   else if ((userCrud.getDataById(futsal.getOwnerid()).getUsertype() == UserType.futsalowner)) {
+                    } else if ((userCrud.getDataById(futsal.getOwnerid()).getUsertype() == UserType.futsalowner)) {
+                        session.setAttribute("futsalId", futsal.getId());
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/home.xhtml");
                     }
 

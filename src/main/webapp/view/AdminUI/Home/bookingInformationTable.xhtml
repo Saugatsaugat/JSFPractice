@@ -20,7 +20,7 @@
         
 
         <h:form>
-            <p:dataTable  value="#{bookingDetailController.bookingDetailList}" rowIndexVar="rowIndex" var="item">
+            <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"  value="#{bookingDetailController.bookingDetailList}" rowIndexVar="rowIndex" var="item">
                 <p:column headerText="S.N." >
                     <h:outputText value="#{rowIndex + 1}" />
                 </p:column>
