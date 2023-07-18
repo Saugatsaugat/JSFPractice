@@ -7,6 +7,7 @@ import Login.Login;
 import Model.FutsalCrud;
 import Model.FutsalScheduleCruds;
 import Model.UserCrud;
+import com.saugat.beans.ActiveUsersBean;
 import com.saugat.beans.UserBean;
 import java.io.IOException;
 import java.io.Serializable;
@@ -45,6 +46,9 @@ public class LoginController implements Serializable {
 
     @Inject
     private FutsalCrud futsalCrud;
+
+    @Inject
+    private ActiveUsersBean activeUsersBean;
 
     @Inject
     private UserBean userBean;
@@ -89,9 +93,10 @@ public class LoginController implements Serializable {
 
                 if (("admin".equals(userType))) {
                     session.setAttribute("userId", userid);
-                    
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Welcome "+userBean.getUser().getFirstname()+" "+userBean.getUser().getLastname(),"Welcome "+userBean.getUser().getFirstname()+" "+userBean.getUser().getLastname());
-                    
+    
+                    activeUsersBean.incrementActiveUsersList(userRecord);
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Welcome " + userBean.getUser().getFirstname() + " " + userBean.getUser().getLastname(), "Welcome " + userBean.getUser().getFirstname() + " " + userBean.getUser().getLastname());
+
                     FacesContext.getCurrentInstance().addMessage(null, message);
                     externalContext = FacesContext.getCurrentInstance().getExternalContext();
                     Flash flash = externalContext.getFlash();
@@ -100,11 +105,14 @@ public class LoginController implements Serializable {
 
                 } else if (("user".equals(userType))) {
                     session.setAttribute("userId", userid);
+                    activeUsersBean.incrementActiveUsersList(userRecord);
+
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
 
                 } else if ("futsalowner".equals(userType)) {
                     if ((futsalCrud.checkIfFutsalRegistered(userid)) == null) {
                         session.setAttribute("userId", userid);
+                        activeUsersBean.incrementActiveUsersList(userRecord);
                         RequestContext contextReq = RequestContext.getCurrentInstance();
                         contextReq.execute("PF('futsalRegisterDialog').show();");
 
