@@ -18,6 +18,10 @@ public class FutsalDetailCrud extends AbstractCrud<FutsalDetail>{
 
     @PersistenceContext(name="futsal")
     EntityManager em;
+
+    public FutsalDetailCrud() {
+        super(FutsalDetail.class);
+    }
     
     @Override
     protected EntityManager getEntityManager() {

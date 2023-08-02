@@ -68,7 +68,7 @@ public class UserController implements Serializable {
         user = new User();
         futsal = new Futsal();
         futsalUserRelation = new FutsalUserRelation();
-        userList = userCrud.getAllData(User.class);
+        userList = userCrud.getAllData();
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);

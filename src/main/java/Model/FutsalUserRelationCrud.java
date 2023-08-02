@@ -23,6 +23,10 @@ public class FutsalUserRelationCrud extends AbstractCrud<FutsalUserRelation> {
     @PersistenceContext(name = "futsal")
     EntityManager em;
 
+    public FutsalUserRelationCrud() {
+        super(FutsalUserRelation.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;

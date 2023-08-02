@@ -30,6 +30,10 @@ public class FutsalScheduleCruds extends AbstractCrud<FutsalSchedule> {
     @PersistenceContext(name = "futsal")
     EntityManager em;
 
+    public FutsalScheduleCruds() {
+        super(FutsalSchedule.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;

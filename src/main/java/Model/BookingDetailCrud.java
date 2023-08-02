@@ -21,6 +21,10 @@ public class BookingDetailCrud extends AbstractCrud<BookingDetail> {
     @PersistenceContext(name="futsal")
     EntityManager em;
 
+    public BookingDetailCrud() {
+        super(BookingDetail.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;

@@ -65,7 +65,7 @@ public class FutsalController implements Serializable {
     public void init() {
         futsal = new Futsal();
         futsalUserRelation = new FutsalUserRelation();
-        futsalList = futsalCrud.getAllData(Futsal.class);
+        futsalList = futsalCrud.getAllData();
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
         session = (HttpSession) externalContext.getSession(true);

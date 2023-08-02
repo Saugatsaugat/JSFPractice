@@ -12,11 +12,14 @@ import javax.persistence.Query;
  * @author saugat
  */
 @Stateless
-
 public class FutsalCrud extends AbstractCrud<Futsal> {
 
     @PersistenceContext(name = "futsal")
     EntityManager em;
+
+    public FutsalCrud() {
+        super(Futsal.class);
+    }
 
     @Override
     protected EntityManager getEntityManager() {

@@ -24,7 +24,9 @@
                 <p:column headerText="S.N." >
                     <h:outputText value="#{rowIndex + 1}" />
                 </p:column>
-                <p:column filterBy="#{item.futsalschedule.futsal.name}" sortBy="#{item.futsalschedule.futsal.name}" rendered="#{userBean.isAdmin}" headerText="Futsal Name">
+                <p:column filterBy="#{item.futsalschedule.futsal.name}" 
+                          sortBy="#{item.futsalschedule.futsal.name}" rendered="#{userBean.isAdmin}" 
+                          headerText="Futsal Name">
                     #{item.futsalschedule.futsal.name}
                 </p:column>
 

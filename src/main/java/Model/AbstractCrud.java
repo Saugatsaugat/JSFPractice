@@ -18,19 +18,19 @@ import javax.persistence.criteria.Root;
 public abstract class AbstractCrud<T extends IAbstractEntity> {
 
     protected abstract EntityManager getEntityManager();
-    private T obj;
+    
+    private final Class<T> entityClass;
 
-    @SuppressWarnings("unchecked")
-    private Class<T> getEntityClass() {
-        Type type = getClass().getGenericSuperclass();
-        ParameterizedType paramType = (ParameterizedType) type;
-        return (Class<T>) paramType.getActualTypeArguments()[0];
+    public AbstractCrud(Class<T> entityClass) {
+        this.entityClass = entityClass;
     }
 
-    public List<T> getAllData(Class<T> cla) {
+ 
+
+    public List<T> getAllData() {
         CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(cla);
-        Root<T> root = criteriaQuery.from(cla);
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        Root<T> root = criteriaQuery.from(entityClass);
         criteriaQuery.select(root);
 
         TypedQuery<T> query = getEntityManager().createQuery(criteriaQuery);
@@ -44,7 +44,7 @@ public abstract class AbstractCrud<T extends IAbstractEntity> {
     public T getDataById(Long id) {
         T t = null;
         try {
-            t = getEntityManager().find(getEntityClass(), id);
+            t = getEntityManager().find(entityClass, id);
             return t;
         } catch (Exception e) {
 
@@ -89,7 +89,7 @@ public abstract class AbstractCrud<T extends IAbstractEntity> {
 
     public boolean update(T obj, Long id) {
         try {
-            T existingObj = getEntityManager().find(getEntityClass(), id);
+            T existingObj = getEntityManager().find(entityClass, id);
             if (existingObj != null) {
                 getEntityManager().merge(obj);
                 return true;
@@ -102,7 +102,7 @@ public abstract class AbstractCrud<T extends IAbstractEntity> {
 
     public boolean checkIfExits(T obj) {
         try {
-            T existingObj = getEntityManager().find(getEntityClass(), obj.getId());
+            T existingObj = getEntityManager().find(entityClass, obj.getId());
             if (existingObj.equals(obj)) {
                 return true;
             }

@@ -17,6 +17,10 @@ public class UserCrud extends AbstractCrud<User> {
     @PersistenceContext(name = "futsal")
     EntityManager em;
 
+    public UserCrud() {
+        super(User.class);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
