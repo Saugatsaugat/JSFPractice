@@ -13,6 +13,7 @@ com/saugat/converter/TimeConvertor.class
 com/saugat/dataModel/CustomDataModel.class
 com/saugat/converter/UserConverter.class
 Model/BookingDetailCrud.class
+com/saugat/services/ApplicationConfig.class
 Model/FutsalScheduleCruds.class
 Controller/BookingInformationController.class
 Controller/UserController.class
@@ -37,6 +38,7 @@ Model/FutsalCrud.class
 Entities/BookingInformation.class
 Controller/JdbcController.class
 Model/FutsalDetailCrud.class
+com/saugat/services/UserService.class
 Entities/DateEntity.class
 Model/UserModel.class
 Controller/LogoutController.class
