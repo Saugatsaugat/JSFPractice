@@ -5,6 +5,7 @@ com/saugat/beans/UserBean.class
 Entities/NormalSchedule.class
 Entities/FileEntity.class
 Model/BookingDetailCrud.class
+com/saugat/services/LoginService.class
 com/saugat/bean/enums/SlotType.class
 com/saugat/converter/FutsalConverter.class
 Model/FutsalUserRelationCrud.class
@@ -41,6 +42,7 @@ com/saugat/converter/AbstractEntityConverter.class
 com/saugat/beans/SlotScheduleBean.class
 Controller/FileController.class
 Controller/ValidationController.class
+com/saugat/beans/LoginRequest.class
 Model/IAbstractEntity.class
 Controller/FutsalUserRelationController.class
 Controller/LoginController.class
