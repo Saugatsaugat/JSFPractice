@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author saugat
  */
-@WebFilter(urlPatterns = {"/faces/view/AdminUI/*","/faces/view/FutsalOwnerUI/*"})
+@WebFilter(urlPatterns = {"/faces/view/AdminUI/*", "/faces/view/FutsalOwnerUI/*"})
 public class LoginFilter implements Filter {
 
     @Override
@@ -28,11 +28,11 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         Long userId = (Long) req.getSession().getAttribute("userId");
+
         if (userId != null) {
             chain.doFilter(request, response);
 
         } else {
-
             res.sendRedirect(req.getContextPath() + "/faces/view/UserUI/Home/home.xhtml");
         }
     }

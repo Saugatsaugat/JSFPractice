@@ -8,6 +8,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/TimeConvertor.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/BookingInformationController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/LoginController.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Filter/AuthorizationFilter.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/PasswordHashController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalScheduleController.java

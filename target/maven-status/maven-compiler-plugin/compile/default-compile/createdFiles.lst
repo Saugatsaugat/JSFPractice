@@ -23,6 +23,7 @@ Controller/FutsalScheduleController.class
 com/saugat/services/ResponseMessage.class
 Login/Login.class
 Entities/FutsalSchedule.class
+Filter/AuthorizationFilter.class
 Entities/User.class
 Model/BookingInformationCrud.class
 Entities/FutsalUserRelation.class

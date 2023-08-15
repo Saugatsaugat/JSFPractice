@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
@@ -47,23 +46,23 @@ public class LoginService extends Application {
         }
     }
 
-    @POST
-    @Path("/tokenVerification/{string}")
-    public Response checkJWT(@PathParam("string") String token) {
-        responseMessage = new ResponseMessage();
-
-        if (!token.isEmpty()) {
-            String userId = TokenManager.verifyToken(token);
-            if (userId != null) {
-              
-                return Response.ok(userId).build();
-
-            } else {
-                return Response.status(Status.UNAUTHORIZED).build();
-            }
-        } else {
-            return Response.status(Status.UNAUTHORIZED).build();
-        }
-    }
+//    @POST
+//    @Path("/tokenVerification/{string}")
+//    public Response checkJWT(@PathParam("string") String token) {
+//        responseMessage = new ResponseMessage();
+//
+//        if (!token.isEmpty()) {
+//            String userId = TokenManager.verifyToken(token);
+//            if (userId != null) {
+//              
+//                return Response.ok(userId).build();
+//
+//            } else {
+//                return Response.status(Status.UNAUTHORIZED).build();
+//            }
+//        } else {
+//            return Response.status(Status.UNAUTHORIZED).build();
+//        }
+//    }
 
 }

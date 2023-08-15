@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class TokenManager {
 
-    private static final long EXPIRATION_TIME = 60000; // 1 day
+    private static final long EXPIRATION_TIME = 60000; 
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public static String generateToken(String subject) {
