@@ -63,7 +63,8 @@ public class LogoutController implements Serializable {
                 activeUsersBean.decrementActiveUsersList(user);
                 new UserBean().setUser(null);
                 session.invalidate();
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "See You Soon", "See You Soon");
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "See You Soon"+user.getFirstname(), "See You Soon "+user.getFirstname());
                 FacesContext.getCurrentInstance().addMessage(null, message);
                 externalContext = FacesContext.getCurrentInstance().getExternalContext();
                 Flash flash = externalContext.getFlash();

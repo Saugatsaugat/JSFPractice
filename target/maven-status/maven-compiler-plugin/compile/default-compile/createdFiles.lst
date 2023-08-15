@@ -13,6 +13,7 @@ Controller/PasswordHashController.class
 Controller/DateController.class
 Entities/FutsalDetail.class
 Controller/FutsalController.class
+Filter/LoginFilter.class
 Controller/JdbcController.class
 Model/FutsalDetailCrud.class
 com/saugat/services/UserService.class
