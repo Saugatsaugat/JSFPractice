@@ -18,8 +18,9 @@
             30
         </session-timeout>
     </session-config>
-    <!-- added for file -->
+    <!-- added for JWT -->
    
+    
    
 
     <!-- Needed for Awesome Font/Icons -->

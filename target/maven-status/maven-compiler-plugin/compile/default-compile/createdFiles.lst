@@ -40,6 +40,7 @@ Model/AbstractEntity.class
 Controller/NormalScheduleFormController.class
 com/saugat/converter/AbstractEntityConverter.class
 com/saugat/beans/SlotScheduleBean.class
+com/saugat/services/TokenManager.class
 Controller/FileController.class
 Controller/ValidationController.class
 com/saugat/beans/LoginRequest.class
