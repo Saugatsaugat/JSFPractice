@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "user_action")
-public abstract class UserAction extends AbstractEntity<UserAction> implements IAbstractEntity, Serializable {
+public class UserAction extends AbstractEntity<UserAction> implements IAbstractEntity, Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -27,7 +27,7 @@ public abstract class UserAction extends AbstractEntity<UserAction> implements I
     public User getUser() {
         return user;
     }
-    
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -39,6 +39,10 @@ public abstract class UserAction extends AbstractEntity<UserAction> implements I
     public void setAclAction(AclAction aclAction) {
         this.aclAction = aclAction;
     }
-    
-    
+
+    @Override
+    public String getTableName() {
+        return "UserAction";
+    }
+
 }

@@ -3,6 +3,7 @@ package Entities;
 import Model.AbstractEntity;
 import Model.IAbstractEntity;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -14,11 +15,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "user_action_resource")
-public abstract class UserActionResource extends AbstractEntity<AclAction> implements IAbstractEntity, Serializable {
+public class UserActionResource extends AbstractEntity<AclAction> implements IAbstractEntity, Serializable {
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_type")
+    private String userType;
 
     @ManyToOne
     @JoinColumn(name = "acl_action_id")
@@ -30,12 +30,12 @@ public abstract class UserActionResource extends AbstractEntity<AclAction> imple
 
     private Boolean isAllowed;
 
-    public User getUser() {
-        return user;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public AclAction getAclAction() {
@@ -60,6 +60,11 @@ public abstract class UserActionResource extends AbstractEntity<AclAction> imple
 
     public void setIsAllowed(Boolean isAllowed) {
         this.isAllowed = isAllowed;
+    }
+
+    @Override
+    public String getTableName() {
+        return "UserActionResource";
     }
 
 }

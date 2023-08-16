@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Interceptors.AclCheck;
 import Entities.BookingInformation;
 import Entities.FutsalSchedule;
 import Entities.User;
@@ -31,6 +32,13 @@ import javax.servlet.http.HttpSession;
 @ViewScoped
 public class BookingInformationController implements Serializable {
 
+    @Inject
+    private BookingInformationCrud bookingInformationCrud;
+    @Inject
+    private UserCrud userCrud;
+    @Inject
+    private FutsalCrud futsalCrud;
+    
     FacesContext context;
     ExternalContext externalContext;
     HttpSession session;
@@ -63,14 +71,6 @@ public class BookingInformationController implements Serializable {
         this.futsalSchdule = futsalSchdule;
     }
 
-    @Inject
-    private BookingInformationCrud bookingInformationCrud;
-
-    @Inject
-    private UserCrud userCrud;
-    @Inject
-    private FutsalCrud futsalCrud;
-
     @PostConstruct
     public void init() {
         bookingInformation = new BookingInformation();
@@ -87,16 +87,14 @@ public class BookingInformationController implements Serializable {
                 } else {
                     bookingInformationList = bookingInformationCrud.getCurrentAndFutureBookingInformationByUser(user);
                 }
-          }
+            }
 //else {
 //                bookingInformationList = bookingInformationCrud.getCurrentAndFutureBookingInformation();
 //
 //            }
 
-            }
         }
-
-    
+    }
 
     public void bookingInformationSchedule(BookingInformation bookingInformation) {
         this.bookingInformation = bookingInformation;

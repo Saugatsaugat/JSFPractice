@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "acl_action")
-public abstract class AclAction extends AbstractEntity<AclAction> implements IAbstractEntity, Serializable {
+public class AclAction extends AbstractEntity<AclAction> implements IAbstractEntity, Serializable {
 
     private String actionName;
 
@@ -23,6 +23,11 @@ public abstract class AclAction extends AbstractEntity<AclAction> implements IAb
     
     public void setActionName(String actionName) {
         this.actionName = actionName;
+    }
+
+    @Override
+    public String getTableName() {
+        return "AclAction";
     }
 
 }

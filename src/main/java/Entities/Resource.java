@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "resource")
-public abstract class Resource extends AbstractEntity<Resource> implements IAbstractEntity, Serializable {
+public class Resource extends AbstractEntity<Resource> implements IAbstractEntity, Serializable {
 
     private String resourceName;
 
@@ -22,6 +22,11 @@ public abstract class Resource extends AbstractEntity<Resource> implements IAbst
 
     public void setResourceName(String resourceName) {
         this.resourceName = resourceName;
+    }
+
+    @Override
+    public String getTableName() {
+        return "Resource";
     }
 
 }

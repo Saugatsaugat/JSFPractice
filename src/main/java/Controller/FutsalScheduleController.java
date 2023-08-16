@@ -1,5 +1,6 @@
 package Controller;
 
+import Interceptors.AclCheck;
 import Entities.BookingDetail;
 import Entities.BookingInformation;
 import Entities.Futsal;
@@ -14,7 +15,6 @@ import Model.UserCrud;
 import com.saugat.bean.enums.SlotType;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpSession;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.ToggleSelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -40,6 +40,7 @@ import org.primefaces.event.UnselectEvent;
  *
  * @author saugat
  */
+@Interceptors(AclCheck.class)
 @Named
 @ViewScoped
 public class FutsalScheduleController implements Serializable {
@@ -585,6 +586,7 @@ public class FutsalScheduleController implements Serializable {
     }
 
     // save generated Scheduled List
+    @AclCheck(action = "create",resource = "futsalschedule")
     public void saveGeneratedSchedules() {
         if (selectedSchedueList != null) {
             try {

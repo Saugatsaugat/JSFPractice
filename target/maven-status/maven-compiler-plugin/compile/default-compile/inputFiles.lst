@@ -31,6 +31,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/UserAction.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/bean/enums/UserType.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/services/UserService.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Interceptors/AclCheck.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalDetailCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalScheduleCruds.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/services/futsalService.java
@@ -57,6 +58,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/dataModel/CustomDataModel.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/DateController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/services/LoginService.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Interceptors/AclInterceptor.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/Resource.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/services/ResponseMessage.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/services/ApplicationConfig.java

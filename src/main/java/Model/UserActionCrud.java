@@ -1,6 +1,7 @@
 package Model;
 
 import Entities.UserAction;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -8,6 +9,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author saugat
  */
+@Stateless
 public class UserActionCrud extends AbstractCrud<UserAction> {
 
     @PersistenceContext(name = "futsal")
