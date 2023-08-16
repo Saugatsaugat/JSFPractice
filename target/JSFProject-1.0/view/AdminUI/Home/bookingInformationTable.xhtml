@@ -53,6 +53,7 @@
                 </p:column>
                 <p:column filterBy="#{item.paymentstatus}" sortBy="#{item.paymentstatus}" headerText="PaymentStatus">
                     #{item.paymentstatus}
+                    
                 </p:column>
                 <p:column rendered="#{userBean.isAdmin}" headerText="Edit">
                     <p:commandButton disabled="true" icon="fa fa-pencil" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
