@@ -4,7 +4,6 @@
  */
 package Controller;
 
-import Interceptors.AclCheck;
 import Entities.BookingInformation;
 import Entities.FutsalSchedule;
 import Entities.User;
@@ -23,6 +22,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import com.saugat.interceptors.Acl;
 
 /**
  *

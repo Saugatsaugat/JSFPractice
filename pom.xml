@@ -68,12 +68,34 @@
             <scope>runtime</scope>
         </dependency>
         
-        <dependency>
+        <!--        <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
             <version>1.2</version>
             <scope>provided</scope>
+        </dependency>-->
+        
+        <!--         https://mvnrepository.com/artifact/org.omnifaces/omnifaces 
+        <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+            <version>2.4</version>
+        </dependency>-->
+        
+<!--         https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet 
+        <dependency>
+            <groupId>org.jboss.weld.servlet</groupId>
+            <artifactId>weld-servlet</artifactId>
+            <version>2.4.8.Final</version>
         </dependency>
+         https://mvnrepository.com/artifact/org.apache.openwebbeans/openwebbeans-impl 
+        <dependency>
+            <groupId>org.apache.openwebbeans</groupId>
+            <artifactId>openwebbeans-impl</artifactId>
+            <version>2.0.27</version>
+        </dependency>-->
+
+
 
 
            

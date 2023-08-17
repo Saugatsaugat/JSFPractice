@@ -9,6 +9,7 @@ import Model.FutsalScheduleCruds;
 import Model.UserCrud;
 import com.saugat.beans.ActiveUsersBean;
 import com.saugat.beans.UserBean;
+import com.saugat.interceptors.Acl;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -93,7 +94,7 @@ public class LoginController implements Serializable {
 
                 if (("admin".equals(userType))) {
                     session.setAttribute("userId", userid);
-    
+
                     activeUsersBean.incrementActiveUsersList(userRecord);
                     FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Welcome " + userBean.getUser().getFirstname() + " " + userBean.getUser().getLastname(), "Welcome " + userBean.getUser().getFirstname() + " " + userBean.getUser().getLastname());
 

@@ -3,9 +3,9 @@ Entities/Futsal.class
 Entities/BookingDetail.class
 Model/ResourceCrud.class
 com/saugat/beans/UserBean.class
-Interceptors/AclCheck.class
 Entities/NormalSchedule.class
 Entities/Resource.class
+com/saugat/interceptors/Acl.class
 Entities/FileEntity.class
 Model/BookingDetailCrud.class
 com/saugat/services/LoginService.class
@@ -24,6 +24,7 @@ Controller/JdbcController.class
 Model/FutsalDetailCrud.class
 com/saugat/services/UserService.class
 Entities/DateEntity.class
+com/saugat/interceptors/AclInterceptor.class
 Entities/UserActionResource.class
 Controller/FutsalScheduleController.class
 com/saugat/services/ResponseMessage.class
@@ -51,7 +52,6 @@ com/saugat/beans/SlotScheduleBean.class
 com/saugat/services/TokenManager.class
 Controller/FileController.class
 Controller/ValidationController.class
-Interceptors/AclInterceptor.class
 com/saugat/beans/LoginRequest.class
 Model/IAbstractEntity.class
 Controller/FutsalUserRelationController.class
