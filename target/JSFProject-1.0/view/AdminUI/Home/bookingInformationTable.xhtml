@@ -8,16 +8,21 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="../../template.xhtml">
     <ui:define name="content">
-
-        <p:panelGrid style="width: 100%;" columns="2">
+        <p:growl autoUpdate="true" />
+        <p:panelGrid style="width: 100%;" columns="3">
             <p:column>
                 <p:outputLabel style="font-weight: bold;" value="Booking Information Table"/>
             </p:column>
             <p:column>
-                <p:commandButton style="float:right;" icon="fa fa-plus" disabled="true" id="addDialog" title="ADD New Booking Information" oncomplete="PF('addDialog').show()" />
+                <p:commandButton style="float:right;" icon="fa fa-plus" disabled="true" id="addDialog" 
+                                 title="ADD New Booking Information" oncomplete="PF('addDialog').show()" />
+            </p:column>
+            <p:column rendered="#{userBean.isAdmin}">
+                <p:commandButton style="float:right;" icon="fa fa-plus" value="ACL" 
+                                 title="ADD New ACL" oncomplete="PF('addAclDialog').show()" />
             </p:column>
         </p:panelGrid>
-        
+
 
         <h:form>
             <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"  value="#{bookingDetailController.bookingDetailList}" rowIndexVar="rowIndex" var="item">
@@ -53,7 +58,7 @@
                 </p:column>
                 <p:column filterBy="#{item.paymentstatus}" sortBy="#{item.paymentstatus}" headerText="PaymentStatus">
                     #{item.paymentstatus}
-                    
+
                 </p:column>
                 <p:column rendered="#{userBean.isAdmin}" headerText="Edit">
                     <p:commandButton disabled="true" icon="fa fa-pencil" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
@@ -85,6 +90,16 @@
             <div class="center-layout">
                 <h:form id="addDialogForm">
                     <ui:include src="bookingInformationForm.xhtml"/>
+                </h:form>
+            </div>
+        </p:dialog>
+
+        <p:dialog class="addAclDialog"  header="New ACL" fitViewport="true" appendTo="@(body)"
+                  widgetVar="addAclDialog" modal="true" height="300px" width="450px">
+            <div class="center-layout">
+                <h:form id="addAclForm">
+                    
+                    <ui:include src="addAclForm.xhtml"/>
                 </h:form>
             </div>
         </p:dialog>

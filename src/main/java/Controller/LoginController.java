@@ -1,7 +1,6 @@
 package Controller;
 
 import Entities.Futsal;
-import Entities.FutsalSchedule;
 import Entities.User;
 import Login.Login;
 import Model.FutsalCrud;
@@ -9,11 +8,9 @@ import Model.FutsalScheduleCruds;
 import Model.UserCrud;
 import com.saugat.beans.ActiveUsersBean;
 import com.saugat.beans.UserBean;
-import com.saugat.interceptors.Acl;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 
@@ -90,10 +87,10 @@ public class LoginController implements Serializable {
             if (userRecord != null) {
                 String userType = userRecord.getUsertype().toString();
                 Long userid = userRecord.getId();
-                userBean.setUser(userRecord);
 
                 if (("admin".equals(userType))) {
                     session.setAttribute("userId", userid);
+                    userBean.setUser(userRecord);
 
                     activeUsersBean.incrementActiveUsersList(userRecord);
                     FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Welcome " + userBean.getUser().getFirstname() + " " + userBean.getUser().getLastname(), "Welcome " + userBean.getUser().getFirstname() + " " + userBean.getUser().getLastname());
@@ -107,10 +104,13 @@ public class LoginController implements Serializable {
                 } else if (("user".equals(userType))) {
                     session.setAttribute("userId", userid);
                     activeUsersBean.incrementActiveUsersList(userRecord);
+                    userBean.setUser(userRecord);
 
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
 
                 } else if ("futsalowner".equals(userType)) {
+                    userBean.setUser(userRecord);
+
                     if ((futsalCrud.checkIfFutsalRegistered(userid)) == null) {
                         session.setAttribute("userId", userid);
                         activeUsersBean.incrementActiveUsersList(userRecord);

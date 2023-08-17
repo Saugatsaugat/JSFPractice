@@ -6,7 +6,10 @@ import Entities.User;
 import Model.FutsalCrud;
 import Model.FutsalUserRelationCrud;
 import Model.UserCrud;
+import com.saugat.bean.enums.ActionType;
+import com.saugat.bean.enums.ResourceType;
 import com.saugat.bean.enums.UserType;
+import com.saugat.interceptors.Acl;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -19,7 +22,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -78,6 +80,7 @@ public class UserController implements Serializable {
         this.user = new User();
     }
 
+    @Acl(actionName = ActionType.UPDATE,resourceName = ResourceType.USER)
     public void updateUser() {
         if (user.getId() != null) {
             user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));

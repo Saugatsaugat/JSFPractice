@@ -2,8 +2,12 @@ package Entities;
 
 import Model.AbstractEntity;
 import Model.IAbstractEntity;
+import com.saugat.bean.enums.ResourceType;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 /**
@@ -14,13 +18,15 @@ import javax.persistence.Table;
 @Table(name = "resource")
 public class Resource extends AbstractEntity<Resource> implements IAbstractEntity, Serializable {
 
-    private String resourceName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "resource_name",unique = true)
+    private ResourceType resourceName;
 
-    public String getResourceName() {
+    public ResourceType getResourceName() {
         return resourceName;
     }
 
-    public void setResourceName(String resourceName) {
+    public void setResourceName(ResourceType resourceName) {
         this.resourceName = resourceName;
     }
 

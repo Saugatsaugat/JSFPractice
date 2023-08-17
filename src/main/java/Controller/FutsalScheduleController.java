@@ -11,6 +11,8 @@ import Model.BookingInformationCrud;
 import Model.FutsalCrud;
 import Model.FutsalScheduleCruds;
 import Model.UserCrud;
+import com.saugat.bean.enums.ActionType;
+import com.saugat.bean.enums.ResourceType;
 import com.saugat.bean.enums.SlotType;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -41,6 +43,7 @@ import com.saugat.interceptors.Acl;
 @Named
 @ViewScoped
 public class FutsalScheduleController implements Serializable {
+//creating enum
 
     @Inject
     private FutsalCrud futsalCrud;
@@ -582,7 +585,7 @@ public class FutsalScheduleController implements Serializable {
         }
     }
 
-    @Acl(resource_name = "abc", action_name = "xyz")
+    @Acl(resourceName = ResourceType.FUTSALSCHEDULE, actionName = ActionType.CREATE)
     public void saveGeneratedSchedules() {
         if (selectedSchedueList != null) {
             try {

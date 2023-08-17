@@ -2,8 +2,12 @@ package Entities;
 
 import Model.AbstractEntity;
 import Model.IAbstractEntity;
+import com.saugat.bean.enums.ActionType;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 /**
@@ -15,13 +19,15 @@ import javax.persistence.Table;
 @Table(name = "acl_action")
 public class AclAction extends AbstractEntity<AclAction> implements IAbstractEntity, Serializable {
 
-    private String actionName;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "action_name",unique = true)
+    private ActionType actionName;
 
-    public String getActionName() {
+    public ActionType getActionName() {
         return actionName;
     }
-    
-    public void setActionName(String actionName) {
+
+    public void setActionName(ActionType actionName) {
         this.actionName = actionName;
     }
 

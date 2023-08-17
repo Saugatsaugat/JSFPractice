@@ -1,5 +1,7 @@
 package com.saugat.interceptors;
 
+import com.saugat.bean.enums.ActionType;
+import com.saugat.bean.enums.ResourceType;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -17,8 +19,8 @@ import javax.interceptor.InterceptorBinding;
 public @interface Acl {
 
     @Nonbinding
-    String resource_name() default "";
+    ResourceType resourceName() default ResourceType.FUTSALSCHEDULE ;
 
     @Nonbinding
-    String action_name() default "";
+    ActionType actionName() default ActionType.READ;
 }

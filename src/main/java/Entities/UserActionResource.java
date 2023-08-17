@@ -2,9 +2,12 @@ package Entities;
 
 import Model.AbstractEntity;
 import Model.IAbstractEntity;
+import com.saugat.bean.enums.UserType;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,8 +20,9 @@ import javax.persistence.Table;
 @Table(name = "user_action_resource")
 public class UserActionResource extends AbstractEntity<AclAction> implements IAbstractEntity, Serializable {
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "user_type")
-    private String userType;
+    private UserType userType;
 
     @ManyToOne
     @JoinColumn(name = "acl_action_id")
@@ -30,11 +34,11 @@ public class UserActionResource extends AbstractEntity<AclAction> implements IAb
 
     private Boolean isAllowed;
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
