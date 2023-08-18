@@ -9,7 +9,7 @@
                 template="../../template.xhtml">
     <ui:define name="content">
         <p:growl autoUpdate="true" />
-        <p:panelGrid style="width: 100%;" columns="3">
+        <p:panelGrid style="width: 100%;" columns="2">
             <p:column>
                 <p:outputLabel style="font-weight: bold;" value="Booking Information Table"/>
             </p:column>
@@ -17,10 +17,7 @@
                 <p:commandButton style="float:right;" icon="fa fa-plus" disabled="true" id="addDialog" 
                                  title="ADD New Booking Information" oncomplete="PF('addDialog').show()" />
             </p:column>
-            <p:column rendered="#{userBean.isAdmin}">
-                <p:commandButton style="float:right;" icon="fa fa-plus" value="ACL" 
-                                 title="ADD New ACL" oncomplete="PF('addAclDialog').show()" />
-            </p:column>
+            
         </p:panelGrid>
 
 
@@ -94,15 +91,6 @@
             </div>
         </p:dialog>
 
-        <p:dialog class="addAclDialog"  header="New ACL" fitViewport="true" appendTo="@(body)"
-                  widgetVar="addAclDialog" modal="true" height="300px" width="450px">
-            <div class="center-layout">
-                <h:form id="addAclForm">
-                    
-                    <ui:include src="addAclForm.xhtml"/>
-                </h:form>
-            </div>
-        </p:dialog>
-
+        
     </ui:define>
 </ui:composition>

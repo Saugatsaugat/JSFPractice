@@ -8,6 +8,7 @@ import Model.AclActionCrud;
 import Model.ResourceCrud;
 import Model.UserActionResourceCrud;
 import Model.UserCrud;
+import com.saugat.bean.enums.UserType;
 import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 import java.io.Serializable;
 import java.util.List;
@@ -33,14 +34,32 @@ public class AclController implements Serializable {
     @Inject
     private UserActionResourceCrud userActionResourceCrud;
 
+    private UserType userType;
     private UserActionResource userActionResource;
     private User user;
     private Resource resource;
     private AclAction action;
-    private Boolean allow;
+    private Boolean allowAcl;
     private List<User> userList;
     private List<Resource> resourceList;
     private List<AclAction> actionList;
+    private List<UserActionResource> aclList;
+
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
+
+    public List<UserActionResource> getAclList() {
+        return aclList;
+    }
+
+    public void setAclList(List<UserActionResource> aclList) {
+        this.aclList = aclList;
+    }
 
     public List<User> getUserList() {
         return userList;
@@ -91,50 +110,66 @@ public class AclController implements Serializable {
     }
 
     public Boolean getAllow() {
-        return allow;
+        return allowAcl;
     }
 
-    public void setAllow(Boolean allow) {
-        this.allow = allow;
+    public void setAllow(Boolean allowAcl) {
+        this.allowAcl = allowAcl;
+    }
+
+    public UserType[] getUserTypes() {
+        return UserType.values();
     }
 
     @PostConstruct
     public void init() {
+        allowAcl = false;
         user = new User();
         resource = new Resource();
         action = new AclAction();
         userList = userCrud.getAllData();
         resourceList = resourceCrud.getAllData();
         actionList = aclActionCrud.getAllData();
-        this.setAllow(Boolean.FALSE);
         userActionResource = new UserActionResource();
+        aclList = userActionResourceCrud.getAllData();
     }
 
     public void afterAdd() {
-        user = new User();
+        userActionResource = new UserActionResource();
+        userType = null;
         resource = new Resource();
         action = new AclAction();
+        allowAcl = false;
     }
 
-    public void saveAcl() {
-        if ((this.user.getId() != null) && (this.resource.getId() != null)
-                && (this.action.getId() != null)) {
-            this.user = userCrud.getDataById(user.getId());
-            this.resource = resourceCrud.getDataById(resource.getId());
-            this.action = aclActionCrud.getDataById(action.getId());
+    public void updateAcl(UserActionResource item) {
+        userActionResource = item;
+        if (item != null) {
+            this.resource = item.getResource();
+            this.userType = item.getUserType();
+            this.allowAcl = item.getIsAllowed();
+            this.action = item.getAclAction();
+        }
+    }
 
+    public void saveAclData() {
+        if ((this.userType != null) && (this.resource.getId() != null)
+                && (this.action.getId() != null)) {
+            resource = resourceCrud.getDataById(resource.getId());
+            action = aclActionCrud.getDataById(action.getId());
             Boolean status = userActionResourceCrud.checkIfExistsByAclDetails(
-                    resource.getResourceName().toString(), user.getUsertype().toString(),
-                    action.getActionName().toString());
+                    resource, userType,
+                    action, allowAcl);
             if (!status) {
                 userActionResource.setAclAction(action);
-                userActionResource.setUserType(user.getUsertype());
+                userActionResource.setUserType(userType);
                 userActionResource.setResource(resource);
-                userActionResource.setIsAllowed(allow);
+                userActionResource.setIsAllowed(allowAcl);
                 if (userActionResourceCrud.save(userActionResource)) {
                     ValidationMessageGenerationUtil.validationMessageGeneration("ACL Added",
                             "informational");
                     afterAdd();
+                    aclList = userActionResourceCrud.getAllData();
                     return;
                 } else {
                     ValidationMessageGenerationUtil.validationMessageGeneration("ACL Add Failed",
@@ -147,6 +182,49 @@ public class AclController implements Serializable {
                 return;
             }
         }
+        afterAdd();
+
     }
 
+    public void updateAcl() {
+        Boolean status = userActionResourceCrud.checkIfExits(userActionResource);
+        if (status) {
+            this.userActionResource.setResource(resource);
+            this.userActionResource.setAclAction(action);
+            this.userActionResource.setIsAllowed(allowAcl);
+            this.userActionResource.setUserType(userType);
+
+            if (userActionResourceCrud.update(userActionResource, userActionResource.getId())) {
+                ValidationMessageGenerationUtil.validationMessageGeneration(
+                        "Acl Updated", "informational");
+                return;
+            } else {
+                ValidationMessageGenerationUtil.validationMessageGeneration(
+                        "Acl Update Failed", "error");
+                return;
+            }
+        } else {
+            ValidationMessageGenerationUtil.validationMessageGeneration(
+                    "Acl Does not Exist", "error");
+            return;
+        }
+    }
+
+    public void deleteAcl() {
+        if (this.userActionResource.getId() != null) {
+            Boolean status = userActionResourceCrud.checkIfExits(userActionResource);
+            if (status) {
+                if (userActionResourceCrud.deleteById(userActionResource.getId())) {
+                    ValidationMessageGenerationUtil.validationMessageGeneration(
+                            "Acl Deleted", "informational");
+                    aclList = userActionResourceCrud.getAllData();
+                    return;
+                } else {
+                    ValidationMessageGenerationUtil.validationMessageGeneration(
+                            "Acl Deletion Failed", "error");
+                    return;
+                }
+            }
+        }
+    }
 }

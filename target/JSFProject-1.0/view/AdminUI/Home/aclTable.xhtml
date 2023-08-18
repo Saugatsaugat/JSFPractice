@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="../../template.xhtml">
+
+
+    <ui:define name="content">
+        <p:growl autoUpdate="true" />
+        <p:panelGrid style="width: 100%;" columns="2">
+            <p:column>
+                <p:outputLabel style="font-weight: bold;" value="ACL Table"/>
+            </p:column>
+
+            <p:column>
+                <p:commandButton style="float:right;" icon="fa fa-plus" process="@this"
+                                 action="#{aclController.afterAdd()}" update="aclTable aclDialog"
+                                 title="ADD New ACL"
+                                 oncomplete="PF('addAclDialog').show()" />
+            </p:column>
+        </p:panelGrid>
+
+        <p:dataTable id="aclTable" paginator="true" rows="10" paginatorPosition="bottom" 
+                     paginatorAlwaysVisible="false"  value="#{aclController.getAclList()}" 
+                     rowIndexVar="rowIndex" var="item">
+
+            <p:column headerText="S.N." >
+                <h:outputText value="#{rowIndex + 1}" />
+            </p:column>
+
+            <p:column headerText="User Role"  filterBy="#{item.userType}" sortBy="#{item.userType}">
+                <h:outputText value="#{item.userType}" />
+            </p:column>
+
+            <p:column headerText="Resource Name" filterBy="#{item.resource.resourceName}" 
+                      sortBy="#{item.resource.resourceName}">
+                <h:outputText value="#{item.resource.resourceName}" />
+            </p:column>
+
+            <p:column headerText="Action Name" filterBy="#{item.aclAction.actionName}" 
+                      sortBy="#{item.aclAction.actionName}">
+                <h:outputText value="#{item.aclAction.actionName}" />
+            </p:column>
+
+            <p:column headerText="Allowed" filterBy="#{item.isAllowed}">
+                <h:outputText value="#{item.isAllowed}" />
+            </p:column>
+            <p:column headerText="Action">
+                <p:commandButton icon="fa fa-pencil" actionListener="#{aclController.updateAcl(item)}"
+                                 update="aclDialog aclTable" oncomplete="PF('addAclDialog').show();"/>
+                <p:commandButton icon="fa fa-trash" action="#{aclController.updateAcl(item)}" 
+                                 oncomplete="PF('deleteAclDialog').show();" process="@this" 
+                                 update="aclDialog aclTable"/>
+            </p:column>
+        </p:dataTable>
+
+
+        <p:dialog id="aclDialog" header="ACL Configuration" fitViewport="true" appendTo="@(body)"
+                  widgetVar="addAclDialog" modal="true" height="300px" width="450px">
+            <ui:include src="addAclForm.xhtml"/>
+        </p:dialog>
+
+        <p:confirmDialog appendTo="@(body)" widgetVar="deleteAclDialog" 
+                         message="Are you sure to delete it?" header="Delete ACL">
+            <p:commandButton value="Yes"  actionListener="#{aclController.deleteAcl}"
+                             oncomplete="PF('deleteAclDialog').hide();" process="@this" update="aclTable"/>
+
+            <p:commandButton value="No" oncomplete="PF('deleteAclDialog').hide();"  />
+
+
+        </p:confirmDialog>
+    </ui:define>
+
+</ui:composition>

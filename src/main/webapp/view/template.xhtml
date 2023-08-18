@@ -63,14 +63,14 @@
             .ui-fieldset,.ui-fieldset .ui-fieldset-legend{
                 padding: 0px;
             }
-/*            .ui-growl-item{
-                font-size: 15px;
-                background: white;
-                color: red;
-            }
-            .ui-growl-icon-close{
-                display: block !important;
-            }*/
+            /*            .ui-growl-item{
+                            font-size: 15px;
+                            background: white;
+                            color: red;
+                        }
+                        .ui-growl-icon-close{
+                            display: block !important;
+                        }*/
             .ui-widget-content {
                 border:none;
             }
@@ -97,7 +97,7 @@
 
     </h:head>
     <p:layout fullPage="true">
- 
+
 
         <p:layoutUnit position="center">
             <h:form>
@@ -110,8 +110,10 @@
                     <p:menuitem value="FutsalSchedule" rendered="#{userBeasn.isAdmin or userBean.isFutsalOwner}" url="/faces/view/FutsalSchedule/futsalScheduleTable.xhtml"/>
 
                     <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
+                    <p:menuitem value="Manage ACL" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/aclTable.xhtml"/>
 
-                    <p:menuitem />
+                    <p:menuitem />  
+
                     <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}" />
                     <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" onclick="PF('loginDialog').show();"/>
 
@@ -125,10 +127,10 @@
             <p:dialog style="font-size: 10px;" id="registerDialog" fitViewport="true" appendTo="@(body)" widgetVar="registerDialog" modal="true" header="Registration" height="500px" width="300px">
                 <ui:include src="../view/Register/registerForm.xhtml" />
             </p:dialog>
-             <p:dialog style="font-size: 10px;" id="loginDialog" fitViewport="true" appendTo="@(body)" widgetVar="loginDialog" modal="true" header="Login" height="250px" width="300px">
+            <p:dialog style="font-size: 10px;" id="loginDialog" fitViewport="true" appendTo="@(body)" widgetVar="loginDialog" modal="true" header="Login" height="250px" width="300px">
                 <ui:include src="../view/Login/loginForm.xhtml" />
             </p:dialog>
-            
+
             <ui:insert name="content" >
             </ui:insert>
             <ui:include  src="Footer/footer.xhtml" />  
