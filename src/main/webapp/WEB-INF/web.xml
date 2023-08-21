@@ -77,8 +77,10 @@
     <welcome-file-list>
         <!--        <welcome-file>faces/view/UserView/userTable.xhtml</welcome-file>-->
         <!--        <welcome-file>faces/view/Home/home.xhtml</welcome-file>-->
-        <welcome-file>faces/view/UserUI/Home/home.xhtml</welcome-file>
+                <welcome-file>faces/view/UserUI/Home/home.xhtml</welcome-file>
         <!--        <welcome-file>faces/view/File/fileInput.xhtml</welcome-file>-->
+<!--        <welcome-file>faces/view/Login/loginPage.xhtml</welcome-file>-->
+
 
     </welcome-file-list>
 
