@@ -35,6 +35,7 @@ public class LoginService extends Application {
             String password = loginRequest.getPassword();
             User user = userCrud.findByUsernameAndPassword(username, password);
             if (user != null) {
+                
                 String token = TokenManager.generateToken(user.getId().toString());
 
                 return Response.ok(token).build();

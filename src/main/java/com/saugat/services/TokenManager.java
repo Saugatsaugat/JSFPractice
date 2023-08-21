@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class TokenManager {
 
-    private static final long EXPIRATION_TIME = 60000; //1 min
+    private static final long EXPIRATION_TIME = 600000; //1 min//10min = 1000*10*60
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public static String generateToken(String subject) {
@@ -31,17 +31,18 @@ public class TokenManager {
     }
 
     public static String verifyToken(String token) {
+        
         JwtParser parser = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build();
         try {
             Claims claims = parser.parseClaimsJws(token).getBody();
-            Date date = claims.getExpiration();
-
+            System.out.println("");
             String userId = claims.getSubject();
             return userId;
 
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

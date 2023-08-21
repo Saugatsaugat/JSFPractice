@@ -5,17 +5,16 @@ import Model.UserActionResourceCrud;
 import Model.UserCrud;
 import com.saugat.bean.enums.ActionType;
 import com.saugat.bean.enums.ResourceType;
+import com.saugat.beans.UserBean;
 import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import javax.annotation.Priority;
 import javax.enterprise.context.Dependent;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,6 +25,9 @@ import javax.servlet.http.HttpSession;
 @Dependent
 @Priority(Interceptor.Priority.APPLICATION)
 public class AclInterceptor implements Serializable {
+
+    @Inject
+    private UserBean userBean;
 
     @Inject
     private UserActionResourceCrud userActionResourceCrud;
@@ -45,30 +47,30 @@ public class AclInterceptor implements Serializable {
             ResourceType resourceType = (ResourceType) aclCheckAnnotationData.resourceName();
             ActionType actionType = (ActionType) aclCheckAnnotationData.actionName();
 
-            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-            if (session.getAttribute("userId") != null) {
-                User user = userCrud.getDataById((Long) session.getAttribute("userId"));
-                if (user != null) {
+            //Rough
+            //start
+            User user = userBean.getUser();
 
-                    Boolean status = userActionResourceCrud.checkIfExistsByAclDetail(resourceType, user.getUsertype(),
-                            actionType);
-                    if (status) {
-                        return context.proceed();
-                    } else {
-                        ValidationMessageGenerationUtil.validationMessageGeneration("Permission Denied.", "error");
-                        return null;
-                    }
+            //end
+            //    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+            if (user.getId() != null) {
+
+                Boolean status = userActionResourceCrud.checkIfExistsByAclDetail(resourceType, user.getUsertype(),
+                        actionType);
+                if (status) {
+                    return context.proceed();
                 } else {
-                    ValidationMessageGenerationUtil.validationMessageGeneration("Permission Denied.", "error");
+           //         ValidationMessageGenerationUtil.validationMessageGeneration("Permission Denied.", "error");
+                    System.out.println("Permission Denied");
                     return null;
                 }
             } else {
-                ValidationMessageGenerationUtil.validationMessageGeneration("Permission Denied.", "error");
+                System.out.println("Permission Denied");
+            //    ValidationMessageGenerationUtil.validationMessageGeneration("Permission Denied.", "error");
                 return null;
-
             }
-
         }
 
     }
+
 }

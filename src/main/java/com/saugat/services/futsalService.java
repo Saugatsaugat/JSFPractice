@@ -2,6 +2,9 @@ package com.saugat.services;
 
 import Entities.Futsal;
 import Model.FutsalCrud;
+import com.saugat.bean.enums.ActionType;
+import com.saugat.bean.enums.ResourceType;
+import com.saugat.interceptors.Acl;
 import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -30,6 +33,7 @@ public class futsalService extends Application {
 
     private ResponseMessage responseMessage = new ResponseMessage();
 
+    @Acl(actionName = ActionType.READ,resourceName = ResourceType.FUTSAL)
     @GET
     public Response getAllFutsal() {
         List<Futsal> futsalList = futsalCrud.getAllData();
@@ -65,6 +69,7 @@ public class futsalService extends Application {
         }
     }
 
+    @Acl(actionName = ActionType.CREATE, resourceName = ResourceType.FUTSAL)
     @POST
     public Response create(Futsal futsal) {
         if (futsal != null) {

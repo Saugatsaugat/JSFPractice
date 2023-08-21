@@ -1,8 +1,12 @@
 package Filter;
 
+import Entities.User;
+import Model.UserCrud;
+import com.saugat.beans.UserBean;
 import com.saugat.services.TokenManager;
 import java.io.IOException;
 import javax.annotation.Priority;
+import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.HttpHeaders;
@@ -17,6 +21,12 @@ import javax.ws.rs.ext.Provider;
 @Priority(1)
 public class AuthorizationFilter implements ContainerRequestFilter {
 
+    @Inject
+    private UserCrud userCrud;
+
+    @Inject
+    private UserBean userBean;
+
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         String requestPath = requestContext.getUriInfo().getPath();
@@ -29,11 +39,14 @@ public class AuthorizationFilter implements ContainerRequestFilter {
                 try {
                     String userId = TokenManager.verifyToken(token);
                     if (userId != null) {
+                        User user = userCrud.getDataById(Long.valueOf(userId));
+                        userBean.setUser(user);
                         return;
                     } else {
                         requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
                     return;
                 }
