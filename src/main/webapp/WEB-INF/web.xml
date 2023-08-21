@@ -69,7 +69,10 @@
         <extension>xlsx</extension>
         <mime-type>application/vnd.ms-excel</mime-type>
     </mime-mapping>
-    
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>omega</param-value>  
+    </context-param>
    
     <welcome-file-list>
         <!--        <welcome-file>faces/view/UserView/userTable.xhtml</welcome-file>-->

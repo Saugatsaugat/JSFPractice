@@ -3,6 +3,8 @@ package com.saugat.interceptors;
 import Entities.User;
 import Model.UserActionResourceCrud;
 import Model.UserCrud;
+import com.saugat.bean.enums.ActionType;
+import com.saugat.bean.enums.ResourceType;
 import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -40,16 +42,16 @@ public class AclInterceptor implements Serializable {
         if (aclCheckAnnotationData == null) {
             return context.proceed();
         } else {
-            String resource = aclCheckAnnotationData.resourceName().getLabel();
-            String action = aclCheckAnnotationData.actionName().getLabel();
+            ResourceType resourceType = (ResourceType) aclCheckAnnotationData.resourceName();
+            ActionType actionType = (ActionType) aclCheckAnnotationData.actionName();
 
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             if (session.getAttribute("userId") != null) {
                 User user = userCrud.getDataById((Long) session.getAttribute("userId"));
                 if (user != null) {
 
-                    Boolean status = userActionResourceCrud.checkIfExistsByAclDetails(resource, user.getUsertype().toString(),
-                            action);
+                    Boolean status = userActionResourceCrud.checkIfExistsByAclDetail(resourceType, user.getUsertype(),
+                            actionType);
                     if (status) {
                         return context.proceed();
                     } else {

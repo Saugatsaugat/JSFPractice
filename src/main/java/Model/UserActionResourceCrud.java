@@ -3,6 +3,8 @@ package Model;
 import Entities.AclAction;
 import Entities.Resource;
 import Entities.UserActionResource;
+import com.saugat.bean.enums.ActionType;
+import com.saugat.bean.enums.ResourceType;
 import com.saugat.bean.enums.UserType;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,10 +55,10 @@ public class UserActionResourceCrud extends AbstractCrud<UserActionResource> {
         }
     }
 
-    public Boolean checkIfExistsByAclDetails(String resource, String userType, String action) {
+    public Boolean checkIfExistsByAclDetail(ResourceType resource, UserType userType, ActionType action) {
         UserActionResource userActionResource = new UserActionResource();
         try {
-            Query query = em.createQuery("SELECT u from UserActionResource u WHERE u.resource.resourceName:resource AND u.userType=:userType AND u.aclAction.actionName=:action", UserActionResource.class);
+            Query query = em.createQuery("SELECT u from UserActionResource u WHERE u.resource.resourceName=:resource AND u.userType=:userType AND u.aclAction.actionName=:action", UserActionResource.class);
             query.setParameter("resource", resource);
             query.setParameter("userType", userType);
             query.setParameter("action", action);
