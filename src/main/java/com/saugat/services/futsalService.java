@@ -35,7 +35,7 @@ public class futsalService extends Application {
     public Response getAllFutsal() {
         List<Futsal> futsalList = futsalCrud.getAllData();
         if (!futsalList.isEmpty()) {
-            ResponseMessage responseMessage = new ResponseMessage("OK", "200", "Data Found Successfully", 
+            ResponseMessage responseMessage = new ResponseMessage("OK", "200", "Data Found Successfully",
                     futsalList);
             return Response.ok(responseMessage).build();
         } else {
@@ -46,6 +46,7 @@ public class futsalService extends Application {
         }
     }
 
+    @Acl(actionName = ActionType.READ, resourceName = ResourceType.FUTSAL)
     @GET
     @Path("/{id}")
     public Response getDataById(@PathParam("id") Long id) {
@@ -76,12 +77,12 @@ public class futsalService extends Application {
         if (futsal != null) {
             Boolean status = futsalCrud.save(futsal);
             if (status) {
-                ResponseMessage responseMessage = new ResponseMessage("OK", "200", 
+                ResponseMessage responseMessage = new ResponseMessage("OK", "200",
                         "Data Created Successfully", futsal);
 
                 return Response.ok(responseMessage).build();
             } else {
-                ResponseMessage responseMessage = new ResponseMessage("NOT_ACCEPTABLE", "406", 
+                ResponseMessage responseMessage = new ResponseMessage("NOT_ACCEPTABLE", "406",
                         "NOT_ACCEPTABLE",
                         "There is a problem in the data sent.");
                 return Response.status(Response.Status.NOT_ACCEPTABLE)
@@ -89,7 +90,7 @@ public class futsalService extends Application {
                         .build();
             }
         } else {
-            ResponseMessage responseMessage = new ResponseMessage("EXPECTATION_FAILED", "400", 
+            ResponseMessage responseMessage = new ResponseMessage("EXPECTATION_FAILED", "400",
                     "EXPECTATION_FAILED", "");
             return Response.status(Response.Status.EXPECTATION_FAILED)
                     .entity(responseMessage)
@@ -97,6 +98,7 @@ public class futsalService extends Application {
         }
     }
 
+    @Acl(actionName = ActionType.DELETE, resourceName = ResourceType.FUTSAL)
     @DELETE
     @Path("/{id}")
     public Response deleteById(@PathParam("id") Long id) {

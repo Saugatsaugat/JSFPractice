@@ -3,6 +3,9 @@ package com.saugat.services;
 import Controller.PasswordHashController;
 import Entities.User;
 import Model.UserCrud;
+import com.saugat.bean.enums.ActionType;
+import com.saugat.bean.enums.ResourceType;
+import com.saugat.interceptors.Acl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -26,6 +29,7 @@ public class UserService extends Application {
     @Inject
     private UserCrud userCrud;
 
+    @Acl(actionName = ActionType.READ, resourceName = ResourceType.USER)
     @GET
     public Response getAllFutsal() {
         List<User> userList = userCrud.getAllData();
@@ -46,6 +50,7 @@ public class UserService extends Application {
         }
     }
 
+    @Acl(actionName = ActionType.READ, resourceName = ResourceType.USER)
     @GET
     @Path("/{id}")
     public Response getDataById(@PathParam("id") Long id) {
@@ -70,6 +75,7 @@ public class UserService extends Application {
         }
     }
 
+    @Acl(actionName = ActionType.CREATE, resourceName = ResourceType.USER)
     @POST
     public Response create(User user) {
         if (user != null) {
@@ -94,6 +100,7 @@ public class UserService extends Application {
         }
     }
 
+    @Acl(actionName = ActionType.DELETE, resourceName = ResourceType.USER)
     @DELETE
     @Path("/{id}")
     public Response deleteById(@PathParam("id") Long id) {
