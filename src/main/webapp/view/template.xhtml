@@ -101,7 +101,7 @@
 
         <p:layoutUnit position="center">
             <h:form>
-                <p:menubar style="background: none; background-color: lightgrey;">
+                <p:menubar style="background: none; background-color: lightgrey; position: sticky;">
                     <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" icon="fa fa-lg fa-home" url="/faces/view/UserUI/Home/home.xhtml"/>
                     <p:menuitem rendered="#{userBean.isFutsalOwner}" value="Home" url="/faces/view/FutsalOwnerUI/Home/home.xhtml"/>
                     <p:menuitem value="UserList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/userTable.xhtml"/>

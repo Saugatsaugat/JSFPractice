@@ -24,11 +24,13 @@
     </p:panelGrid>
 
 
-    <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false" value="#{userController.userList}" rowIndexVar="rowIndex" var="item">
+    <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false" 
+                 value="#{userController.userList}" rowIndexVar="rowIndex" var="item" rowKey="#{item.id}"
+                 lazy="false">
         <p:column headerText="S.N." >
             <h:outputText value="#{rowIndex + 1}" />
         </p:column>
-        <p:column filterBy="#{item.firstname}" filterable="true" sortBy="#{item.firstname}"  headerText="Firstname">
+        <p:column filterBy="#{item.firstname}" sortBy="#{item.firstname}"  headerText="Firstname">
             #{item.firstname}
         </p:column>
         <p:column filterBy="#{item.midname}" sortBy="#{item.midname}" headerText="Midname">

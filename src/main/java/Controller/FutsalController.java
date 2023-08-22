@@ -135,23 +135,18 @@ public class FutsalController implements Serializable {
                 boolean status = futsalCrud.deleteById(futsal.getId());
                 if (status) {
                     try {
-                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Futsal Deleted Successfully", "Futsal Deleted Successfully");
-                        FacesContext.getCurrentInstance().addMessage(null, message);
-                        externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                        Flash flash = externalContext.getFlash();
-                        flash.setKeepMessages(true);
+                        ValidationMessageGenerationUtil.validationMessageGeneration("Deleted", "informational");
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
                     } catch (Exception e) {
                     }
                 } else {
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
-                    context.addMessage(null, message);
+                    ValidationMessageGenerationUtil.validationMessageGeneration("Deletion Failed", "error");
+
                 }
 
             }
 
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
-            context.addMessage(null, message);
+            ValidationMessageGenerationUtil.validationMessageGeneration("Deletion Failed", "error");
 
         }
     }

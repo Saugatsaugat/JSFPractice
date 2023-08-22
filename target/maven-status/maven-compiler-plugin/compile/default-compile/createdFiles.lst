@@ -25,6 +25,7 @@ Model/FutsalDetailCrud.class
 com/saugat/bean/enums/ActionType.class
 com/saugat/services/UserService.class
 Entities/DateEntity.class
+Controller/CarouselController.class
 com/saugat/interceptors/AclInterceptor.class
 Entities/UserActionResource.class
 Controller/FutsalScheduleController.class

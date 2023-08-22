@@ -10,6 +10,23 @@
 
     <ui:define name="title">Home</ui:define>
     <ui:define name="content" >
+        <style>
+            .ui-carousel .ui-carousel-header{
+                display: none;
+            }
+            .ui-carousel .ui-carousel-viewport .ui-carousel-items .ui-carousel-item{
+                height: 300px;
+                width: 100%;
+            }
+        </style>
+
+        <p:carousel value="#{carouselController.homePageCarouselList}" var="item" 
+                    numVisible="1" autoPlayInterval="3000" circular="true"> 
+            <h:graphicImage width="100%" alt="#{item}" library="images" 
+                            name="futsal/#{item}"/> 
+
+        </p:carousel>
+
         <ui:include src="../../FutsalCart/futsalCartBox.xhtml"/>       
     </ui:define>
 
