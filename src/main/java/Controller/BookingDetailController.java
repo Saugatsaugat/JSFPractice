@@ -79,7 +79,15 @@ public class BookingDetailController implements Serializable {
                     bookingDetailList = bookingDetailCrud.bookingDetailOfCurrentDateAndHigherByUser(user);
 
                 }
-            } 
+            }
+        }
+    }
+
+    public Boolean checkPaymentStatus(BookingDetail bookingDetail) {
+        if (bookingDetail.getPaymentstatus().equals("incomplete")) {
+            return true;
+        } else {
+            return true;
         }
     }
 

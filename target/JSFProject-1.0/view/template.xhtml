@@ -133,10 +133,14 @@
 
             <ui:insert name="content" >
             </ui:insert>
-            <ui:include  src="Footer/footer.xhtml" />  
-            <p:outputPanel rendered="#{(not userBean.isAdmin) and (not userBean.isFutsalOwner)}" style="padding: 5px; background-color: #006666; width: 100%; text-align: center; color: white;">
-                <i class="fa fa-copyright" />2023. All rights reserved.
-            </p:outputPanel>
+
+            <ui:remove>
+                <ui:include  src="Footer/footer.xhtml" />  
+                <p:outputPanel rendered="#{(not userBean.isAdmin) and (not userBean.isFutsalOwner)}" style="padding: 5px; background-color: #006666; width: 100%; text-align: center; color: white;">
+                    <i class="fa fa-copyright" />2023. All rights reserved.
+                </p:outputPanel>
+            </ui:remove>
+
         </p:layoutUnit>
 
 

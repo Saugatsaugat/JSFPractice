@@ -17,12 +17,13 @@
                 <p:commandButton style="float:right;" icon="fa fa-plus" disabled="true" id="addDialog" 
                                  title="ADD New Booking Information" oncomplete="PF('addDialog').show()" />
             </p:column>
-            
+
         </p:panelGrid>
 
 
         <h:form>
-            <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"  value="#{bookingDetailController.bookingDetailList}" rowIndexVar="rowIndex" var="item">
+            <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"  
+                         value="#{bookingDetailController.bookingDetailList}" rowIndexVar="rowIndex" var="item">
                 <p:column headerText="S.N." >
                     <h:outputText value="#{rowIndex + 1}" />
                 </p:column>
@@ -32,10 +33,12 @@
                     #{item.futsalschedule.futsal.name}
                 </p:column>
 
-                <p:column filterBy=" #{item.bookinginformation.fromdate}" sortBy=" #{item.bookinginformation.fromdate}" headerText="FromDate">
+                <p:column filterBy=" #{item.bookinginformation.fromdate}" sortBy=" #{item.bookinginformation.fromdate}"
+                          headerText="FromDate">
                     #{item.bookinginformation.fromdate}
                 </p:column>
-                <p:column filterBy="#{item.bookinginformation.todate}" sortBy="#{item.bookinginformation.todate}" headerText="ToDate">
+                <p:column filterBy="#{item.bookinginformation.todate}" sortBy="#{item.bookinginformation.todate}" 
+                          headerText="ToDate">
                     #{item.bookinginformation.todate}
                 </p:column>
                 <p:column filterBy="#{item.futsalschedule.starthour}" sortBy="#{item.futsalschedule.starthour}" headerText="StartHour">
@@ -47,28 +50,36 @@
                 <p:column filterBy=" #{item.futsalschedule.rate}" sortBy=" #{item.futsalschedule.rate}" headerText="Amount">
                     #{item.futsalschedule.rate}
                 </p:column>
-                <p:column filterBy="#{item.bookinginformation.user.firstname}" sortBy="#{item.bookinginformation.user.firstname}" rendered="#{userBean.isAdmin or userBean.isFutsalOwner}"  headerText="UserName">
+                <p:column filterBy="#{item.bookinginformation.user.firstname}" sortBy="#{item.bookinginformation.user.firstname}" 
+                          rendered="#{userBean.isAdmin or userBean.isFutsalOwner}"  headerText="UserName">
                     #{item.bookinginformation.user.firstname}
                 </p:column>
-                <p:column filterBy="#{item.bookinginformation.user.mobile}" sortBy="#{item.bookinginformation.user.mobile}"  headerText="Mobile">
+                <p:column filterBy="#{item.bookinginformation.user.mobile}" sortBy="#{item.bookinginformation.user.mobile}" 
+                          headerText="Mobile">
                     #{item.bookinginformation.user.mobile}
                 </p:column>
                 <p:column filterBy="#{item.paymentstatus}" sortBy="#{item.paymentstatus}" headerText="PaymentStatus">
                     #{item.paymentstatus}
 
                 </p:column>
-                <p:column rendered="#{userBean.isAdmin}" headerText="Edit">
-                    <p:commandButton disabled="true" icon="fa fa-pencil" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
 
-                </p:column>
-                <p:column rendered="#{userBean.isAdmin or userBean.isFutsalOwner}" headerText="Delete">
-                    <p:commandButton disabled="true" icon="fa fa-trash" title="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{bookingInformationController.setBookingInformationId(item.id)}" />
+                <p:column headerText="Actions">
+                    <p:commandButton rendered="#{userBean.isAdmin}"  disabled="true" icon="fa fa-pencil" id="editDialog" 
+                                     title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" 
+                                     actionListener="#{bookingInformationController.bookingInformationSchedule(item)}"/>
 
+                    <p:commandButton rendered="#{userBean.isAdmin or userBean.isFutsalOwner}" disabled="true" icon="fa fa-trash" 
+                                     title="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" 
+                                     actionListener="#{bookingInformationController.setBookingInformationId(item.id)}" />
+
+                    <p:commandButton rendered="#{(userBean.isUser) and (bookingDetailController.checkPaymentStatus(item))}"
+                                     value="Pay Now" onclick="PF('paymentChooseDialog').show();"/>
                 </p:column>
             </p:dataTable>
         </h:form>
 
-        <p:dialog class="editDialog"  header="Edit Booking Information" fitViewport="true" appendTo="@(body)" widgetVar="editDialog" modal="true" height="400px" width="300px">
+        <p:dialog class="editDialog"  header="Edit Booking Information" fitViewport="true" appendTo="@(body)"
+                  widgetVar="editDialog" modal="true" height="400px" width="300px">
             <div class="center-layout">
                 <h:form id="editDialogForm">
                     <ui:include src="bookingInformationForm.xhtml"/>
@@ -77,13 +88,15 @@
         </p:dialog>
 
 
-        <p:dialog style="font-size: 10px;" id="deleteDialog" fitViewport="true" appendTo="@(body)" widgetVar="deleteDialog" modal="true" header="Confirmation" height="100px" width="300px">
+        <p:dialog style="font-size: 10px;" id="deleteDialog" fitViewport="true" appendTo="@(body)" widgetVar="deleteDialog" 
+                  modal="true" header="Confirmation" height="100px" width="300px">
             <p>Do you really want to delete it?</p><br/>
             <p:commandButton value="Yes" id="delete" actionListener="#{bookingInformationController.delete}"/>
             <p:commandButton value="No" onclick="PF('deleteDialog').hide()" style="float:right;" />
         </p:dialog>
 
-        <p:dialog class="addDialog"  header="New Booking Information" fitViewport="true" appendTo="@(body)" widgetVar="addDialog" modal="true" height="400px" width="300px">
+        <p:dialog class="addDialog"  header="New Booking Information" fitViewport="true" appendTo="@(body)" widgetVar="addDialog" 
+                  modal="true" height="400px" width="300px">
             <div class="center-layout">
                 <h:form id="addDialogForm">
                     <ui:include src="bookingInformationForm.xhtml"/>
@@ -91,6 +104,13 @@
             </div>
         </p:dialog>
 
-        
+        <p:dialog style="font-size: 20px;" class="paymentChooseDialog"  header="Choose Payment Type" fitViewport="true" appendTo="@(body)" 
+                  widgetVar="paymentChooseDialog" modal="true" width="300px" height="200px">
+            <div class="center-layout">
+                <ui:include src="../../KhaltiPayment/khaltiPage.xhtml" />
+
+            </div>
+        </p:dialog>
+
     </ui:define>
 </ui:composition>
