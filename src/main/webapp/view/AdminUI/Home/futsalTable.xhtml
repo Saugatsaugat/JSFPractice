@@ -12,18 +12,20 @@
 
 
     <ui:define name="content" >
-        <p:growl redisplay="false" showSummary="true" showDetail="false" autoUpdate="true" severity="error" />
+        <p:growl redisplay="false" showSummary="true" showDetail="false"
+                 autoUpdate="true" />
         <p:panelGrid style="width: 100%;" columns="2">
             <p:column>
-            <p:outputLabel style="font-weight: bold;" value="Futsal's List"/>
+                <p:outputLabel style="font-weight: bold;" value="Futsal's List"/>
             </p:column>
             <p:column>
-            <p:commandButton style="float: right;" icon="fa fa-plus" id="addDialog" title="Add New Futsal" oncomplete="PF('addDialog').show()" />
+                <p:commandButton style="float: right;" icon="fa fa-plus" id="addDialog" title="Add New Futsal" oncomplete="PF('addDialog').show()" />
             </p:column>
         </p:panelGrid>
-        
 
-        <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false" value="#{futsalController.futsalList}" rowIndexVar="rowIndex" var="item">
+
+        <p:dataTable id="futsalTable" paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false" 
+                     value="#{futsalController.futsalList}" rowIndexVar="rowIndex" var="item">
             <p:column headerText="S.N." >
                 <h:outputText value="#{rowIndex + 1}" />
             </p:column>

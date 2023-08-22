@@ -7,6 +7,7 @@ import Model.FutsalCrud;
 import Model.FutsalUserRelationCrud;
 import Model.UserCrud;
 import com.saugat.bean.enums.UserType;
+import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,27 +107,24 @@ public class FutsalController implements Serializable {
             }
 
             if (futsalCrud.save(futsal)) {
-                try {
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Futsal Created Successfully", "Futsal Created Successfully");
-                    FacesContext.getCurrentInstance().addMessage(null, message);
-                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                    Flash flash = externalContext.getFlash();
-                    flash.setKeepMessages(true);
-                    if ((userCrud.getDataById(futsal.getOwnerid()).getUsertype() == UserType.admin)) {
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
-                    } else if ((userCrud.getDataById(futsal.getOwnerid()).getUsertype() == UserType.futsalowner)) {
-                        session.setAttribute("futsalId", futsal.getId());
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/home.xhtml");
-                    }
+                futsalList = futsalCrud.getAllData();
+                ValidationMessageGenerationUtil.validationMessageGeneration("Created", "informational");
+                return;
+// try {
 
-                } catch (Exception e) {
-                }
+//                    if ((userCrud.getDataById(futsal.getOwnerid()).getUsertype() == UserType.admin)) {
+//                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
+//                    } else if ((userCrud.getDataById(futsal.getOwnerid()).getUsertype() == UserType.futsalowner)) {
+//                        session.setAttribute("futsalId", futsal.getId());
+//                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/home.xhtml");
+//                    }
+//                } catch (Exception e) {
+//                }
             }
 
         }
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Save Failed", "Save Failed");
-        context.addMessage(null, message);
-
+        ValidationMessageGenerationUtil.validationMessageGeneration("Failed", "error");
+        return;
     }
 
     public void deleteFutsal() {

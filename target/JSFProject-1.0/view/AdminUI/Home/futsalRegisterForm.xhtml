@@ -7,8 +7,6 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <p:messages styleClass="errorMessage" showSummary="true" closable="true" severity="error" autoUpdate="true" />
-    
     <p:outputLabel  style="font-weight: bold;" value="Owner Name"/><br/>
     <p:selectOneMenu rendered="#{userBean.isAdmin}"  value="#{futsalController.futsal.ownerid}" >
         <f:selectItem itemLabel="Select One" itemValue="" />
@@ -33,7 +31,10 @@
         <p:outputLabel style="font-weight: bold;" value="Rate(per Hour)"/><br/>
         <p:inputText id="rate" value="#{futsalController.futsal.rate}" required="true" />
     </div>
-    <p:commandButton value="Save" rendered="#{empty futsalController.futsal.id}" id="futsalRegister" action="#{futsalController.saveFutsal}"/>
-    <p:commandButton value="Update" rendered="#{not empty futsalController.futsal.id}" id="futsalUpdate" action="#{futsalController.updateFutsal}"/>
+    <p:commandButton value="Save" rendered="#{empty futsalController.futsal.id}" id="futsalRegister" 
+                     action="#{futsalController.saveFutsal}" oncomplete="PF('addDialog').hide();"
+                     update="futsalTable" />
+    <p:commandButton value="Update" rendered="#{not empty futsalController.futsal.id}" id="futsalUpdate" 
+                     action="#{futsalController.updateFutsal}"/>
 
 </ui:composition>
