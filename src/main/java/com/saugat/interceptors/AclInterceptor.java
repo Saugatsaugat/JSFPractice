@@ -7,6 +7,7 @@ import com.saugat.bean.enums.ActionType;
 import com.saugat.bean.enums.ResourceType;
 import com.saugat.beans.UserBean;
 import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
+import com.saugat.services.ResponseMessage;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import javax.annotation.Priority;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -47,12 +49,8 @@ public class AclInterceptor implements Serializable {
             ResourceType resourceType = (ResourceType) aclCheckAnnotationData.resourceName();
             ActionType actionType = (ActionType) aclCheckAnnotationData.actionName();
 
-            //Rough
-            //start
             User user = userBean.getUser();
 
-            //end
-            //    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
             if (user.getId() != null) {
 
                 Boolean status = userActionResourceCrud.checkIfExistsByAclDetail(resourceType, user.getUsertype(),
@@ -60,17 +58,40 @@ public class AclInterceptor implements Serializable {
                 if (status) {
                     return context.proceed();
                 } else {
-           //         ValidationMessageGenerationUtil.validationMessageGeneration("Permission Denied.", "error");
-                    System.out.println("Permission Denied");
-                    return null;
+                    try {
+                        ValidationMessageGenerationUtil.validationMessageGeneration("Permission Denied.", "error");
+
+                    } catch (Exception e) {
+                        ResponseMessage responseMessage = new ResponseMessage("FORBIDDEN", "403", "Permission Denied", "");
+                        return Response.status(Response.Status.FORBIDDEN)
+                                .entity(responseMessage)
+                                .build();
+                    }
+
                 }
             } else {
-                System.out.println("Permission Denied");
-            //    ValidationMessageGenerationUtil.validationMessageGeneration("Permission Denied.", "error");
-                return null;
+                try {
+                    ValidationMessageGenerationUtil.validationMessageGeneration("Permission Denied.", "error");
+
+                } catch (Exception e) {
+                    ResponseMessage responseMessage = new ResponseMessage("FORBIDDEN", "403", "Permission Denied", "");
+                    return Response.status(Response.Status.FORBIDDEN)
+                            .entity(responseMessage)
+                            .build();
+                }
             }
         }
-
+        return null;
     }
 
+//    public Response returnResponseForWebService() {
+//        ResponseMessage responseMessage = new ResponseMessage();
+//        responseMessage.setCode("403");
+//        responseMessage.setMessage("Permission Denied");
+//        responseMessage.setResult("");
+//        responseMessage.setStatus("FORBIDDEN");
+//        return Response.status(Response.Status.FORBIDDEN)
+//                .entity(responseMessage)
+//                .build();
+//    }
 }

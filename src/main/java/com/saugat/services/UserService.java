@@ -3,6 +3,7 @@ package com.saugat.services;
 import Controller.PasswordHashController;
 import Entities.User;
 import Model.UserCrud;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -21,85 +22,98 @@ import javax.ws.rs.core.Response;
 @Path("/user")
 @Produces("application/json")
 public class UserService extends Application {
-    
+
     @Inject
     private UserCrud userCrud;
-    
-    private ResponseMessage responseMessage = new ResponseMessage();
-    
+
     @GET
     public Response getAllFutsal() {
         List<User> userList = userCrud.getAllData();
+        List<User> modifiedUserList = new ArrayList<>();
         if (!userList.isEmpty()) {
-            responseMessage.setCode("200");
-            responseMessage.setMessage("Data Found Successfully");
-            responseMessage.setStatus("Ok");
-            responseMessage.setResult(userList);
+            for (User user : userList) {
+                user.setUserpassword("*******");
+                modifiedUserList.add(user);
+            }
+            ResponseMessage responseMessage = new ResponseMessage("OK", "200", "Data Found Successfully",
+                    modifiedUserList);
             return Response.ok(responseMessage).build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            ResponseMessage responseMessage = new ResponseMessage("NOT FOUND", "404", "Login Required", "");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(responseMessage)
+                    .build();
         }
     }
-    
+
     @GET
     @Path("/{id}")
     public Response getDataById(@PathParam("id") Long id) {
         if (id != null) {
             User user = userCrud.getDataById(id);
             if (user != null) {
-                responseMessage = new ResponseMessage();
-                responseMessage.setCode("200");
-                responseMessage.setMessage("Record Found");
-                responseMessage.setStatus("Ok");
-                responseMessage.setResult(user);
+                user.setUserpassword("*******");
+                ResponseMessage responseMessage = new ResponseMessage("OK", "200", "Data Found Successfully", user);
                 return Response.ok(responseMessage).build();
             } else {
-                
-                return Response.status(Response.Status.NOT_FOUND).build();
+
+                ResponseMessage responseMessage = new ResponseMessage("NOT FOUND", "404", "Doesn't Exist", "");
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity(responseMessage)
+                        .build();
             }
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            ResponseMessage responseMessage = new ResponseMessage("BAD REQUEST", "400", "BAD REQUEST", "");
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(responseMessage)
+                    .build();
         }
     }
-    
+
     @POST
     public Response create(User user) {
         if (user != null) {
             user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
             Boolean status = userCrud.save(user);
             if (status) {
-                responseMessage = new ResponseMessage();
-                responseMessage.setCode("200");
-                responseMessage.setMessage("Record Added");
-                responseMessage.setStatus("Ok");
-                responseMessage.setResult(user);
+                user.setUserpassword("********");
+                ResponseMessage responseMessage = new ResponseMessage("OK", "200", "Created Successfully", user);
                 return Response.ok(responseMessage).build();
             } else {
-                return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+                ResponseMessage responseMessage = new ResponseMessage("NOT_ACCEPTABLE", "406", "NOT_ACCEPTABLE",
+                        "There is a problem in the data sent.");
+                return Response.status(Response.Status.NOT_ACCEPTABLE)
+                        .entity(responseMessage)
+                        .build();
             }
         } else {
-            return Response.status(Response.Status.EXPECTATION_FAILED).build();
+            ResponseMessage responseMessage = new ResponseMessage("EXPECTATION_FAILED", "400", "EXPECTATION_FAILED", "");
+            return Response.status(Response.Status.EXPECTATION_FAILED)
+                    .entity(responseMessage)
+                    .build();
         }
     }
-    
+
     @DELETE
     @Path("/{id}")
     public Response deleteById(@PathParam("id") Long id) {
         if (id != null) {
             Boolean status = userCrud.deleteById(id);
             if (status) {
-                responseMessage = new ResponseMessage();
-                responseMessage.setCode("301");
-                responseMessage.setMessage("Record Deleted");
-                responseMessage.setStatus("No Content");
-                responseMessage.setResult("");
+                ResponseMessage responseMessage = new ResponseMessage("NO CONTENT", "301", "Record Deleted", "");
                 return Response.ok(responseMessage).build();
             } else {
-                return Response.status(Response.Status.NOT_FOUND).build();
+                ResponseMessage responseMessage = new ResponseMessage("NOT FOUND", "404", "Not Found", "");
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity(responseMessage)
+                        .build();
             }
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).build();
+            ResponseMessage responseMessage = new ResponseMessage("BAD REQUEST", "400", "BAD REQUEST", "");
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(responseMessage)
+                    .build();
         }
     }
-    
+
 }

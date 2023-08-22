@@ -1,4 +1,3 @@
-
 package com.saugat.services;
 
 /**
@@ -6,10 +5,11 @@ package com.saugat.services;
  * @author saugat
  */
 public class ResponseMessage<T> {
-  private String status;
-  private String code;
-  private String message;
-  private T result;
+
+    private String status;
+    private String code;
+    private String message;
+    private T result;
 
     public String getStatus() {
         return status;
@@ -43,5 +43,11 @@ public class ResponseMessage<T> {
         this.result = result;
     }
 
-    
+    public ResponseMessage(String status, String code, String message, T result) {
+        this.status = status;
+        this.code = code;
+        this.message = message;
+        this.result = result;
+    }
+
 }

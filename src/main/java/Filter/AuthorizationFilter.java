@@ -3,6 +3,7 @@ package Filter;
 import Entities.User;
 import Model.UserCrud;
 import com.saugat.beans.UserBean;
+import com.saugat.services.ResponseMessage;
 import com.saugat.services.TokenManager;
 import java.io.IOException;
 import javax.annotation.Priority;
@@ -43,15 +44,22 @@ public class AuthorizationFilter implements ContainerRequestFilter {
                         userBean.setUser(user);
                         return;
                     } else {
-                        requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+                        ResponseMessage responseMessage = new ResponseMessage("UNAUTHORIZED", "401", "Login Required", "");
+                        requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                                .entity(responseMessage)
+                                .build());
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
-                    return;
+                    ResponseMessage responseMessage = new ResponseMessage("UNAUTHORIZED", "401", "Login Required", "");
+                    requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                            .entity(responseMessage)
+                            .build());
                 }
             }
         }
-        requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+        ResponseMessage responseMessage = new ResponseMessage("UNAUTHORIZED", "401", "Login Required", "");
+        requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                .entity(responseMessage)
+                .build());
     }
 }

@@ -17,7 +17,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 /**
  *
@@ -31,20 +30,19 @@ public class futsalService extends Application {
     @Inject
     private FutsalCrud futsalCrud;
 
-    private ResponseMessage responseMessage = new ResponseMessage();
-
-    @Acl(actionName = ActionType.READ,resourceName = ResourceType.FUTSAL)
+    @Acl(actionName = ActionType.READ, resourceName = ResourceType.FUTSAL)
     @GET
     public Response getAllFutsal() {
         List<Futsal> futsalList = futsalCrud.getAllData();
         if (!futsalList.isEmpty()) {
-            responseMessage.setCode("200");
-            responseMessage.setMessage("Data Found Successfully");
-            responseMessage.setStatus("Ok");
-            responseMessage.setResult(futsalList);
+            ResponseMessage responseMessage = new ResponseMessage("OK", "200", "Data Found Successfully", 
+                    futsalList);
             return Response.ok(responseMessage).build();
         } else {
-            return Response.status(Status.NOT_FOUND).build();
+            ResponseMessage responseMessage = new ResponseMessage("NOT FOUND", "404", "Login Required", "");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(responseMessage)
+                    .build();
         }
     }
 
@@ -54,18 +52,21 @@ public class futsalService extends Application {
         if (id != null) {
             Futsal futsal = futsalCrud.getDataById(id);
             if (futsal != null) {
-                responseMessage = new ResponseMessage();
-                responseMessage.setCode("200");
-                responseMessage.setMessage("Record Found");
-                responseMessage.setStatus("Ok");
-                responseMessage.setResult(futsal);
+                ResponseMessage responseMessage = new ResponseMessage("OK", "200", "Data Found Successfully", futsal);
+
                 return Response.ok(responseMessage).build();
             } else {
-
-                return Response.status(Status.NOT_FOUND).build();
+                ResponseMessage responseMessage = new ResponseMessage("NOT FOUND", "404", "Doesn't Exist", "");
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity(responseMessage)
+                        .build();
             }
         } else {
-            return Response.status(Status.BAD_REQUEST).build();
+            ResponseMessage responseMessage = new ResponseMessage("BAD REQUEST", "400", "BAD REQUEST", "");
+
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(responseMessage)
+                    .build();
         }
     }
 
@@ -75,17 +76,24 @@ public class futsalService extends Application {
         if (futsal != null) {
             Boolean status = futsalCrud.save(futsal);
             if (status) {
-                responseMessage = new ResponseMessage();
-                responseMessage.setCode("200");
-                responseMessage.setMessage("Record Added");
-                responseMessage.setStatus("Ok");
-                responseMessage.setResult(futsal);
+                ResponseMessage responseMessage = new ResponseMessage("OK", "200", 
+                        "Data Created Successfully", futsal);
+
                 return Response.ok(responseMessage).build();
             } else {
-                return Response.status(Status.NOT_ACCEPTABLE).build();
+                ResponseMessage responseMessage = new ResponseMessage("NOT_ACCEPTABLE", "406", 
+                        "NOT_ACCEPTABLE",
+                        "There is a problem in the data sent.");
+                return Response.status(Response.Status.NOT_ACCEPTABLE)
+                        .entity(responseMessage)
+                        .build();
             }
         } else {
-            return Response.status(Status.EXPECTATION_FAILED).build();
+            ResponseMessage responseMessage = new ResponseMessage("EXPECTATION_FAILED", "400", 
+                    "EXPECTATION_FAILED", "");
+            return Response.status(Response.Status.EXPECTATION_FAILED)
+                    .entity(responseMessage)
+                    .build();
         }
     }
 
@@ -95,17 +103,19 @@ public class futsalService extends Application {
         if (id != null) {
             Boolean status = futsalCrud.deleteById(id);
             if (status) {
-                responseMessage = new ResponseMessage();
-                responseMessage.setCode("301");
-                responseMessage.setMessage("Record Deleted");
-                responseMessage.setStatus("No Content");
-                responseMessage.setResult("");
+                ResponseMessage responseMessage = new ResponseMessage("NO CONTENT", "301", "Record Deleted", "");
                 return Response.ok(responseMessage).build();
             } else {
-                return Response.status(Status.NOT_FOUND).build();
+                ResponseMessage responseMessage = new ResponseMessage("NOT FOUND", "404", "Not Found", "");
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity(responseMessage)
+                        .build();
             }
         } else {
-            return Response.status(Status.BAD_REQUEST).build();
+            ResponseMessage responseMessage = new ResponseMessage("BAD REQUEST", "400", "BAD REQUEST", "");
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(responseMessage)
+                    .build();
         }
     }
 

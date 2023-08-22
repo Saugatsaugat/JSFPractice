@@ -11,7 +11,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
 /**
  *
@@ -25,25 +24,28 @@ public class LoginService extends Application {
     @Inject
     private UserCrud userCrud;
 
-    ResponseMessage responseMessage = new ResponseMessage();
-
     @POST
     public Response checkLogin(LoginRequest loginRequest) {
-        responseMessage = new ResponseMessage();
         if (loginRequest != null) {
             String username = loginRequest.getUsername();
             String password = loginRequest.getPassword();
             User user = userCrud.findByUsernameAndPassword(username, password);
             if (user != null) {
-                
+
                 String token = TokenManager.generateToken(user.getId().toString());
 
                 return Response.ok(token).build();
             } else {
-                return Response.status(Status.NOT_FOUND).build();
+                ResponseMessage responseMessage = new ResponseMessage("NOT FOUND", "404", "Login Required", "");
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity(responseMessage)
+                        .build();
             }
         } else {
-            return Response.status(Status.BAD_REQUEST).build();
+            ResponseMessage responseMessage = new ResponseMessage("BAD REQUEST", "400", "BAD REQUEST", "");
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(responseMessage)
+                    .build();
         }
     }
 
@@ -65,5 +67,4 @@ public class LoginService extends Application {
 //            return Response.status(Status.UNAUTHORIZED).build();
 //        }
 //    }
-
 }
