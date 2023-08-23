@@ -36,13 +36,15 @@ public class LoginFilter implements Filter {
 
     private static final List<String> USER_URL_PATTERNS = Arrays.asList(
             "/JSFProject-1.0/faces/view/UserUI/Home/home.xhtml",
-            "/JSFProject-1.0/faces/view/AdminUI/Home/bookingInformationTable.xhtml"
+            "/JSFProject-1.0/faces/view/AdminUI/Home/bookingInformationTable.xhtml",
+            "/JSFProject-1.0/faces/view/ChatWebSocket/chatPage.xhtml"
     );
 
     private static final List<String> FUTSAL_OWNER_URL_PATTERNS = Arrays.asList(
             "/JSFProject-1.0/faces/view/FutsalOwnerUI/Home/home.xhtml",
             "/JSFProject-1.0/faces/view/FutsalSchedule/futsalScheduleTable.xhtml",
-            "/JSFProject-1.0/faces/view/AdminUI/Home/bookingInformationTable.xhtml"
+            "/JSFProject-1.0/faces/view/AdminUI/Home/bookingInformationTable.xhtml",
+            "/JSFProject-1.0/faces/view/ChatWebSocket/chatPage.xhtml"
     );
 
     private static final List<String> ADMIN_URL_PATTERNS = Arrays.asList(
@@ -50,7 +52,8 @@ public class LoginFilter implements Filter {
             "/JSFProject-1.0/faces/view/AdminUI/Home/userTable.xhtml",
             "/JSFProject-1.0/faces/view/AdminUI/Home/futsalTable.xhtml",
             "/JSFProject-1.0/faces/view/AdminUI/Home/bookingInformationTable.xhtml",
-            "/JSFProject-1.0/faces/view/AdminUI/Home/aclTable.xhtml"
+            "/JSFProject-1.0/faces/view/AdminUI/Home/aclTable.xhtml",
+            "/JSFProject-1.0/faces/view/ChatWebSocket/chatPage.xhtml"
     );
 
     @Override

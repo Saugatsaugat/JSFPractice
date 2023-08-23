@@ -5,6 +5,7 @@ Model/ResourceCrud.class
 com/saugat/beans/UserBean.class
 Entities/NormalSchedule.class
 Entities/Resource.class
+com/saugat/beans/ChatBean.class
 com/saugat/interceptors/Acl.class
 Entities/FileEntity.class
 Model/BookingDetailCrud.class
@@ -54,6 +55,7 @@ com/saugat/converter/AbstractEntityConverter.class
 com/saugat/beans/SlotScheduleBean.class
 com/saugat/services/TokenManager.class
 Controller/FileController.class
+Controller/ChatWebSocketController.class
 Controller/AclController.class
 com/saugat/converter/ActionConverter.class
 Controller/ValidationController.class

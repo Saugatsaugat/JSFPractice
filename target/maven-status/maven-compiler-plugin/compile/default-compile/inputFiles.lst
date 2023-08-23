@@ -7,6 +7,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/AclAction.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/FutsalConverter.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/BookingDetailController.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/ChatWebSocketController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/TimeConvertor.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/BookingInformationController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/LoginController.java
@@ -27,6 +28,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/JdbcController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/BookingInformation.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/beans/ChatBean.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/BookingInformationCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/BookingDetailCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/UserAction.java

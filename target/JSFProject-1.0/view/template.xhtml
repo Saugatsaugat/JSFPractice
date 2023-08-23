@@ -111,7 +111,7 @@
 
                     <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
                     <p:menuitem value="Manage ACL" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/aclTable.xhtml"/>
-
+                    <p:menuitem value="Chat" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/ChatWebSocket/chatPage.xhtml"/>
                     <p:menuitem />  
 
                     <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}" />
