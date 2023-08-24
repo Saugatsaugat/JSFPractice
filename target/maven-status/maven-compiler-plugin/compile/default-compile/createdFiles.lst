@@ -1,6 +1,5 @@
 com/saugat/beans/ActiveUsersBean.class
 Entities/Futsal.class
-com/saugat/utils/WebSocketUtils.class
 Entities/BookingDetail.class
 Model/ResourceCrud.class
 com/saugat/beans/UserBean.class

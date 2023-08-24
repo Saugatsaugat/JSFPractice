@@ -21,7 +21,7 @@
         </p:panelGrid>
 
 
-        <h:form>
+        <h:form id="bookingDetailTable">
             <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false"  
                          value="#{bookingDetailController.bookingDetailList}" rowIndexVar="rowIndex" var="item">
                 <p:column headerText="S.N." >
@@ -73,9 +73,12 @@
                                      actionListener="#{bookingInformationController.setBookingInformationId(item.id)}" />
 
                     <p:commandButton rendered="#{(userBean.isUser) and (bookingDetailController.checkPaymentStatus(item))}"
-                                     value="Pay Now" onclick="PF('paymentChooseDialog').show();"/>
+                                     actionListener="#{bookingDetailController.saveBookingDetail(item)}"  value="Pay Now"
+                                     process="@this" update="khaltiForm"
+                                     oncomplete="PF('paymentChooseDialog').show();"/>
                 </p:column>
             </p:dataTable>
+
         </h:form>
 
         <p:dialog class="editDialog"  header="Edit Booking Information" fitViewport="true" appendTo="@(body)"
@@ -104,7 +107,7 @@
             </div>
         </p:dialog>
 
-        <p:dialog style="font-size: 20px;" class="paymentChooseDialog"  header="Choose Payment Type" fitViewport="true" appendTo="@(body)" 
+        <p:dialog style="font-size: 20px;" id="paymentSelectDialog"  header="Choose Payment Type" fitViewport="true" appendTo="@(body)" 
                   widgetVar="paymentChooseDialog" modal="true" width="300px" height="200px">
             <div class="center-layout">
                 <ui:include src="../../KhaltiPayment/khaltiPage.xhtml" />

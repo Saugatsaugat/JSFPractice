@@ -35,6 +35,7 @@ public class BookingDetailController implements Serializable {
     ExternalContext externalContext;
     HttpSession session;
     private User user;
+    private BookingDetail bookingDetail;
 
     public User getUser() {
         return user;
@@ -54,6 +55,14 @@ public class BookingDetailController implements Serializable {
         this.bookingDetailList = bookingDetailList;
     }
 
+    public BookingDetail getBookingDetail() {
+        return bookingDetail;
+    }
+
+    public void setBookingDetail(BookingDetail bookingDetail) {
+        this.bookingDetail = bookingDetail;
+    }
+
     @Inject
     private BookingDetailCrud bookingDetailCrud;
     @Inject
@@ -61,6 +70,7 @@ public class BookingDetailController implements Serializable {
 
     @PostConstruct
     public void init() {
+        bookingDetail = new BookingDetail();
         user = new User();
         context = FacesContext.getCurrentInstance();
         externalContext = context.getExternalContext();
@@ -89,6 +99,20 @@ public class BookingDetailController implements Serializable {
         } else {
             return true;
         }
+    }
+
+    public void saveBookingDetail(BookingDetail bookingDetail) {
+        if (bookingDetail != null) {
+            this.bookingDetail = bookingDetail;
+        }
+    }
+
+    public String getBookingAmount() {
+        String amount = "";
+        if (this.bookingDetail.getId() != null) {
+            amount = String.valueOf(bookingDetail.getBookinginformation().getAmount());
+        }
+        return amount;
     }
 
 }
