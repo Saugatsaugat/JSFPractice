@@ -11,6 +11,46 @@
     <h:head>
         <title><ui:insert name="title">Default Template </ui:insert></title>
 
+        <script type="text/javascript">
+            var host = "ws://localhost:8080/JSFProject-1.0/chat";
+            var wSocket = new WebSocket(host);
+            var browserSupport = ("WebSocket" in window) ? true : false;
+
+            // called  body onLoad()
+            function initializeReception()
+            {
+                if (browserSupport)
+                {
+                    wSocket.onopen = function ()
+                    {
+
+                    };
+                } else
+                {
+                    alert("WebSocket is NOT supported by your Browser!");
+                }
+            }
+
+            // called when a message is received
+            wSocket.onmessage = function (event)
+            {
+                // var received_msg = event.data;
+                PF('notificationDialog').show();
+            };
+
+            // called when socket closes
+            wSocket.onclose = function ()
+            {
+
+            };
+
+            // called when error
+            wSocket.onerror = function () {
+                console.log("Socket Error");
+            };
+
+        </script>
+
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <style>
@@ -96,57 +136,58 @@
         </style>
 
     </h:head>
-    <p:layout fullPage="true">
+
+    <h:body onload="initializeReception()">
+        <p:layout fullPage="true">
 
 
-        <p:layoutUnit position="center">
-            <h:form>
-                <p:menubar style="background: none; background-color: lightgrey; position: relative ; z-index: 40;">
-                    <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" icon="fa fa-lg fa-home" url="/faces/view/UserUI/Home/home.xhtml"/>
-                    <p:menuitem rendered="#{userBean.isFutsalOwner}" value="Home" url="/faces/view/FutsalOwnerUI/Home/home.xhtml"/>
-                    <p:menuitem value="UserList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/userTable.xhtml"/>
-                    <p:menuitem value="FutsalList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/futsalTable.xhtml"/>
+            <p:layoutUnit position="center">
+                <h:form>
+                    <p:menubar style="background: none; background-color: lightgrey; position: relative ; z-index: 40;">
+                        <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" icon="fa fa-lg fa-home" url="/faces/view/UserUI/Home/home.xhtml"/>
+                        <p:menuitem rendered="#{userBean.isFutsalOwner}" value="Home" url="/faces/view/FutsalOwnerUI/Home/home.xhtml"/>
+                        <p:menuitem value="UserList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/userTable.xhtml"/>
+                        <p:menuitem value="FutsalList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/futsalTable.xhtml"/>
 
-                    <p:menuitem value="FutsalSchedule" rendered="#{userBeasn.isAdmin or userBean.isFutsalOwner}" url="/faces/view/FutsalSchedule/futsalScheduleTable.xhtml"/>
+                        <p:menuitem value="FutsalSchedule" rendered="#{userBeasn.isAdmin or userBean.isFutsalOwner}" url="/faces/view/FutsalSchedule/futsalScheduleTable.xhtml"/>
 
-                    <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
-                    <p:menuitem value="Manage ACL" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/aclTable.xhtml"/>
-                    <p:menuitem value="Chat" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/ChatWebSocket/chatPage.xhtml"/>
-                    <p:menuitem />  
+                        <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
+                        <p:menuitem value="Manage ACL" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/aclTable.xhtml"/>
+                        <p:menuitem value="Chat" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/ChatWebSocket/chatPage.xhtml"/>
+                        <p:menuitem />  
 
-                    <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}" />
-                    <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" onclick="PF('loginDialog').show();"/>
+                        <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}" />
+                        <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" onclick="PF('loginDialog').show();"/>
 
-                    <p:submenu style="" label="Register" rendered="#{empty userBean.user}">
-                        <p:menuitem title="User Registration" value="User" action="#{userController.resetUser()}" oncomplete=""  onclick="PF('registerDialog').show();"/>
-                        <p:menuitem title="Futsal Registration" value="Futsal" action="#{userController.user.setUsertype('futsalowner')}" oncomplete="PF('registerDialog').show();" />
-                    </p:submenu>
+                        <p:submenu style="" label="Register" rendered="#{empty userBean.user}">
+                            <p:menuitem title="User Registration" value="User" action="#{userController.resetUser()}" oncomplete=""  onclick="PF('registerDialog').show();"/>
+                            <p:menuitem title="Futsal Registration" value="Futsal" action="#{userController.user.setUsertype('futsalowner')}" oncomplete="PF('registerDialog').show();" />
+                        </p:submenu>
 
-                </p:menubar>
-            </h:form>
-            <p:dialog style="font-size: 10px;" id="registerDialog" fitViewport="true" appendTo="@(body)" widgetVar="registerDialog" modal="true" header="Registration" height="500px" width="300px">
-                <ui:include src="../view/Register/registerForm.xhtml" />
-            </p:dialog>
-            <p:dialog style="font-size: 10px;" id="loginDialog" fitViewport="true" appendTo="@(body)" widgetVar="loginDialog" modal="true" header="Login" height="250px" width="300px">
-                <ui:include src="../view/Login/loginForm.xhtml" />
-            </p:dialog>
+                    </p:menubar>
+                </h:form>
+                <p:dialog style="font-size: 10px;" id="registerDialog" fitViewport="true" appendTo="@(body)" widgetVar="registerDialog" modal="true" header="Registration" height="500px" width="300px">
+                    <ui:include src="../view/Register/registerForm.xhtml" />
+                </p:dialog>
+                <p:dialog style="font-size: 10px;" id="loginDialog" fitViewport="true" appendTo="@(body)" widgetVar="loginDialog" modal="true" header="Login" height="250px" width="300px">
+                    <ui:include src="../view/Login/loginForm.xhtml" />
+                </p:dialog>
 
-            <ui:insert name="content" >
-            </ui:insert>
+                <ui:insert name="content" >
+                </ui:insert>
 
-            <ui:remove>
-                <ui:include  src="Footer/footer.xhtml" />  
-                <p:outputPanel rendered="#{(not userBean.isAdmin) and (not userBean.isFutsalOwner)}" style="padding: 5px; background-color: #006666; width: 100%; text-align: center; color: white;">
-                    <i class="fa fa-copyright" />2023. All rights reserved.
-                </p:outputPanel>
-            </ui:remove>
+                <ui:remove>
+                    <ui:include  src="Footer/footer.xhtml" />  
+                    <p:outputPanel rendered="#{(not userBean.isAdmin) and (not userBean.isFutsalOwner)}" style="padding: 5px; background-color: #006666; width: 100%; text-align: center; color: white;">
+                        <i class="fa fa-copyright" />2023. All rights reserved.
+                    </p:outputPanel>
+                </ui:remove>
 
-        </p:layoutUnit>
+            </p:layoutUnit>
 
+        </p:layout>
+        <p:dialog widgetVar="notificationDialog" height="500px" header="GET 30% OFF" width="500px">
+        </p:dialog>
 
-
-
-    </p:layout>
-
-
+    </h:body>
 </ui:composition>

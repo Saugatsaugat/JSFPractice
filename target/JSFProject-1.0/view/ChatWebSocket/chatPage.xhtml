@@ -7,23 +7,22 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="../template.xhtml">
-
+    
     <ui:define name="content">
         <p:growl autoUpdate="true" />
-
-
-
+        
         <h:form>
-            <p:panelGrid>
-
-                <p:outputPanel>
-                    <p:outputLabel value="Chat Messages" />
-                </p:outputPanel>
-                <p:inputTextarea value="#{chatWebSocketController.chatBean.typedMessage}" />
-                <p:commandButton icon="fa fa-send" />
+            <p:panelGrid columns="1">
+                <p:outputLabel value="Chat Messages" />
+                <p:column>
+                    <p:panelGrid columns="2">
+                        <h:inputTextarea id="msg"  value="#{chatBean.message}" style="color: blue"/>  
+                        <p:commandButton  icon="fa fa-send"
+                                          action="#{chatBean.sendNotification()}" />
+                    </p:panelGrid>
+                </p:column>
             </p:panelGrid>
-
         </h:form>
-
+        
     </ui:define>
 </ui:composition>

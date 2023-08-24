@@ -1,5 +1,6 @@
 com/saugat/beans/ActiveUsersBean.class
 Entities/Futsal.class
+com/saugat/utils/WebSocketUtils.class
 Entities/BookingDetail.class
 Model/ResourceCrud.class
 com/saugat/beans/UserBean.class
@@ -9,6 +10,7 @@ com/saugat/beans/ChatBean.class
 com/saugat/interceptors/Acl.class
 Entities/FileEntity.class
 Model/BookingDetailCrud.class
+WebSocket/ChatEndPoint.class
 com/saugat/services/LoginService.class
 com/saugat/bean/enums/SlotType.class
 com/saugat/converter/FutsalConverter.class
@@ -16,6 +18,7 @@ Model/AclActionCrud.class
 Model/FutsalUserRelationCrud.class
 Model/UserCrud.class
 Controller/PasswordHashController.class
+WebSocket/ThreadMessageSender.class
 Controller/DateController.class
 Entities/FutsalDetail.class
 Controller/FutsalController.class
@@ -55,7 +58,6 @@ com/saugat/converter/AbstractEntityConverter.class
 com/saugat/beans/SlotScheduleBean.class
 com/saugat/services/TokenManager.class
 Controller/FileController.class
-Controller/ChatWebSocketController.class
 Controller/AclController.class
 com/saugat/converter/ActionConverter.class
 Controller/ValidationController.class

@@ -1,30 +1,39 @@
 package com.saugat.beans;
 
+import WebSocket.ChatEndPoint;
+import WebSocket.ThreadMessageSender;
 import java.io.Serializable;
+import java.util.List;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author saugat
  */
+@Named
+@ViewScoped
 public class ChatBean implements Serializable {
 
-    private String receivedMessage;
-    private String typedMessage;
-
-    public String getReceivedMessage() {
-        return receivedMessage;
+    public ChatBean() {
     }
 
-    public void setReceivedMessage(String receivedMessage) {
-        this.receivedMessage = receivedMessage;
+    private String message;
+
+    public void sendNotification() {
+        ThreadMessageSender.sendMessage(message);
     }
 
-    public String getTypedMessage() {
-        return typedMessage;
+    public List getNotificationReceiverList() {
+        return ChatEndPoint.getSessions();
     }
 
-    public void setTypedMessage(String typedMessage) {
-        this.typedMessage = typedMessage;
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

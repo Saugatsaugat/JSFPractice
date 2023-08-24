@@ -7,7 +7,6 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/AclAction.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/FutsalConverter.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/BookingDetailController.java
-/home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/ChatWebSocketController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/TimeConvertor.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/BookingInformationController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/LoginController.java
@@ -31,6 +30,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/beans/ChatBean.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/BookingInformationCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/BookingDetailCrud.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/WebSocket/ThreadMessageSender.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/UserAction.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/bean/enums/UserType.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/services/UserService.java
@@ -38,6 +38,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/ActionConverter.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalScheduleCruds.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/services/futsalService.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/utils/WebSocketUtils.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Filter/LoginFilter.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalUserRelationController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/UserController.java
@@ -54,6 +55,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/UserActionResource.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/interceptors/AclInterceptor.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Login/Login.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/WebSocket/ChatEndPoint.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/AbstractEntityConverter.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalUserRelationCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/LogoutController.java
