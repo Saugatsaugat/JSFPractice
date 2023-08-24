@@ -101,7 +101,7 @@
 
         <p:layoutUnit position="center">
             <h:form>
-                <p:menubar style="background: none; background-color: lightgrey; position: sticky;">
+                <p:menubar style="background: none; background-color: lightgrey; position: relative ; z-index: 40;">
                     <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" icon="fa fa-lg fa-home" url="/faces/view/UserUI/Home/home.xhtml"/>
                     <p:menuitem rendered="#{userBean.isFutsalOwner}" value="Home" url="/faces/view/FutsalOwnerUI/Home/home.xhtml"/>
                     <p:menuitem value="UserList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/userTable.xhtml"/>
@@ -117,8 +117,8 @@
                     <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}" />
                     <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" onclick="PF('loginDialog').show();"/>
 
-                    <p:submenu label="Register" rendered="#{empty userBean.user}">
-                        <p:menuitem  title="User Registration" value="User" action="#{userController.resetUser()}" oncomplete=""  onclick="PF('registerDialog').show();"/>
+                    <p:submenu style="" label="Register" rendered="#{empty userBean.user}">
+                        <p:menuitem title="User Registration" value="User" action="#{userController.resetUser()}" oncomplete=""  onclick="PF('registerDialog').show();"/>
                         <p:menuitem title="Futsal Registration" value="Futsal" action="#{userController.user.setUsertype('futsalowner')}" oncomplete="PF('registerDialog').show();" />
                     </p:submenu>
 

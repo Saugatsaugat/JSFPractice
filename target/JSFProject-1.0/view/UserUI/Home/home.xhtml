@@ -20,7 +20,7 @@
             }
         </style>
 
-        <p:carousel value="#{carouselController.homePageCarouselList}" var="item" 
+        <p:carousel style="overflow: visible;" value="#{carouselController.homePageCarouselList}" var="item" 
                     numVisible="1" autoPlayInterval="3000" circular="true"> 
             <h:graphicImage width="100%" alt="#{item}" library="images" 
                             name="futsal/#{item}"/> 
