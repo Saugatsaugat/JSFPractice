@@ -107,10 +107,10 @@ public class BookingDetailController implements Serializable {
         }
     }
 
-    public String getBookingAmount() {
-        String amount = "";
+    public float getBookingAmount() {
+        float amount = 0L;
         if (this.bookingDetail.getId() != null) {
-            amount = String.valueOf(bookingDetail.getBookinginformation().getAmount());
+            amount = bookingDetail.getBookinginformation().getAmount();
         }
         return amount;
     }
