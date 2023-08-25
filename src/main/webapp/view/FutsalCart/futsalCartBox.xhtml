@@ -7,7 +7,7 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <p:growl redisplay="false" showSummary="true" showDetail="false" autoUpdate="true" severity="error" />
+    <p:growl redisplay="false" showSummary="true" showDetail="false" autoUpdate="true"/>
 
     <p:outputPanel style="text-align: center; font-size: 20px; font-weight: bold;"  >
         <p:outputLabel value="Futsal Grounds"/>
@@ -26,11 +26,11 @@
                     <p:outputPanel style="font-size: 14px;">
                         <h:outputText  value="Rs. #{item.rate}" />
                     </p:outputPanel>
-                    
+
                     <p:outputPanel style="font-size: 12px;">
-                    <h:outputText  value="#{item.address}"/>
+                        <h:outputText  value="#{item.address}"/>
                     </p:outputPanel>
-                    
+
                     <p:commandButton style="background: none; color: white; background-color: #0000ff;" id="viewSchedules" action="#{futsalScheduleController.futsalScheduleByFutsalId(item.id)}" value="View Schedules" oncomplete="PF('viewSchedules').show();" process="@this" update="scheduleList" />
                 </h:panelGrid>
             </p:panel>

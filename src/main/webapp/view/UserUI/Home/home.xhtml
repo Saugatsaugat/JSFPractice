@@ -17,6 +17,16 @@
                 }
             }
             ;
+            // if logged in successfully, call the dialog as,
+            window.addEventListener('DOMContentLoaded', function () {
+                var urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('showDialog')) {
+                    if (!localStorage.getItem('dialogShown1')) {
+                        PF('notificationDialogForLoggedIn').show();
+                        localStorage.setItem('dialogShown1', 'true');
+                    }
+                }
+            });
 
         </script>
 
@@ -42,6 +52,11 @@
         </p:carousel>
 
         <ui:include src="../../FutsalCart/futsalCartBox.xhtml"/>       
+
+
+        <p:dialog widgetVar="notificationDialogForLoggedIn" height="500px" width="500px">
+            <ui:include src="../../Notification/loggedInNotifyForm.xhtml" />
+        </p:dialog>
     </ui:define>
 
 </ui:composition>

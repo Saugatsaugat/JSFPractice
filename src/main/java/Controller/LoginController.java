@@ -8,6 +8,7 @@ import Model.FutsalScheduleCruds;
 import Model.UserCrud;
 import com.saugat.beans.ActiveUsersBean;
 import com.saugat.beans.UserBean;
+import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -93,20 +94,28 @@ public class LoginController implements Serializable {
                     userBean.setUser(userRecord);
 
                     activeUsersBean.incrementActiveUsersList(userRecord);
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Welcome " + userBean.getUser().getFirstname() + " " + userBean.getUser().getLastname(), "Welcome " + userBean.getUser().getFirstname() + " " + userBean.getUser().getLastname());
 
-                    FacesContext.getCurrentInstance().addMessage(null, message);
+                    ValidationMessageGenerationUtil.validationMessageGeneration("Welcome " + userBean.getUser().getFirstname(),
+                            "informational");
+
+                    RequestContext contextReq = RequestContext.getCurrentInstance();
+                    contextReq.execute("PF('notificationDialogForLoggedIn').show();");
+
                     externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                    Flash flash = externalContext.getFlash();
-                    flash.setKeepMessages(true);
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/home.xhtml");
+                    externalContext.redirect(externalContext.getRequestContextPath() +
+                            "/faces/view/AdminUI/Home/home.xhtml?showDialog=true");
 
                 } else if (("user".equals(userType))) {
                     session.setAttribute("userId", userid);
                     activeUsersBean.incrementActiveUsersList(userRecord);
                     userBean.setUser(userRecord);
 
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
+                    ValidationMessageGenerationUtil.validationMessageGeneration("Welcome " + userBean.getUser().getFirstname(),
+                            "informational");
+                    RequestContext contextReq = RequestContext.getCurrentInstance();
+                    contextReq.execute("PF('notificationDialogForLoggedIn').show();");
+                    externalContext.redirect(externalContext.getRequestContextPath() +
+                            "/faces/view/UserUI/Home/home.xhtml?showDialog=true");
 
                 } else if ("futsalowner".equals(userType)) {
                     userBean.setUser(userRecord);
@@ -114,6 +123,8 @@ public class LoginController implements Serializable {
                     if ((futsalCrud.checkIfFutsalRegistered(userid)) == null) {
                         session.setAttribute("userId", userid);
                         activeUsersBean.incrementActiveUsersList(userRecord);
+                        ValidationMessageGenerationUtil.validationMessageGeneration("Welcome " + userBean.getUser().getFirstname(),
+                                "informational");
                         RequestContext contextReq = RequestContext.getCurrentInstance();
                         contextReq.execute("PF('futsalRegisterDialog').show();");
 
@@ -122,7 +133,8 @@ public class LoginController implements Serializable {
                         session.setAttribute("userId", userid);
                         session.setAttribute("futsalId", futsalData.getId());
 
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/FutsalOwnerUI/Home/home.xhtml");
+                        externalContext.redirect(externalContext.getRequestContextPath() 
+                                + "/faces/view/FutsalOwnerUI/Home/home.xhtml?showDialog=true");
                     }
 
                 }

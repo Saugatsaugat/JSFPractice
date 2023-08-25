@@ -4,6 +4,7 @@ import Entities.User;
 import Model.UserCrud;
 import com.saugat.beans.ActiveUsersBean;
 import com.saugat.beans.UserBean;
+import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -59,16 +60,13 @@ public class LogoutController implements Serializable {
     public void logout() {
         if (session.getAttribute("userId") != null) {
             try {
-                User user = userCrud.getDataById((Long)session.getAttribute("userId"));
+                User user = userCrud.getDataById((Long) session.getAttribute("userId"));
                 activeUsersBean.decrementActiveUsersList(user);
                 new UserBean().setUser(null);
                 session.invalidate();
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        "See You Soon "+user.getFirstname(), "See You Soon "+user.getFirstname());
-                FacesContext.getCurrentInstance().addMessage(null, message);
+                ValidationMessageGenerationUtil.validationMessageGeneration("Bye " + user.getFirstname(),
+                        "informational");
                 externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                Flash flash = externalContext.getFlash();
-                flash.setKeepMessages(true);
                 externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
             } catch (Exception e) {
 

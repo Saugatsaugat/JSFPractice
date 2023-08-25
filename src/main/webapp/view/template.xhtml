@@ -50,6 +50,12 @@
                 console.log("Socket Error");
             };
 
+            // clear Local Storage
+            function clearLocalStorage() {
+                localStorage.removeItem("dialogShown1");
+            }
+
+
         </script>
 
 
@@ -157,7 +163,8 @@
                         <p:menuitem value="Chat" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/ChatWebSocket/chatPage.xhtml"/>
                         <p:menuitem />  
 
-                        <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}" />
+                        <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}"
+                                    oncomplete="clearLocalStorage();"/>
                         <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" onclick="PF('loginDialog').show();"/>
 
                         <p:submenu style="" label="Register" rendered="#{empty userBean.user}">
