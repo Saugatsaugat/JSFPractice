@@ -19,6 +19,7 @@
             // called  body onLoad()
             function initializeReception()
             {
+
                 if (browserSupport)
                 {
                     wSocket.onopen = function ()
@@ -186,8 +187,11 @@
             </p:layoutUnit>
 
         </p:layout>
-        <p:dialog widgetVar="notificationDialog" height="500px" header="GET 30% OFF" width="500px">
+        <p:dialog widgetVar="notificationDialog" height="500px" header="OFFER! OFFER!! OFFER!!!" width="500px">
+            <ui:include src="Notification/futsalOfferForm.xhtml" />
         </p:dialog>
+
+
 
     </h:body>
 </ui:composition>

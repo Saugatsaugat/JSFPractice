@@ -7,9 +7,19 @@
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core" 
                 template="../../template.xhtml">
-
     <ui:define name="title">Home</ui:define>
     <ui:define name="content" >
+        <script type="text/javascript">
+            window.onload = function () {
+                if (!localStorage.getItem('dialogShown')) {
+                    PF('futsalNotificationForm').show();
+                    localStorage.setItem('dialogShown', 'true');
+                }
+            }
+            ;
+
+        </script>
+
         <style>
             .ui-carousel .ui-carousel-header{
                 display: none;
@@ -19,6 +29,10 @@
                 width: 100%;
             }
         </style>
+
+        <p:dialog widgetVar="futsalNotificationForm" height="500px" width="500px">
+            <ui:include src="../../Notification/startBanner.xhtml" />
+        </p:dialog>
 
         <p:carousel value="#{carouselController.homePageCarouselList}" var="item" 
                     numVisible="1" autoPlayInterval="3000" circular="true"> 
