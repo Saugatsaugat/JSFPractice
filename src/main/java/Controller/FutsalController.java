@@ -45,6 +45,15 @@ public class FutsalController implements Serializable {
     List<Futsal> futsalList;
     private Futsal futsal;
     private FutsalUserRelation futsalUserRelation;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public List<Futsal> getFutsalList() {
         return futsalList;
@@ -64,6 +73,7 @@ public class FutsalController implements Serializable {
 
     @PostConstruct
     public void init() {
+        user = new User();
         futsal = new Futsal();
         futsalUserRelation = new FutsalUserRelation();
         futsalList = futsalCrud.getAllData();
@@ -94,14 +104,18 @@ public class FutsalController implements Serializable {
     public void saveFutsal() {
         if (futsal.getId() == null) {
             if (futsal.getOwnerid() != null) {
-                User userData = userCrud.getDataById(futsal.getOwnerid());
-                futsal.setMobile(userData.getMobile());
-                futsal.setOwnerid(userData.getId());
+                user = userCrud.getDataById(futsal.getOwnerid());
+                if (user.getUsertype().equals(UserType.user)) {
+                    user.setUsertype(UserType.futsalowner);
+                    userCrud.update(user, user.getId());
+                }
+                futsal.setMobile(user.getMobile());
+                futsal.setOwnerid(user.getId());
             } else {
                 if (session.getAttribute("userId") != null) {
                     Long userId = (Long) session.getAttribute("userId");
-                    User userData = userCrud.getDataById(userId);
-                    futsal.setMobile(userData.getMobile());
+                    user = userCrud.getDataById(userId);
+                    futsal.setMobile(user.getMobile());
                     futsal.setOwnerid(userId);
                 }
             }

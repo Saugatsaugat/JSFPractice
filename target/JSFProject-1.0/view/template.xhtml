@@ -12,7 +12,14 @@
         <title><ui:insert name="title">Default Template </ui:insert></title>
 
         <script type="text/javascript">
-            var host = "ws://localhost:8080/JSFProject-1.0/chat";
+            //while hosting without SSL
+            // var host = "ws://172.7.0.226:8080/JSFProject-1.0/chat"; 
+            // 
+            //while hosting with SSL
+            // var host = "ws://172.7.0.226:8443/JSFProject-1.0/chat"; 
+            
+            
+            var host = "ws://localhost:8080/JSFProject-1.0/chat"
             var wSocket = new WebSocket(host);
             var browserSupport = ("WebSocket" in window) ? true : false;
 
@@ -163,7 +170,7 @@
                         <p:menuitem value="Chat" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/ChatWebSocket/chatPage.xhtml"/>
                         <p:menuitem />  
 
-                        <p:menuitem value="Logout" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}"
+                        <p:menuitem title="Sign Out" icon="fa fa-sign-out" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}"
                                     oncomplete="clearLocalStorage();"/>
                         <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" onclick="PF('loginDialog').show();"/>
 

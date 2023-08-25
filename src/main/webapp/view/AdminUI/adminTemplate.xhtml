@@ -8,6 +8,10 @@
         <title><ui:insert name="title">Template </ui:insert></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <style>
+            .body{
+                background-image: linear-gradient(to right, red , yellow);
+
+            }
             .center-layout {
                 display: flex;
                 justify-content: center;
@@ -50,13 +54,13 @@
 
         <p:layoutUnit position="north" size="50" >  
             <h:form>
-                <p:menubar>
-                        <p:menuitem value="UserList" url="/faces/view/AdminUI/Home/userTable.xhtml"/>
-                        <p:menuitem value="FutsalList" url="/faces/view/AdminUI/Home/futsalTable.xhtml"/>
-                        <p:menuitem value="FutsalUserRelation" url="/faces/view/AdminUI/Home/futsalUserRelationTable.xhtml"/>
-                        <p:menuitem value="FutsalSchedule" url="/faces/view/AdminUI/Home/futsalScheduleTable.xhtml"/>
-                        <p:menuitem value="BookingInformation" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
-                        <p:menuitem value="Logout" actionListener="#{logoutController.logout}" />
+                <p:menubar styleClass="body">
+                    <p:menuitem value="UserList" url="/faces/view/AdminUI/Home/userTable.xhtml"/>
+                    <p:menuitem value="FutsalList" url="/faces/view/AdminUI/Home/futsalTable.xhtml"/>
+                    <p:menuitem value="FutsalUserRelation" url="/faces/view/AdminUI/Home/futsalUserRelationTable.xhtml"/>
+                    <p:menuitem value="FutsalSchedule" url="/faces/view/AdminUI/Home/futsalScheduleTable.xhtml"/>
+                    <p:menuitem value="BookingInformation" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
+                    <p:menuitem value="Logout" actionListener="#{logoutController.logout}" />
 
                 </p:menubar>
             </h:form>
