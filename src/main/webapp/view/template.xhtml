@@ -17,8 +17,8 @@
             // 
             //while hosting with SSL
             // var host = "ws://172.7.0.226:8443/JSFProject-1.0/chat"; 
-            
-            
+
+
             var host = "ws://localhost:8080/JSFProject-1.0/chat"
             var wSocket = new WebSocket(host);
             var browserSupport = ("WebSocket" in window) ? true : false;
@@ -135,17 +135,16 @@
                 table-layout: auto;
             }
             .cart-css{
+                border-radius: 5px;
                 height: auto;
                 width: auto;
                 border: none;
                 display: flex;
                 justify-content: center;
-                box-shadow: 0px 25px 40px #dce2da;
+                box-shadow: 0px 25px 40px #cccccc;
 
             }
-
-
-
+            
 
         </style>
 
@@ -153,8 +152,6 @@
 
     <h:body onload="initializeReception()">
         <p:layout fullPage="true">
-
-
             <p:layoutUnit position="center">
                 <h:form>
                     <p:menubar style="background: none; background-color: lightgrey; position: relative ; z-index: 40;">

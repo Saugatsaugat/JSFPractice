@@ -11,6 +11,7 @@ import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -163,6 +164,12 @@ public class FutsalController implements Serializable {
             ValidationMessageGenerationUtil.validationMessageGeneration("Deletion Failed", "error");
 
         }
+    }
+    
+    public String getRandomImage(){
+        Random random = new Random();
+        int randomNumber = random.nextInt(10) + 1; // Generates a random number between 0 (inclusive) and 4 (exclusive), then adds 1
+        return String.valueOf(randomNumber);
     }
 
 }
