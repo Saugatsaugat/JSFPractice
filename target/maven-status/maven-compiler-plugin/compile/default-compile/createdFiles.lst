@@ -20,6 +20,7 @@ Controller/PasswordHashController.class
 WebSocket/ThreadMessageSender.class
 Controller/DateController.class
 Entities/FutsalDetail.class
+Controller/KhaltiVerificationController.class
 Controller/FutsalController.class
 Filter/LoginFilter.class
 Entities/UserAction.class
@@ -35,9 +36,9 @@ Controller/FutsalScheduleController.class
 com/saugat/services/ResponseMessage.class
 Login/Login.class
 Entities/FutsalSchedule.class
-Filter/AuthorizationFilter.class
 Entities/User.class
 Model/BookingInformationCrud.class
+com/saugat/services/KhaltiService.class
 Entities/FutsalUserRelation.class
 com/saugat/converter/TimeConvertor.class
 com/saugat/dataModel/CustomDataModel.class

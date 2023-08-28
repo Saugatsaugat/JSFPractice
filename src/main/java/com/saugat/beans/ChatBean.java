@@ -21,6 +21,7 @@ public class ChatBean implements Serializable {
     private String message;
 
     public void sendNotification() {
+        
         ThreadMessageSender.sendMessage(message);
     }
 

@@ -6,8 +6,10 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <style>
 
-    <h:form >
+    </style>
+    <h:form style="padding: 5px;">
         <p:growl id="messages" autoUpdate="true" severity="error" redisplay="false" showDetail="false" showSummary="true" />
         <p:outputLabel rendered="#{userBean.isAdmin}" style="font-weight: bold;" value="Select UserType"/><br/>
         <p:selectOneRadio rendered="#{userBean.isAdmin}" id="RegisterAs" value="#{userController.user.usertype}" required="true">

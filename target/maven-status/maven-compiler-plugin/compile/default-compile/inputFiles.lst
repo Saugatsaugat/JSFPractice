@@ -22,6 +22,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/DateEntity.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/UserModel.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/AbstractEntity.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/KhaltiVerificationController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/FutsalUserRelation.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/BookingDetail.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalCrud.java
@@ -42,6 +43,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalUserRelationController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/UserController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/bean/enums/ActionType.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/services/KhaltiService.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/User.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/AclController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/messageGeneration/ValidationMessageGenerationUtil.java

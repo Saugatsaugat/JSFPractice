@@ -12,26 +12,28 @@ import javax.websocket.server.ServerEndpoint;
  *
  * @author saugat
  */
-@ServerEndpoint(value="/chat")
-public class ChatEndPoint implements Serializable{
+
+@ServerEndpoint(value = "/chat")
+public class ChatEndPoint implements Serializable {
 
     static ArrayList<Session> sessions = new ArrayList<>();
 
     @OnMessage
-    public void messageReceiver(String message) {
-        //System.out.println("Received message:" + message);
+    public void onMessage(Session session, String message) {
+        System.out.println("Received message:" + message);
+
     }
 
     @OnOpen
     public void onOpen(Session session) {
         //System.out.println("onOpen: " + session.getId());
         sessions.add(session);
-       // System.out.println("onOpen: Notification list size: " + sessions.size());
+        // System.out.println("onOpen: Notification list size: " + sessions.size());
     }
 
     @OnClose
     public void onClose(Session session) {
-       // System.out.println("onClose: " + session.getId());
+        // System.out.println("onClose: " + session.getId());
         sessions.remove(session);
     }
 
