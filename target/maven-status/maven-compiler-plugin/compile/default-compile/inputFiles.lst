@@ -3,6 +3,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/bean/enums/SlotType.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/AclActionCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/IAbstractEntity.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/PaymentCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/UserCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/AclAction.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/FutsalConverter.java
@@ -13,6 +14,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/ResourceConverter.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Filter/AuthorizationFilter.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/PasswordHashController.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/bean/enums/WalletType.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/FutsalScheduleController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/FileEntity.java
@@ -61,6 +63,7 @@
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/FutsalUserRelationCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Controller/LogoutController.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/interceptors/Acl.java
+/home/saugat/NetBeansProjects/JSFProject/src/main/java/Entities/Payment.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/converter/UserConverter.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/Model/ResourceCrud.java
 /home/saugat/NetBeansProjects/JSFProject/src/main/java/com/saugat/services/TokenManager.java

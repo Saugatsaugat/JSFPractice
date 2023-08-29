@@ -94,8 +94,8 @@ public class BookingDetailController implements Serializable {
     }
 
     public Boolean checkPaymentStatus(BookingDetail bookingDetail) {
-        if (bookingDetail.getPaymentstatus().equals("incomplete")) {
-            return true;
+        if (bookingDetail.getPaymentstatus().equals("complete")) {
+            return false;
         } else {
             return true;
         }
@@ -105,6 +105,10 @@ public class BookingDetailController implements Serializable {
         if (bookingDetail != null) {
             this.bookingDetail = bookingDetail;
         }
+    }
+
+    public Long getSelectedBookingInformationId() {
+        return bookingDetail.getId();
     }
 
     public float getBookingAmount() {

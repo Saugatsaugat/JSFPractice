@@ -14,19 +14,25 @@
         <h:form id="khaltiForm">
             <p:outputLabel style="display: none;" id="amountValue" 
                            value="#{bookingDetailController.getBookingAmount()}" />
+            <p:outputLabel style="display: none;" id="bookingInformationId" 
+                           value="#{bookingDetailController.selectedBookingInformationId}" />
             <p:panelGrid columns="2">
                 <p:commandButton id="paymentButton" value="Khalti" 
-                                 icon="fa fa-money" onclick="startPayment()" />
+                                 icon="fa fa-money" onclick="startPayment()" 
+                                 />
                 <p:commandButton id="esewa" value="Esewa Pay" 
                                  title="Coming Soon..." onclick="comingSoon()" />
 
             </p:panelGrid>
         </h:form>
+       
         <script type="text/javascript">
             function startPayment() {
+                var bookingInformationId = document.getElementById("khaltiForm:bookingInformationId").textContent;
+
                 var config = {
                     // replace the publicKey with yours
-                    "publicKey": "test_public_key_40718b41656a4e2aaf9624d9e3137e46",
+                    "publicKey": "test_public_key_ac674f3b12da4496b13b45787b5e0a66",
                     "productIdentity": "1234567890",
                     "productName": "Dragon",
                     "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
@@ -41,7 +47,8 @@
                         onSuccess(payload) {
                             // hit merchant api for initiating verfication
                             var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "/JSFProject-1.0/resources/khaltiPay", true);
+                            xhr.open("POST", "/JSFProject-1.0/resources/khaltiPay/" +
+                                    bookingInformationId, true);
                             xhr.setRequestHeader("Content-Type", "application/json");
                             xhr.onreadystatechange = function () {
                                 if (xhr.readyState === 4) {
@@ -54,10 +61,9 @@
                                 }
                             };
                             var jsonData = JSON.stringify(payload);
-                            console.log(typeof(jsonData));
+                            console.log(typeof (jsonData));
                             xhr.send(jsonData);
 
-                            console.log(payload);
                         },
                         onError(error) {
                             console.log(error);

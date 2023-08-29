@@ -1,14 +1,28 @@
 package Controller;
 
+import Entities.BookingDetail;
+import Entities.Payment;
+import Entities.User;
+import Model.BookingDetailCrud;
+import Model.PaymentCrud;
+import Model.UserCrud;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.saugat.bean.enums.WalletType;
+import com.saugat.beans.UserBean;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import javax.enterprise.context.SessionScoped;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -16,51 +30,118 @@ import javax.inject.Named;
  * @author saugat
  */
 @Named
-@SessionScoped
+@RequestScoped
 public class KhaltiVerificationController implements Serializable {
 
-    public Boolean verifyKhaltiTransaction(String idx, String token, float amount) {
+    @Inject
+    private UserBean userBean;
+    @Inject
+    private PaymentCrud paymentCrud;
+    @Inject
+    private BookingDetailCrud bookingDetailCrud;
+    @Inject
+    private UserCrud userCrud;
 
-        String url = "https://khalti.com/api/v2/payment/verify/";
-        String response = "";
+    public Boolean verifyKhaltiTransaction(String idx, String token, float amount, BookingDetail bookingDetail) {
+        Map<String, String> result = new HashMap<>();
+        StringBuilder response = new StringBuilder();
 
         try {
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            String postData = "token=" + token + "&amount=" + amount;
 
-            // Add request header
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Authorization", "Key test_public_key_40718b41656a4e2aaf9624d9e3137e46");
-            
+            URL url = new URL("https://khalti.com/api/v2/payment/verify/");
 
-            // Enable input/output streams
-            con.setDoOutput(true);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Authorization",
+                    "Key test_secret_key_564f0fa350ab43aa890419a00989a27c");
 
-            // Prepare the payload
-            String payload = "token=" + token + "&amount=" + amount;
-
-            // Write payload to the request
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(payload);
-            wr.flush();
+            //Send request
+            DataOutputStream wr = new DataOutputStream(
+                    connection.getOutputStream());
+            wr.writeBytes(postData);
             wr.close();
 
-            // Read response
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuilder responseBuilder = new StringBuilder();
+            // Get the response Code
+            int responseCode = connection.getResponseCode();
 
-            while ((inputLine = in.readLine()) != null) {
-                responseBuilder.append(inputLine);
+            //Get Response  
+            try {
+                InputStream is = connection.getInputStream();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+                String line;
+                while ((line = rd.readLine()) != null) {
+                    response.append(line);
+                    response.append('\r');
+                }
+                rd.close();
+
+                // json transformation using fasterxml jackson
+                try {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    JsonNode jsonNode = objectMapper.readTree(response.toString());
+                    String completed = jsonNode.get("state").get("name").asText();
+
+                    if (completed != null) {
+                        String successIdx = "";
+                        String typeIdx = "";
+                        String username = "";
+                        String merchantIdx = "";
+
+                        typeIdx = jsonNode.get("type").get("idx").asText();
+                        successIdx = jsonNode.get("state").get("idx").asText();
+                        username = jsonNode.get("user").get("name").asText();
+                        merchantIdx = jsonNode.get("merchant").get("idx").asText();
+
+                        result.put("typeIdx", typeIdx);
+                        result.put("successIdx", successIdx);
+                        result.put("username", username);
+                        result.put("merchantIdx", merchantIdx);
+                        Boolean stat = savePaymentInformation(typeIdx, successIdx, username,
+                                merchantIdx, bookingDetail);
+                        if (stat) {
+                            return true;
+                        }
+
+                    }
+                } catch (Exception e) {
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            in.close();
-
-            response = responseBuilder.toString();
+            connection.disconnect();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return false;
     }
+
+    public Boolean savePaymentInformation(String typeIdx, String successIdx, String username,
+            String merchantId, BookingDetail bookingDetail) {
+        User user = bookingDetail.getBookinginformation().getUser();
+        if (user.getId() != null) {
+            Payment payment = new Payment();
+            payment.setWalletType(WalletType.KHALTI);
+            payment.setSuccessId(successIdx);
+            payment.setKhaltiTypeIdx(typeIdx);
+            payment.setKhaltiMerchantIdx(merchantId);
+            payment.setClientNameReceivedFromKhalti(username);
+            payment.setTransactionDate(new Date());
+            payment.setUser(user);
+            payment.setBookingDetail(bookingDetail);
+            if (paymentCrud.save(payment)) {
+                bookingDetail.setPaymentstatus("completed");
+                if (bookingDetailCrud.update(bookingDetail, bookingDetail.getId())) {
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
 }

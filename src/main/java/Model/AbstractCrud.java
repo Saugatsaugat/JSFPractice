@@ -57,7 +57,7 @@ public abstract class AbstractCrud<T extends IAbstractEntity> {
             getEntityManager().persist(obj);
             return true;
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return false;
     }

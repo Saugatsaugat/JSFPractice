@@ -67,6 +67,11 @@
             <version>0.11.2</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.10.0.pr2</version>
+        </dependency>
         
         <!--        <dependency>
             <groupId>javax.enterprise</groupId>
@@ -82,7 +87,7 @@
             <version>2.4</version>
         </dependency>-->
         
-<!--         https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet 
+        <!--         https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet 
         <dependency>
             <groupId>org.jboss.weld.servlet</groupId>
             <artifactId>weld-servlet</artifactId>
