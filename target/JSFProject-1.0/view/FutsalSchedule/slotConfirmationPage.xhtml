@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <p:dataTable  id="scheduleDT" value="#{futsalScheduleController.newScheduleList}"
+                  selection="#{futsalScheduleController.selectedSchedueList}"
+                  rowKey="#{futsalScheduleController.getUniqueId(item)}" var="item"  rowIndexVar="i" 
+                  rendered="#{not empty futsalScheduleController.newScheduleList}" >
+
+        <ui:remove>
+            <p:ajax event="toggleSelect" listener="#{futsalScheduleController.onToggleSelect}"  process="@this" />
+            <p:ajax event="rowSelect" listener="#{futsalScheduleController.onRowSelect}" process="@this" />
+            <p:ajax event="rowUnselect" listener="#{futsalScheduleController.onRowUnselect}" process="@this" />
+            <p:ajax event="rowSelectCheckbox" listener="#{futsalScheduleController.onRowSelectCheckbox}" process="@this" />
+            <p:ajax event="rowUnselectCheckbox" listener="#{futsalScheduleController.onRowUnselectCheckbox}" process="@this" />
+        </ui:remove>
+        
+        <p:column selectionMode="multiple" style="width:16px;text-align:center" />
+        <p:column  headerText="S.N.">
+            <h:outputText value="#{i + 1}" />
+        </p:column>
+        <p:column headerText="ScheduleDate">
+            #{item.scheduledate}
+        </p:column>
+        <p:column headerText="StartHour">
+            #{item.starthour}
+        </p:column>
+        <p:column headerText="EndHour">
+            #{item.endhour}
+        </p:column>
+        <p:column headerText="Rate">
+            #{item.rate}
+        </p:column>
+    </p:dataTable>
+    <p:separator style="border: none;" />
+    <p:commandButton value="Confirm" update="@form" rendered="#{not empty futsalScheduleController.newScheduleList}" action="#{futsalScheduleController.saveGeneratedSchedules()}"/>
+    <p:commandButton style="float:right;" value="Cancel" action="#{futsalScheduleController.updateNewScheduleList()}" rendered="#{not empty futsalScheduleController.newScheduleList}" onclick="PF('slotScheduleDialog').hide();"  />
+
+</ui:composition>

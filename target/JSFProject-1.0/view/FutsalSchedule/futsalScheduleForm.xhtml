@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <p:messages styleClass="errorMessage" showSummary="true" closable="true" severity="error" autoUpdate="true" />
+    <p:outputLabel value="Scheduled Date" />
+    <p:calendar id="scheduledate" pattern="yyyy-MM-dd" value="#{futsalScheduleController.futsalSchedule.scheduledate}"/><br/><br/>
+
+    <p:outputLabel value="Start Hour:" /><br/>
+    <p:calendar timeControlType="select" pattern="HH:mm" timeInput="true" id="starthour" timeOnly="true" value="#{futsalScheduleController.futsalSchedule.starthour}"/><br/><br/>
+    
+
+    <p:outputLabel value="End Hour:" /><br/>
+    <p:calendar timeControlType="select" pattern="HH:mm" timeInput="true" id="endhour" timeOnly="true" value="#{futsalScheduleController.futsalSchedule.endhour}"/><br/><br/>
+    
+
+    <p:outputLabel style="font-weight: bold;" value="Rate"/><br/>
+    <p:inputNumber id="rate" value="#{futsalScheduleController.futsalSchedule.rate}" required="true" /><br/><br/>
+
+
+    <p:outputLabel style="font-weight: bold;" value="Set Slot Status"/><br/>
+    <p:selectOneRadio value="#{futsalScheduleController.futsalSchedule.status}">
+        <f:selectItem itemLabel="Available" itemValue="available" />
+        <f:selectItem itemLabel="Booked" itemValue="booked"/>
+    </p:selectOneRadio><br/><br/>
+
+    <p:commandButton value="Save" rendered="#{empty futsalScheduleController.futsalSchedule.id}" id="saveFutsalSchedule" action="#{futsalScheduleController.save()}"/>
+    <p:commandButton value="Update" rendered="#{not empty futsalScheduleController.futsalSchedule.id}" id="editFutsalSchedule" action="#{futsalScheduleController.update()}"/>
+
+
+</ui:composition>

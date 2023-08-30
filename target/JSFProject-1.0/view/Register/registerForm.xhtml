@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <style>
+
+    </style>
+    <h:form style="padding: 5px;">
+        <p:growl id="messages" autoUpdate="true" severity="error" redisplay="false" showDetail="false" showSummary="true" />
+        <p:outputLabel rendered="#{userBean.isAdmin}" style="font-weight: bold;" value="Select UserType"/><br/>
+        <p:selectOneRadio rendered="#{userBean.isAdmin}" id="RegisterAs" value="#{userController.user.usertype}" required="true">
+            <f:selectItem itemLabel="Admin" itemValue="admin" />
+            <f:selectItem itemLabel="Futsal Owner" itemValue="futsalowner"/>
+            <f:selectItem itemLabel="User" itemValue="user"/>
+        </p:selectOneRadio>
+
+        <p:separator style="border: none;" />
+
+        <p:outputLabel style="font-weight: bold;" value="Email"/>        
+        <p:separator style="border: none;" />
+        <p:inputText id="email" value="#{userController.user.email}" required="true" />
+        <p:separator style="border: none;" />
+
+
+        <p:outputLabel style="font-weight: bold;" value="Firstname"/>
+        <p:separator style="border: none;" />
+        <p:inputText id="firstname" value="#{userController.user.firstname}" required="true"/>
+        <p:separator style="border: none;" />
+
+
+        <p:outputLabel style="font-weight: bold;" value="Midname"/>
+        <p:separator style="border: none;" />
+        <p:inputText id="midname" value="#{userController.user.midname}" />
+        <p:separator style="border: none;" />
+
+
+        <p:outputLabel style="font-weight: bold;" value="Lastname"/>
+        <p:separator style="border: none;" />
+        <p:inputText id="lastname" value="#{userController.user.lastname}" required="true" />
+        <p:separator style="border: none;" />
+
+
+        <p:outputLabel style="font-weight: bold;" value="Mobile"/>
+        <p:separator style="border: none;" />
+        <p:inputText id="mobile" value="#{userController.user.mobile}"  required="true"/>
+        <p:separator style="border: none;" />
+
+
+        <p:outputLabel style="font-weight: bold;" value="Password" />
+        <p:separator style="border: none;" />
+        <p:password id="password" value="#{userController.user.userpassword}" required="true" />
+        <p:separator style="border: none;" />
+
+        <p:commandButton update="messages" value="Save" rendered="#{empty userController.user.id}" id="register" action="#{userController.saveUser}"/><br/>
+        <p:commandButton update="messages" value="Update" rendered="#{(not empty userController.user.id) and (userBean.isAdmin)}" id="userUpdate" action="#{userController.updateUser}"/>
+    </h:form>
+</ui:composition>

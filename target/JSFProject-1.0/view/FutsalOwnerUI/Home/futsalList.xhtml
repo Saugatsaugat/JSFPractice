@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:form>
+    <p:messages styleClass="errorMessage" closable="true" severity="error" autoUpdate="true" />
+    <h3 style="text-align: center;">Futsal Grounds</h3>
+    <p:dataTable value="#{futsalController.futsalList}" var="item">
+        <p:column  headerText="FutsalGround">
+            #{item.name}
+        </p:column>
+        <p:column  headerText="Address">
+            #{item.address}
+        </p:column>
+        <p:column  headerText="Rate per Hour(Rs.)">
+            #{item.rate}
+        </p:column>
+        <p:column  headerText="Contact">
+            #{item.mobile}
+        </p:column>
+
+        <p:column  headerText="">
+            <p:commandButton value="Book Now" id="bookNowBtn" oncomplete="if (#{futsalScheduleController.saveFutsal(item)}) { PF('bookNowDialog').show(); }"
+                             actionListener="#{futsalScheduleController.saveFutsal(item)}" update="scheduleDisplay">
+
+            </p:commandButton>
+        </p:column>
+    </p:dataTable>
+    </h:form>
+    
+    <p:dialog style="font-size: 10px;" id="bookNowDialog" fitViewport="true" appendTo="@(body)" 
+              widgetVar="bookNowDialog" modal="true" header="Book Now" height="500px" width="1000px">
+        <p:outputLabel >Choose Date</p:outputLabel>
+        <h:form>
+            <p:calendar id="calendar" pattern="yyyy-MM-dd" value="#{futsalScheduleController.newDate}">
+                <p:ajax event="dateSelect" listener="#{futsalScheduleController.onDateSelect}" 
+                        update="scheduleDisplay" process="@this"/>
+            </p:calendar>
+        </h:form>
+        <p:outputPanel id="scheduleDisplay">
+            <ui:include src="futsalScheduleDisplay.xhtml" rendered="#{not empty futsalScheduleController.newDate}" />
+        </p:outputPanel> 
+    </p:dialog>
+</ui:composition>

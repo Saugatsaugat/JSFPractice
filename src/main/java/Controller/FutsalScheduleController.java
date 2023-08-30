@@ -35,6 +35,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.ToggleSelectEvent;
 import org.primefaces.event.UnselectEvent;
 import com.saugat.interceptors.Acl;
+import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 
 /**
  *
@@ -300,23 +301,17 @@ public class FutsalScheduleController implements Serializable {
             if ((fsc.checkIfExits(futsalSchedule)) && status.matches("available")) {
                 try {
                     if (fsc.saveBooking(bookingInformation, futsalSchedule)) {
-                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Booked Successfully", "Booked Successfully");
-                        FacesContext.getCurrentInstance().addMessage(null, message);
-                        externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                        Flash flash = externalContext.getFlash();
-                        flash.setKeepMessages(true);
-                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/bookingInformationTable.xhtml");
-
+                        ValidationMessageGenerationUtil.validationMessageGeneration("Booked", "informational");
                     }
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Booking Failed", "Booking Failed");
-                    context.addMessage(null, message);
+                    ValidationMessageGenerationUtil.validationMessageGeneration("Booked Failed", "erro");
+
                 } catch (Exception e) {
 
                 }
             } else {
 
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Slot Not Available", "Slot Not available");
-                context.addMessage(null, message);
+                ValidationMessageGenerationUtil.validationMessageGeneration("Slot Unavailable", "error");
+
             }
         }
 
@@ -334,7 +329,7 @@ public class FutsalScheduleController implements Serializable {
                 }
                 if (fsc.update(futsalSchedule, futsalSchedule.getId())) {
                     try {
-                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Updated Successfully", "Updated Successfully");
+                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Updated Successfully", "Updated Successfully");
                         FacesContext.getCurrentInstance().addMessage(null, message);
                         externalContext = FacesContext.getCurrentInstance().getExternalContext();
                         Flash flash = externalContext.getFlash();

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:outputLabel  style="font-weight: bold;" value="Owner Name"/><br/>
+    <p:selectOneMenu rendered="#{userBean.isAdmin}"  value="#{futsalController.futsal.ownerid}" >
+        <f:selectItem itemLabel="Select One" itemValue="" />
+        <f:selectItems value="#{userController.userList}" var="item"
+                       itemLabel="#{item.firstname} #{item.lastname} #{item.mobile}" itemValue="#{item.id}"/>
+    </p:selectOneMenu>
+
+    <div>
+        <p:outputLabel  style="font-weight: bold;" value="Futsal Name"/><br/>
+        <p:inputText id="name" value="#{futsalController.futsal.name}" required="true" />
+    </div>
+
+    <div>
+        <p:outputLabel style="font-weight: bold;" value="PAN Number"/><br/>
+        <p:inputText id="pan" value="#{futsalController.futsal.pan}" required="true" />
+    </div>
+    <div>
+        <p:outputLabel style="font-weight: bold;" value="Address"/><br/>
+        <p:inputText id="address" value="#{futsalController.futsal.address}" required="true" />
+    </div>
+    <div>
+        <p:outputLabel style="font-weight: bold;" value="Rate(per Hour)"/><br/>
+        <p:inputText id="rate" value="#{futsalController.futsal.rate}" required="true" />
+    </div>
+    <p:commandButton value="Save" rendered="#{empty futsalController.futsal.id}" id="futsalRegister" 
+                     action="#{futsalController.saveFutsal}" oncomplete="PF('addDialog').hide();"
+                     update="futsalTable" />
+    <p:commandButton value="Update" rendered="#{not empty futsalController.futsal.id}" id="futsalUpdate" 
+                     action="#{futsalController.updateFutsal}"/>
+
+</ui:composition>

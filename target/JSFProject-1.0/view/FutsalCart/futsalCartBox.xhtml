@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:growl redisplay="false" showSummary="true" showDetail="false" autoUpdate="true"/>
+
+    <p:outputPanel style="text-align: center;  height: 50px;"  >
+        <p:outputLabel style="font-size: 20px; font-weight: bold; " value="Futsal Grounds"/>
+    </p:outputPanel>
+
+    <p:dataGrid value="#{futsalController.futsalList}" var="item" columns="4" rows="#{futsalController.futsalList.size()}">
+        <p:column>
+
+            <p:panel>
+                <h:panelGrid styleClass="cart-css" columns="1">
+
+                    <p:graphicImage height="250px" width="100%" library="images" 
+                                    name="#{futsalController.getRandomImage()}.jpg" alt="#{item.name}"/>   
+
+                    <p:outputPanel style="text-align: center;" >
+                        <h:outputText style="font-size: 20px;font-weight: bold;" value="#{item.name}" />
+                    </p:outputPanel>
+                    <p:outputPanel style="font-size: 14px;text-align: center;">
+                        <h:outputText  value="Rs. #{item.rate}" />
+                    </p:outputPanel>
+
+                    <p:outputPanel style="font-size: 12px;text-align: center;">
+                        <h:outputText  value="#{item.address}"/>
+                    </p:outputPanel>
+                    <p:outputPanel style="text-align: center;">
+                        <p:commandButton style="color: white;  background-image: linear-gradient(to right,red, orange);
+                                         margin-bottom: 5px; " 
+                                         id="viewSchedules" action="#{futsalScheduleController.futsalScheduleByFutsalId(item.id)}" 
+                                         value="View Schedules" oncomplete="PF('viewSchedules').show();" 
+                                         process="@this" update="scheduleList" />
+                    </p:outputPanel>
+
+                </h:panelGrid>
+            </p:panel>
+        </p:column>
+    </p:dataGrid>
+
+
+    <p:dialog class="viewSchedules"  header="Schedules" fitViewport="true" appendTo="@(body)" widgetVar="viewSchedules" modal="true" height="600px" width="800px">
+        <div  class="center-layout">
+            <h:form id="scheduleList">
+                <ui:include src="../FutsalSchedule/futsalScheduleDisplay.xhtml" />
+            </h:form>
+        </div>
+    </p:dialog>
+
+
+</ui:composition>

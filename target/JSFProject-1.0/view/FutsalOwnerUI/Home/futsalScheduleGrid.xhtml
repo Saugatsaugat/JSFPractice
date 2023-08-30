@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <p:growl autoUpdate="true" />
+    <p:dataGrid value="#{futsalScheduleController.futsalScheduleList}" var="item" columns="6" rows="#{futsalScheduleController.futsalScheduleList.size()}">
+        <p:column>
+            <p:panel styleClass="#{futsalScheduleController.rowStyleClass(item)}">
+                <h:panelGrid  columns="1">
+                    <p:graphicImage height="100px" library="images" name="starting_futsal.jpg" alt="picture"/>                        
+                    <h:outputText value="#{item.scheduledate}" />
+                    <h:outputText value="#{item.starthour} - #{item.endhour}" />
+                    <h:outputText value="Rs. #{item.rate}" />
+                    <h:outputText value="#{item.status}"/>
+                </h:panelGrid>
+            </p:panel>
+        </p:column>
+    </p:dataGrid>
+
+</ui:composition>

@@ -11,6 +11,8 @@ import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
@@ -20,6 +22,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -40,7 +43,7 @@ public class KhaltiService extends Application {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @POST
-    public void verification(JsonObject payload, @PathParam("id") Long id) throws IOException {
+    public Response verification(JsonObject payload, @PathParam("id") Long id) throws IOException {
 
         String idx = payload.getJsonString("idx").getString();
         String token = payload.getJsonString("token").getString();
@@ -51,10 +54,10 @@ public class KhaltiService extends Application {
 
         Boolean status = khaltiVerificationController.verifyKhaltiTransaction(idx, token, amount, bookingDetail);
         if (status) {
-            ValidationMessageGenerationUtil.validationMessageGeneration("Payment Sucess", "informational");
+            ResponseMessage responseMessage = new ResponseMessage("SUCCESS","200","Complete","Complete");
+            return Response.ok(responseMessage).build();
         } else {
-            ValidationMessageGenerationUtil.validationMessageGeneration("Payment Failed", "error");
-
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
     }
 

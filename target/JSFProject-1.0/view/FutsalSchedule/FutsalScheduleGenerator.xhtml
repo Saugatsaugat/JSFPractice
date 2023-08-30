@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:form>
+        <h:outputText value="Choose Schedule Type" />
+        <p:separator style="border:none;" />
+        <p:panelGrid columns="3">
+            <p:column>
+                <p:commandButton update="slotScheduleDialog" value="Automatic Slot" action="#{futsalScheduleController.slotType('automatic')}" oncomplete="PF('slotScheduleDialog').show();"  />
+            </p:column>
+            <p:column>
+                <p:commandButton update="slotScheduleDialog" value="Shift Slot" action="#{futsalScheduleController.slotType('shift')}" oncomplete="PF('slotScheduleDialog').show();" />
+            </p:column>
+            <p:column>
+                <p:commandButton update="slotScheduleDialog" value="Custom Slot"  action="#{futsalScheduleController.slotType('custom')}" oncomplete="PF('slotScheduleDialog').show();" />
+            </p:column>
+        </p:panelGrid>
+    </h:form>
+
+    <p:dialog id="slotScheduleDialog" header="Schedule Generator" appendTo="@(body)" widgetVar="slotScheduleDialog" height="600" width="1000">
+        <ui:include src="AutomaticScheduleForm.xhtml" />
+    </p:dialog>
+
+
+</ui:composition>
+

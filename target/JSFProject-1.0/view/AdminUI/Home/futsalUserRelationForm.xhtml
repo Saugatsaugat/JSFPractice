@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:messages styleClass="errorMessage" showSummary="true" closable="true" severity="error" autoUpdate="true" />
+
+    <p:outputLabel >Entry Date</p:outputLabel>
+    <p:calendar id="calendar" pattern="yyyy-MM-dd" value="#{futsalUserRelationController.futsalUserRelation.entrydate}"/>
+    <br/>
+
+    <p:outputLabel  style="font-weight: bold;" value="User Name"/><br/>
+    <p:selectOneMenu converter="userconverter" value="#{futsalUserRelationController.futsalUserRelation.user}" >
+        <f:selectItem itemLabel="Select One" itemValue="" />
+        <f:selectItems value="#{userController.userList}" var="item"
+                       itemLabel="#{item.firstname}" itemValue="#{item}"/>
+    </p:selectOneMenu><br/>
+
+    <p:outputLabel  style="font-weight: bold;" value="Futsal Name"/><br/>
+    <p:selectOneMenu converter="futsalconverter" value="#{futsalUserRelationController.futsalUserRelation.futsal}" >
+        <f:selectItem itemLabel="Select One" itemValue="" />
+        <f:selectItems value="#{futsalController.futsalList}" var="item"
+                       itemLabel="#{item.name}" itemValue="#{item}"/>
+    </p:selectOneMenu><br/>
+
+
+    <p:commandButton value="Save" rendered="#{empty futsalUserRelationController.futsalUserRelation.id}" id="save" action="#{futsalUserRelationController.save}"/>
+    <p:commandButton value="Update" rendered="#{not empty futsalUserRelationController.futsalUserRelation.id}" id="update" action="#{futsalUserRelationController.update}"/>
+
+
+</ui:composition>

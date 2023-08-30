@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:messages styleClass="errorMessage" showSummary="true" closable="true" severity="error" autoUpdate="true" />
+
+        <p:outputLabel style="font-weight: bold;" value="Register As"/><br/>
+        <p:selectOneRadio id="RegisterAs" value="#{userController.user.usertype}" required="true">
+            <f:selectItem itemLabel="Admin" itemValue="admin" />
+            <f:selectItem itemLabel="Futsal Owner" itemValue="futsalowner"/>
+            <f:selectItem itemLabel="User" itemValue="user"/>
+        </p:selectOneRadio>
+
+        <p:outputLabel style="font-weight: bold;" value="Email"/><br/>
+        <p:inputText id="email" value="#{userController.user.email}" required="true" />
+
+        <p:outputLabel style="font-weight: bold;" value="Firstname"/><br/>
+        <p:inputText id="firstname" value="#{userController.user.firstname}" required="true"/>
+
+        <p:outputLabel style="font-weight: bold;" value="Midname"/><br/>
+        <p:inputText id="midname" value="#{userController.user.midname}" />
+
+        <p:outputLabel style="font-weight: bold;" value="Lastname"/><br/>
+        <p:inputText id="lastname" value="#{userController.user.lastname}" required="true" />
+
+        <p:outputLabel style="font-weight: bold;" value="Mobile"/><br/>
+        <p:inputText id="mobile" value="#{userController.user.mobile}"  required="true"/>
+
+        <p:outputLabel style="font-weight: bold;" value="Password" /><br/>
+        <p:password id="password" value="#{userController.user.userpassword}" required="true" /><br/>
+    <p:commandButton value="Save" rendered="#{empty userController.user.id}" id="userRegister" action="#{userController.saveUser}"/>
+    <p:commandButton value="Update" rendered="#{not empty userController.user.id}" id="userUpdate" action="#{userController.updateUser}"/>
+
+</ui:composition>

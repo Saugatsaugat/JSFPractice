@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="../../template.xhtml">
+    <ui:define name="content">
+        <div style="text-align: center;">
+            <p:commandButton id="addDialog" value="ADD New" oncomplete="PF('addDialog').show()" />
+        </div>
+        <h3 style="text-align: center;">Futsal User Relation Table</h3>
+        <h:form>
+            <p:dataTable value="#{futsalUserRelationController.futsalUserRelationList}" rowIndexVar="rowIndex" var="item">
+                <p:column headerText="S.N." >
+                    <h:outputText value="#{rowIndex + 1}" />
+                </p:column>
+                <p:column  headerText="EntryDate">
+                    #{item.entrydate}
+                </p:column>
+                <p:column  headerText="FutsalId">
+                    #{item.futsal.name}
+                </p:column>
+                <p:column  headerText="UserId">
+                    #{item.user.firstname}
+                </p:column>
+                <p:column  headerText="Edit">
+                    <p:commandButton id="editDialog" value="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" actionListener="#{futsalUserRelationController.showFutsalUserRelation(item)}"/>
+
+                </p:column>
+                <p:column  headerText="Delete">
+                    <p:commandButton value="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{futsalUserRelationController.setFutsalUserRelationId(item.id)}" />
+
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog class="editDialog"  header="Edit Futsal" fitViewport="true" appendTo="@(body)" widgetVar="editDialog" modal="true" height="200px" width="300px">
+            <div class="center-layout">
+                <h:form id="editDialogForm">
+                    <ui:include src="futsalUserRelationForm.xhtml"/>
+                </h:form>
+            </div>
+        </p:dialog>
+
+
+        <p:dialog style="font-size: 10px;" id="deleteDialog" fitViewport="true" appendTo="@(body)" widgetVar="deleteDialog" modal="true" header="Confirmation" height="100px" width="300px">
+            <p>Do you really want to delete it?</p><br/>
+            <p:commandButton value="Yes" id="delete" actionListener="#{futsalUserRelationController.delete}"/>
+            <p:commandButton value="No" onclick="PF('deleteDialog').hide()" style="float:right;" />
+        </p:dialog>
+
+        <p:dialog class="addDialog"  header="New" fitViewport="true" appendTo="@(body)" widgetVar="addDialog" modal="true" height="200px" width="300px">
+            <div class="center-layout">
+                <h:form id="addDialogForm">
+                    <ui:include src="futsalUserRelationForm.xhtml"/>
+                </h:form>
+            </div>
+        </p:dialog>
+
+    </ui:define>
+</ui:composition>

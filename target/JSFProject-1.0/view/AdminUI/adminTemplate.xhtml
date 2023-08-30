@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title><ui:insert name="title">Template </ui:insert></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <style>
+            .body{
+                background-image: linear-gradient(to right, red , yellow);
+
+            }
+            .center-layout {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 15px;
+                border-radius: 4px;
+            }
+
+            .ui-layout-pane {
+                border: 0;
+                overflow: visible  ;
+                margin: 0;
+                padding: 0px 5px;
+
+            }
+
+            .ui-layout-unit-content{
+                font-size: 15px;
+
+            }
+
+            .ui-widget .ui-widget {
+                font-size: 15px;
+            }
+            .ui-tabs{
+                border: 0;
+            }
+            .ui-datepicker{
+                font-size: 16px;
+            }
+            .ui-dialog-titlebar{
+                font-size:15px;
+            }
+
+
+        </style>
+    </h:head>
+
+    <p:layout fullPage="true">
+
+        <p:layoutUnit position="north" size="50" >  
+            <h:form>
+                <p:menubar styleClass="body">
+                    <p:menuitem value="UserList" url="/faces/view/AdminUI/Home/userTable.xhtml"/>
+                    <p:menuitem value="FutsalList" url="/faces/view/AdminUI/Home/futsalTable.xhtml"/>
+                    <p:menuitem value="FutsalUserRelation" url="/faces/view/AdminUI/Home/futsalUserRelationTable.xhtml"/>
+                    <p:menuitem value="FutsalSchedule" url="/faces/view/AdminUI/Home/futsalScheduleTable.xhtml"/>
+                    <p:menuitem value="BookingInformation" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
+                    <p:menuitem value="Logout" actionListener="#{logoutController.logout}" />
+
+                </p:menubar>
+            </h:form>
+
+        </p:layoutUnit>
+
+        <p:layoutUnit position="center">
+            <ui:insert name="content" />
+        </p:layoutUnit>
+
+    </p:layout>
+
+
+
+
+
+
+</ui:composition>

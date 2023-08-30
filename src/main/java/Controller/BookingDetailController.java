@@ -11,6 +11,7 @@ import Model.BookingDetailCrud;
 import Model.FutsalCrud;
 import Model.UserCrud;
 import com.saugat.bean.enums.UserType;
+import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -36,6 +37,15 @@ public class BookingDetailController implements Serializable {
     HttpSession session;
     private User user;
     private BookingDetail bookingDetail;
+    private String updatePaymentSuccessStatus;
+
+    public String getUpdatePaymentSuccessStatus() {
+        return updatePaymentSuccessStatus;
+    }
+
+    public void setUpdatePaymentSuccessStatus(String updatePaymentSuccessStatus) {
+        this.updatePaymentSuccessStatus = updatePaymentSuccessStatus;
+    }
 
     public User getUser() {
         return user;
@@ -70,6 +80,7 @@ public class BookingDetailController implements Serializable {
 
     @PostConstruct
     public void init() {
+        updatePaymentSuccessStatus = "";
         bookingDetail = new BookingDetail();
         user = new User();
         context = FacesContext.getCurrentInstance();
@@ -94,7 +105,7 @@ public class BookingDetailController implements Serializable {
     }
 
     public Boolean checkPaymentStatus(BookingDetail bookingDetail) {
-        if (bookingDetail.getPaymentstatus().equals("complete")) {
+        if (bookingDetail.getPaymentstatus().equals("completed")) {
             return false;
         } else {
             return true;
@@ -117,6 +128,18 @@ public class BookingDetailController implements Serializable {
             amount = bookingDetail.getBookinginformation().getAmount();
         }
         return amount;
+    }
+
+    public void displaySuccessMessage() {
+        if (updatePaymentSuccessStatus.equals("true")) {
+            updatePaymentSuccessStatus = "";
+            ValidationMessageGenerationUtil.validationMessageGeneration("Payment Success", "informational");
+        } else if (updatePaymentSuccessStatus.equals("false")) {
+            updatePaymentSuccessStatus = "";
+            ValidationMessageGenerationUtil.validationMessageGeneration("Payment Failed", "error");
+        } else {
+
+        }
     }
 
 }

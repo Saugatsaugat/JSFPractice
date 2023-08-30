@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <h:form style="padding: 5px;">
+        <p:fieldset style="margin-left: 30%; margin-top: 10%; width: 25%;" legend="Login">
+            <p:outputLabel for="username">Username</p:outputLabel><br/>
+            <p:inputText id="username" value="#{loginController.login.username}"
+                         required="true"/><br/><br/>
+
+            <p:outputLabel for="password">Password</p:outputLabel><br/>
+            <p:password id="password" value="#{loginController.login.password}" feedback="false"
+                        required="true"/>
+            <br/><br/>
+
+            <p:commandButton value="Login" id="btn" actionListener="#{loginController.checkUser}"/>
+        </p:fieldset>
+    </h:form>
+
+</ui:composition>

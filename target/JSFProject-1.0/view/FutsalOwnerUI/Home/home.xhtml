@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../../template.xhtml">
+
+    <ui:define name="title">Home</ui:define>
+    <ui:define name="content" >
+        <script type="text/javascript">
+            // if logged in successfully, call the dialog as,
+            window.addEventListener('DOMContentLoaded', function () {
+                var urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has('showDialog')) {
+                    if (!localStorage.getItem('dialogShown1')) {
+                        PF('notificationDialogForLoggedIn').show();
+                        localStorage.setItem('dialogShown1', 'true');
+                    }
+                }
+            });
+        </script>
+
+        <p:dialog widgetVar="notificationDialogForLoggedIn" height="500px" width="500px">
+            <ui:include src="../../Notification/loggedInNotifyForm.xhtml" />
+        </p:dialog>
+
+        <ui:include src="futsalScheduleGrid.xhtml"/>
+    </ui:define>
+
+</ui:composition>

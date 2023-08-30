@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <p:messages styleClass="errorMessage" showSummary="true" closable="true" severity="error" autoUpdate="true" />
+
+    <p:outputLabel value="From Date" />
+    <p:calendar id="fromdate" pattern="yyyy-MM-dd" value="#{bookingInformationController.bookingInformation.fromdate}"/><br/><br/>
+
+    <p:outputLabel value="To Date" />
+    <p:calendar id="todate" pattern="yyyy-MM-dd" value="#{bookingInformationController.bookingInformation.todate}"/><br/><br/>
+
+    <p:outputLabel  style="font-weight: bold;" value="User Name"/><br/>
+    <p:selectOneMenu converter="userconverter" value="#{bookingInformationController.bookingInformation.user}" >
+        <f:selectItem itemLabel="Select One" itemValue="" />
+        <f:selectItems value="#{userController.userList}" var="item"
+                       itemLabel="#{item.firstname}#{item.mobile}" itemValue="#{item}"/>
+    </p:selectOneMenu><br/>
+    
+    <p:outputLabel style="font-weight: bold;" value="Amount"/><br/>
+    <p:inputNumber id="amount" value="#{bookingInformationController.bookingInformation.amount}" required="true" /><br/><br/>
+
+    <p:commandButton rendered="#{empty bookingInformationController.bookingInformation.id}" value="Save" id="save" action="#{bookingInformationController.save}"/>
+    <p:commandButton rendered="#{not empty bookingInformationController.bookingInformation.id}" value="Update" id="update" action="#{bookingInformationController.update}"/>
+
+</ui:composition>

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:form id="aclForm">
+
+
+        <p:panelGrid columns="2">
+            <p:outputLabel value="Select UserType"/>
+            <p:selectOneMenu value="#{aclController.userType}">
+                <f:selectItem itemLabel="Select one" itemValue="" noSelectionOption="true" />
+                <f:selectItems value="#{aclController.getUserTypes()}" var="item" 
+                               itemLabel="#{item}" itemValue="#{item}" >
+                </f:selectItems>
+                <p:ajax process="@this" />
+            </p:selectOneMenu>
+
+            <p:outputLabel value="Choose Resource"/>
+            <p:selectOneMenu converter="resourceconverter" value="#{aclController.resource}">
+                <f:selectItem itemLabel="Select one" itemValue="" noSelectionOption="true" />
+                <f:selectItems value="#{aclController.resourceList}" var="it" 
+                               itemLabel="#{it.resourceName.label}" itemValue="#{it}" >
+                </f:selectItems>
+                <p:ajax process="@this"  />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="Choose Action" />
+            <p:selectOneMenu converter="actionconverter" value="#{aclController.action}">
+                <f:selectItem itemLabel="Select one" itemValue="" noSelectionOption="true" />
+                <f:selectItems value="#{aclController.actionList}" var="item" 
+                               itemLabel="#{item.actionName.label}" itemValue="#{item}" >
+                </f:selectItems>
+                <p:ajax process="@this" />
+
+            </p:selectOneMenu>
+
+            <p:outputLabel value="Allow"/>
+            <p:selectOneRadio  value="#{aclController.allow}">
+                <f:selectItem itemLabel="Yes" itemValue="True"  />
+                <f:selectItem itemLabel="No" itemValue="False}" />
+                <p:ajax process="@this" />
+            </p:selectOneRadio>
+        </p:panelGrid>
+
+        <p:commandButton value="AddNew" update="aclTable" oncomplete="PF('addAclDialog').hide();"
+                         actionListener="#{aclController.saveAclData()}" process="@this"
+                         />
+
+        <p:commandButton rendered="#{not empty aclController.resource.id}" value="Update" 
+                         actionListener="#{aclController.updateAcl}" process="@this"
+                         update="@form aclTable" oncomplete="PF('addAclDialog').hide();"/>
+
+
+    </h:form>
+
+</ui:composition>

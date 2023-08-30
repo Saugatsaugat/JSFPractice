@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" >
+    <h:head>
+        <title></title>
+    </h:head>
+    <h:body>
+
+        <h:form id="frm_edit_category" enctype="multipart/form-data">        
+            <p:outputLabel value="File"/>
+            <p:commandButton value="upload" title="Upload" icon="fa fa-cloud-upload"
+                             process="@this"
+                             id="btn_upload_file" oncomplete="PF('attachFiles').show();" />
+            <p:outputLabel value="#{fileController.fileEntity.filename}"
+                           />
+
+            <p:commandButton value="Save" action="#{fileController.saveFile()}"
+
+                             />
+        </h:form>
+
+
+        <p:dialog widgetVar="attachFiles" appendTo="@(body)" id="attachFiles" dynamic="true"
+                  width="600" height="400" modal="true" resizable="true" closable="true"
+                  >
+            <h:form id="frm_upload_file">
+                <p:fileUpload fileUploadListener="#{fileController.saveUploadedFile}"
+                              mode="advanced" dragDropSupport="false"
+                              allowTypes="/(\.|\/)(gif|jpeg|jpg|png|pdf)$/" 
+                              process="@this"
+                              oncomplete="PF('attachFiles').hide();"
+                              value="#{fileController.uploadedFile}">
+                </p:fileUpload>
+            </h:form>
+        </p:dialog>
+
+    </h:body>
+
+</html>
