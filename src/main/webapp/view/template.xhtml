@@ -162,23 +162,35 @@
                         <p:outputLabel value="Futsal Owner Panel" />
                     </p:panel>
 
-
-
                     <p:menubar style="background: none; background-color: lightgrey; position: relative ; z-index: 40;">
-                        <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" icon="fa fa-lg fa-home" url="/faces/view/UserUI/Home/home.xhtml"/>
+                        <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" 
+                                    icon="fa fa-lg fa-home" url="/faces/view/UserUI/Home/home.xhtml"/>
+
                         <p:menuitem rendered="#{userBean.isFutsalOwner}" value="Home" url="/faces/view/FutsalOwnerUI/Home/home.xhtml"/>
+
                         <p:menuitem value="UserList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/userTable.xhtml"/>
+
                         <p:menuitem value="FutsalList" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/futsalTable.xhtml"/>
 
-                        <p:menuitem value="FutsalSchedule" rendered="#{userBeasn.isAdmin or userBean.isFutsalOwner}" url="/faces/view/FutsalSchedule/futsalScheduleTable.xhtml"/>
+                        <p:menuitem value="FutsalSchedule" rendered="#{userBeasn.isAdmin or userBean.isFutsalOwner}" 
+                                    url="/faces/view/FutsalSchedule/futsalScheduleTable.xhtml"/>
 
                         <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
                         <p:menuitem value="Manage ACL" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/aclTable.xhtml"/>
-                        <p:menuitem value="Chat" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/ChatWebSocket/chatPage.xhtml"/>
+                        <p:menuitem value="Chat" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}"
+                                    url="/faces/view/ChatWebSocket/chatPage.xhtml"/>
                         <p:menuitem />  
 
-                        <p:menuitem title="Sign Out" icon="fa fa-sign-out" rendered="#{logoutController.checkIfSessionExists()}" actionListener="#{logoutController.logout()}"
-                                    oncomplete="clearLocalStorage();"/>
+                        <p:submenu icon="fa fa-user" rendered="#{logoutController.checkIfSessionExists()}" >
+                            <p:menuitem title="View Information" value="Information" icon="fa fa-user"
+                                        onclick="PF('userInformationDlg').show();"/>
+
+                            <p:menuitem title="Sign Out" value="Log Out" icon="fa fa-sign-out" 
+                                        rendered="#{logoutController.checkIfSessionExists()}" 
+                                        actionListener="#{logoutController.logout()}"
+                                        oncomplete="clearLocalStorage();"/>
+                        </p:submenu>
+
                         <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" onclick="PF('loginDialog').show();"/>
 
                         <p:submenu style="" label="Register" rendered="#{empty userBean.user}">
@@ -200,10 +212,18 @@
                     <ui:include src="../view/Register/registerForm.xhtml" />
                 </p:dialog>
 
+
                 <p:dialog style="font-size: 10px;" id="loginDialog" fitViewport="true" 
                           appendTo="@(body)" widgetVar="loginDialog" modal="true" 
                           header="Login" height="250px" width="300px">
                     <ui:include src="../view/Login/loginForm.xhtml" />
+                </p:dialog>
+                
+                 <p:dialog style="font-size: 10px;" id="userInformationDlg" fitViewport="true" 
+                          appendTo="@(body)" widgetVar="userInformationDlg" modal="true" 
+                          header="#{userBean.user.firstname} #{userBean.user.midname} #{userBean.user.lastname}" 
+                          height="500px" width="400px">
+                    <ui:include src="../view/UserInformation/userInformationSummaryForm.xhtml" />
                 </p:dialog>
 
                 <ui:insert name="content" >
@@ -211,7 +231,8 @@
 
                 <ui:remove>
                     <ui:include  src="Footer/footer.xhtml" />  
-                    <p:outputPanel rendered="#{(not userBean.isAdmin) and (not userBean.isFutsalOwner)}" style="padding: 5px; background-color: #006666; width: 100%; text-align: center; color: white;">
+                    <p:outputPanel rendered="#{(not userBean.isAdmin) and (not userBean.isFutsalOwner)}"
+                                   style="padding: 5px; background-color: #006666; width: 100%; text-align: center; color: white;">
                         <i class="fa fa-copyright" />2023. All rights reserved.
                     </p:outputPanel>
                 </ui:remove>
@@ -222,8 +243,6 @@
         <p:dialog widgetVar="notificationDialog" height="500px" header="OFFER! OFFER!! OFFER!!!" width="500px">
             <ui:include src="Notification/futsalOfferForm.xhtml" />
         </p:dialog>
-
-
 
     </h:body>
 </ui:composition>

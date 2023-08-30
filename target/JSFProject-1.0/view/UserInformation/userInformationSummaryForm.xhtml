@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:separator/> 
+    <p:panelGrid columns="2" style="width: 100%;">
+        <p:outputLabel value="FirstName" />
+        <p:outputLabel value="#{userBean.user.firstname}"/>
+        <p:outputLabel value="MidName" />
+        <p:outputLabel value="#{userBean.user.midname}" />
+        <p:outputLabel value="LastName" />
+        <p:outputLabel value="#{userBean.user.lastname}" />  
+        <p:outputLabel value="Email" />
+        <p:outputLabel value="#{userBean.user.email}" />
+        <p:outputLabel value="Mobile" />
+        <p:outputLabel value="#{userBean.user.mobile}" />
+
+        <p:outputLabel rendered="#{userBean.isAdmin}" value="UserType" />
+        <p:outputLabel rendered="#{userBean.isAdmin}" value="#{(userBean.isAdmin)?'Admin':''}" />
+
+        <p:outputLabel rendered="#{userBean.isFutsalOwner}" value="UserType" />
+        <p:outputLabel rendered="#{userBean.isFutsalOwner}" value="#{(userBean.isFutsalOwner)?'Futsal Owner':''}" />
+
+        <p:outputLabel rendered="#{userBean.isUser}" value="UserType" />
+        <p:outputLabel rendered="#{userBean.isUser}" value="#{(userBean.isUser)?'User':''}" />
+
+    </p:panelGrid>
+    <p:separator/> 
+
+
+</ui:composition>
