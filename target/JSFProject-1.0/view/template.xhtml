@@ -155,14 +155,14 @@
         <p:layout fullPage="true">
             <p:layoutUnit position="center">
                 <h:form>
-                    <p:panel rendered="#{userBean.isAdmin}" style="width: 100%;text-align: center; ">
-                        <p:outputLabel value="Admin Panel" />
-                    </p:panel>
-                    <p:panel rendered="#{userBean.isFutsalOwner}" style="width: 100%;text-align: center; ">
-                        <p:outputLabel value="Futsal Owner Panel" />
+                    <p:panel style="width: 100%;text-align: center; background: #6666ff; #{((empty userBean.user.id)or (userBean.isUser))?'display:none;':''}}">
+                        <p:outputLabel style="color: white;" rendered="#{userBean.isAdmin}"  
+                                       value="Welcome Admin (#{userBean.user.firstname})" />
+                        <p:outputLabel style="color: white;" rendered="#{userBean.isFutsalOwner}" value="Welcome #{userBean.user.firstname}" />
+
                     </p:panel>
 
-                    <p:menubar style="background: none; background-color: lightgrey; position: relative ; z-index: 40;">
+                    <p:menubar style="background-color: lightgreen; position: relative ; z-index: 40;">
                         <p:menuitem rendered="#{(userBean.isUser) or ((not userBean.isAdmin) and (not userBean.isFutsalOwner))}" 
                                     icon="fa fa-lg fa-home" url="/faces/view/UserUI/Home/home.xhtml"/>
 
@@ -174,10 +174,9 @@
 
                         <p:menuitem value="FutsalSchedule" rendered="#{userBeasn.isAdmin or userBean.isFutsalOwner}" 
                                     url="/faces/view/FutsalSchedule/futsalScheduleTable.xhtml"/>
-
                         <p:menuitem value="BookingInformation" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}" url="/faces/view/AdminUI/Home/bookingInformationTable.xhtml"/>
                         <p:menuitem value="Manage ACL" rendered="#{userBean.isAdmin}" url="/faces/view/AdminUI/Home/aclTable.xhtml"/>
-                        <p:menuitem value="Chat" rendered="#{userBean.isAdmin or userBean.isFutsalOwner or userBean.isUser}"
+                        <p:menuitem value="Notification" rendered="#{userBean.isAdmin}"
                                     url="/faces/view/ChatWebSocket/chatPage.xhtml"/>
                         <p:menuitem />  
 
@@ -194,13 +193,14 @@
                         <p:menuitem id="login" value="Login" rendered="#{empty userBean.user}" onclick="PF('loginDialog').show();"/>
 
                         <p:submenu style="" label="Register" rendered="#{empty userBean.user}">
-                            <p:menuitem title="User Registration" value="User" action="#{userController.resetUser()}"
-                                        actionListener="#{futsalController.updateRegisterHeaderName('User')}"
-                                        oncomplete="PF('registerDialog').show();"  update="registerDialog" process="@this"/>
+                            <p:menuitem title="User Registration" value="Normal User" action="#{userController.resetUser()}"
+                                        actionListener="#{futsalController.updateRegisterHeaderName('Normal User')}"
+                                        oncomplete="PF('registerDialog').show();"  update="registerDialog" 
+                                        process="@this"/>
 
-                            <p:menuitem title="Futsal Registration" value="Futsal" 
+                            <p:menuitem title="Futsal Registration" value="Futsal User" 
                                         action="#{userController.user.setUsertype('futsalowner')}" 
-                                        actionListener="#{futsalController.updateRegisterHeaderName('Futsal')}"
+                                        actionListener="#{futsalController.updateRegisterHeaderName('Futsal User')}"
                                         oncomplete="PF('registerDialog').show();" update="registerDialog" process="@this"/>
                         </p:submenu>
 
@@ -218,8 +218,8 @@
                           header="Login" height="250px" width="300px">
                     <ui:include src="../view/Login/loginForm.xhtml" />
                 </p:dialog>
-                
-                 <p:dialog style="font-size: 10px;" id="userInformationDlg" fitViewport="true" 
+
+                <p:dialog style="font-size: 10px;" id="userInformationDlg" fitViewport="true" 
                           appendTo="@(body)" widgetVar="userInformationDlg" modal="true" 
                           header="#{userBean.user.firstname} #{userBean.user.midname} #{userBean.user.lastname}" 
                           height="500px" width="400px">

@@ -32,19 +32,19 @@
                 <h:outputText value="#{rowIndex + 1}" />
             </p:column>
 
-            <p:column headerText="User Role">
+            <p:column filterBy="#{item.userType}" headerText="User Role">
                 <h:outputText value="#{item.userType}" />
             </p:column>
 
-            <p:column headerText="Resource Name">
+            <p:column filterBy="#{item.resource.resourceName}" headerText="Resource Name">
                 <h:outputText value="#{item.resource.resourceName}" />
             </p:column>
 
-            <p:column headerText="Action Name">
+            <p:column filterBy="#{item.aclAction.actionName}" headerText="Action Name">
                 <h:outputText value="#{item.aclAction.actionName}" />
             </p:column>
 
-            <p:column headerText="Allowed">
+            <p:column filterBy="#{item.isAllowed}" headerText="Allowed">
                 <h:outputText value="#{item.isAllowed}" />
             </p:column>
             <p:column headerText="Action">

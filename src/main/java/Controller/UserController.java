@@ -9,7 +9,9 @@ import Model.UserCrud;
 import com.saugat.bean.enums.ActionType;
 import com.saugat.bean.enums.ResourceType;
 import com.saugat.bean.enums.UserType;
+import com.saugat.beans.UserBean;
 import com.saugat.interceptors.Acl;
+import com.saugat.messageGeneration.ValidationMessageGenerationUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -39,6 +41,8 @@ public class UserController implements Serializable {
 
     @Inject
     private FutsalUserRelationCrud futsalUserRelationCrud;
+    @Inject
+    private UserBean userBean;
 
     List<User> userList;
     private User user;
@@ -80,18 +84,14 @@ public class UserController implements Serializable {
         this.user = new User();
     }
 
-    @Acl(actionName = ActionType.UPDATE,resourceName = ResourceType.USER)
+    @Acl(actionName = ActionType.UPDATE, resourceName = ResourceType.USER)
     public void updateUser() {
         if (user.getId() != null) {
             user.setUserpassword(new PasswordHashController().getPasswordHash(user.getUserpassword()));
             if (userCrud.update(user, user.getId())) {
                 try {
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data Updated Successfully", "Data Updated Successfully");
-                    FacesContext.getCurrentInstance().addMessage(null, message);
-                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                    Flash flash = externalContext.getFlash();
-                    flash.setKeepMessages(true);
-                    externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
+                    ValidationMessageGenerationUtil.validationMessageGeneration("Updated", "informational");
+                    externalContext.redirect(externalContext.getRequestContextPath());
 
                 } catch (Exception e) {
                 }
@@ -110,33 +110,22 @@ public class UserController implements Serializable {
             }
             if (userCrud.save(user)) {
                 try {
-                    if (session.getAttribute("userId") != null) {
-                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Added Successfully", "Added Successfully");
-                        FacesContext.getCurrentInstance().addMessage(null, message);
-                        externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                        Flash flash = externalContext.getFlash();
-                        flash.setKeepMessages(true);
-                        User sessionUser = userCrud.getDataById((Long) session.getAttribute("userId"));
-                        if (sessionUser.getUsertype() == UserType.admin) {
-                            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
-                        } else {
-                            externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
-                        }
-                    } else {
-                        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "User Created Successfully", "User Created Successfully");
-                        FacesContext.getCurrentInstance().addMessage(null, message);
-                        externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                        Flash flash = externalContext.getFlash();
-                        flash.setKeepMessages(true);
-
+                    ValidationMessageGenerationUtil.validationMessageGeneration("Added", "informational");
+                    if (userBean.getUser() == null) {
                         externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
                     }
+                    User sessionUser = userBean.getUser();
+                    if (sessionUser.getUsertype() == UserType.admin) {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
+                    } else {
+                        externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/UserUI/Home/home.xhtml");
+                    }
+
                 } catch (Exception e) {
                 }
             }
         }
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Creation Failed", "Creation Failed");
-        context.addMessage(null, message);
+        ValidationMessageGenerationUtil.validationMessageGeneration("Creation Failed", "error");
 
     }
 
@@ -144,11 +133,7 @@ public class UserController implements Serializable {
         if (user.getId() != null) {
             if (userCrud.deleteById(user.getId())) {
                 try {
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data Deleted Successfully", "Data Deleted Successfully");
-                    FacesContext.getCurrentInstance().addMessage(null, message);
-                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                    Flash flash = externalContext.getFlash();
-                    flash.setKeepMessages(true);
+                    ValidationMessageGenerationUtil.validationMessageGeneration("Deleted", "informational");
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/userTable.xhtml");
 
                 } catch (Exception e) {
@@ -156,14 +141,16 @@ public class UserController implements Serializable {
                             e.getMessage(), e.getMessage());
                     context.addMessage(null, message);
                 }
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion Failed", "Deletion Failed");
-                context.addMessage(null, message);
+                ValidationMessageGenerationUtil.validationMessageGeneration("Delete Failed", "error");
 
             }
 
-            }
         }
+    }
 
-
+    public void updateUserForUserEdit() {
+        User user = userBean.getUser();
+        this.setUser(user);
+    }
 
 }

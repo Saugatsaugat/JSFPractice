@@ -55,7 +55,10 @@
         <p:password id="password" value="#{userController.user.userpassword}" required="true" />
         <p:separator style="border: none;" />
 
-        <p:commandButton update="messages" value="Save" rendered="#{empty userController.user.id}" id="register" action="#{userController.saveUser}"/><br/>
-        <p:commandButton update="messages" value="Update" rendered="#{(not empty userController.user.id) and (userBean.isAdmin)}" id="userUpdate" action="#{userController.updateUser}"/>
+        <p:commandButton update="messages" value="Save" rendered="#{empty userController.user.id}"
+                         id="register" action="#{userController.saveUser}"/>
+        
+        <p:commandButton update="messages" value="Update" rendered="#{(not empty userController.user.id)}"
+                         id="userUpdate" action="#{userController.updateUser}"/>
     </h:form>
 </ui:composition>

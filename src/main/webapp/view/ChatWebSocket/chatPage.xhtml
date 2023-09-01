@@ -16,8 +16,8 @@
                 <p:outputLabel value="Chat Messages" />
                 <p:column>
                     <p:panelGrid columns="2">
-                        <h:inputTextarea id="msg"  value="#{chatBean.message}" style="color: blue"/>  
-                        <p:commandButton  icon="fa fa-send"
+                        <h:inputTextarea id="msg"  value="#{chatBean.message}" style="color: blue; display: none;"/>  
+                        <p:commandButton  icon="fa fa-send" value="Display Notification"
                                           action="#{chatBean.sendNotification()}" />
                     </p:panelGrid>
                 </p:column>

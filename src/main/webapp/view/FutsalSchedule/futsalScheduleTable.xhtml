@@ -20,7 +20,7 @@
         </p:panelGrid>       
 
         <h:form>
-            <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false" rowStyleClass="#{futsalScheduleController.rowStyleClass(item)}"  value="#{futsalScheduleController.futsalScheduleList}" rowIndexVar="rowIndex" var="item">
+            <p:dataTable paginator="true" rows="15" paginatorPosition="bottom" paginatorAlwaysVisible="false" rowStyleClass="#{futsalScheduleController.rowStyleClass(item)}"  value="#{futsalScheduleController.futsalScheduleList}" rowIndexVar="rowIndex" var="item">
                 <p:column headerText="S.N." >
                     <h:outputText value="#{rowIndex + 1}" />
                 </p:column>
@@ -39,13 +39,14 @@
                 <p:column  headerText="Status">
                     #{item.status}
                 </p:column>
-                <p:column  headerText="Edit">
+
+                <p:column headerText="Actions">
+
                     <p:commandButton icon="fa fa-pencil" rendered="#{item.status.matches('available')}" id="editDialog" title="Edit" update=":editDialogForm" oncomplete="PF('editDialog').show();" process="@this" actionListener="#{futsalScheduleController.showFutsalSchedule(item)}"/>
+                    <p:commandButton icon="fa fa-trash" rendered="#{item.status.matches('available')}" title="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{futsalScheduleController.setFutsalScheduleId(item.id)}" />
 
                 </p:column>
-                <p:column  headerText="Delete">
-                    <p:commandButton icon="fa fa-trash" rendered="#{item.status.matches('available')}" title="Delete" id="deleteDialog" oncomplete="PF('deleteDialog').show();" actionListener="#{futsalScheduleController.setFutsalScheduleId(item.id)}" />
-                </p:column>
+
             </p:dataTable>
         </h:form>
 

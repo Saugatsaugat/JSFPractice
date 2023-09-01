@@ -6,10 +6,11 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+
     <p:outputLabel value="Available Slots" />
     <p:growl redisplay="false" showSummary="true" showDetail="false" autoUpdate="true" severity="error" />
-    <p:dataTable rowStyleClass="#{futsalScheduleController.rowStyleClass(item)}" rowIndexVar="rowIndex" value="#{futsalScheduleController.futsalScheduleList}" var="item">
+    <p:dataTable id="futsalScheduleTable" rowStyleClass="#{futsalScheduleController.rowStyleClass(item)}"
+                 rowIndexVar="rowIndex" value="#{futsalScheduleController.futsalScheduleList}" var="item">
 
         <p:column headerText="S.N." >
             <h:outputText value="#{rowIndex + 1}" />
@@ -28,6 +29,7 @@
         </p:column>
         <p:column  headerText="">
             <p:commandButton rendered="#{item.status.equalsIgnoreCase('available')}" value="Book" 
+                             update="futsalScheduleTable"
                              actionListener="#{futsalScheduleController.bookFutsalSchedule(item)}" >
                 <f:setPropertyActionListener target="#{futsalScheduleController.futsal.id}" 
                                              value="#{item.futsal.id}" />

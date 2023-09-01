@@ -24,25 +24,26 @@
         </p:panelGrid>
 
 
-        <p:dataTable id="futsalTable" paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false" 
-                     value="#{futsalController.futsalList}" rowIndexVar="rowIndex" var="item">
+        <p:dataTable id="futsalTable" paginator="true" rows="15" paginatorPosition="bottom" 
+                     paginatorAlwaysVisible="false" rowKey="#{item.id}"
+                     value="#{futsalController.futsalList}" lazy="false" rowIndexVar="rowIndex" var="item">
             <p:column headerText="S.N." >
                 <h:outputText value="#{rowIndex + 1}" />
             </p:column>
 
-            <p:column filterBy="#{item.pan}" sortBy="#{item.pan}"  headerText="Pan">
+            <p:column filterBy="#{item.name}" headerText="Pan">
                 #{item.pan}
             </p:column>
-            <p:column filterBy="#{item.name}" sortBy="#{item.name}"  headerText="FutsalName">
+            <p:column filterBy="#{item.name}" headerText="FutsalName">
                 #{item.name}
             </p:column>
-            <p:column filterBy="#{item.mobile}" sortBy="#{item.mobile}" headerText="Mobile">
+            <p:column filterBy="#{item.mobile}" headerText="Mobile">
                 #{item.mobile}
             </p:column>
-            <p:column filterBy="#{item.rate}" sortBy="#{item.rate}" headerText="Rate">
+            <p:column filterBy="#{item.rate}" headerText="Rate">
                 #{item.rate}
             </p:column>
-            <p:column filterBy="#{item.address}" sortBy="#{item.address}" headerText="Address">
+            <p:column filterBy="#{item.address}" headerText="Address">
                 #{item.address}
             </p:column>
 

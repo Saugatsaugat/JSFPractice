@@ -46,12 +46,14 @@
         </p:column>
        
         <p:column>
-            <p:commandButton style="float:right;" id="addDialog" icon="fa fa-plus" update=":addDialogForm"  title="Add New User" oncomplete="PF('addDialog').show()"/>
+            <p:commandButton style="float:right;" id="addDialog" icon="fa fa-plus"
+                             update=":addDialogForm"  title="Add New User"
+                             oncomplete="PF('addDialog').show()"/>
         </p:column>
     </p:panelGrid>
 
 
-    <p:dataTable paginator="true" rows="10" paginatorPosition="bottom" paginatorAlwaysVisible="false" 
+    <p:dataTable paginator="true" rows="15" paginatorPosition="bottom" paginatorAlwaysVisible="false" 
                  value="#{userController.userList}" rowIndexVar="rowIndex" var="item" rowKey="#{item.id}"
                  lazy="false">
         <p:column headerText="S.N." >
@@ -76,7 +78,9 @@
             #{item.usertype}
         </p:column>
         <p:column  headerText="Edit">
-            <p:commandButton id="editDialog" icon="fa fa-pencil" title="Edit" oncomplete="PF('editDialog').show()" update=":editDialogForm" action="#{userController.setUser(item)}" />
+            <p:commandButton id="editDialog" icon="fa fa-pencil" title="Edit" 
+                             oncomplete="PF('editDialog').show()" update=":editDialogForm" 
+                             action="#{userController.setUser(item)}" />
         </p:column>
         <p:column  headerText="Delete">
 

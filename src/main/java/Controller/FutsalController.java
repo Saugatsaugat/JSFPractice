@@ -97,18 +97,13 @@ public class FutsalController implements Serializable {
         if (futsal.getId() != null) {
             if (futsalCrud.update(futsal, futsal.getId())) {
                 try {
-                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Futsal Updated Successfully", "Futsal Updated Successfully");
-                    FacesContext.getCurrentInstance().addMessage(null, message);
-                    externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                    Flash flash = externalContext.getFlash();
-                    flash.setKeepMessages(true);
+                    ValidationMessageGenerationUtil.validationMessageGeneration("Updated", "informational");
                     externalContext.redirect(externalContext.getRequestContextPath() + "/faces/view/AdminUI/Home/futsalTable.xhtml");
                 } catch (Exception e) {
                 }
             }
         }
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Update Failed", "Update Failed");
-        context.addMessage(null, message);
+        ValidationMessageGenerationUtil.validationMessageGeneration("Update Failed", "error");
 
     }
 

@@ -25,7 +25,8 @@
         <p:outputLabel style="font-weight: bold;" value="Rate(per Hour)"/><br/>
         <p:inputText id="rate" value="#{futsalController.futsal.rate}" required="true" />
     </div>
-    <p:commandButton value="Save" id="register" action="#{futsalController.saveFutsal}"/>
+    <p:commandButton value="Save" id="register" action="#{futsalController.saveFutsal}" 
+                     oncomplete="PF('futsalRegisterDialog').hide();"/>
     
 
 
