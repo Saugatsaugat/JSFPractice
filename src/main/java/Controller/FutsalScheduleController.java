@@ -278,7 +278,7 @@ public class FutsalScheduleController implements Serializable {
 //        this.futsalSchedule = futsalSchedule;
     }
 
-    public void bookFutsalSchedule(FutsalSchedule futsalSch) {
+   synchronized public void bookFutsalSchedule(FutsalSchedule futsalSch) {
         this.futsalSchedule = futsalSch;
         if (session.getAttribute("userId") == null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Required", "Login Required");
